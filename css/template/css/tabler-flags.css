@@ -1,0 +1,807 @@
+/*!
+* Tabler v1.0.0-beta (https://tabler.io)
+* @version 1.0.0-beta
+* @link https://tabler.io
+* Copyright 2018-2021 The Tabler Authors
+* Copyright 2018-2021 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+*/
+.flag {
+  position: relative;
+  display: inline-block;
+  width: 1.33333em;
+  height: 1em;
+  vertical-align: -3px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid #e6e8e9;
+  border-radius: 3px; }
+
+.flag-country-ad {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ad.svg"); }
+
+.flag-country-ae {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ae.svg"); }
+
+.flag-country-af {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/af.svg"); }
+
+.flag-country-ag {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ag.svg"); }
+
+.flag-country-ai {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ai.svg"); }
+
+.flag-country-al {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/al.svg"); }
+
+.flag-country-am {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/am.svg"); }
+
+.flag-country-ao {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ao.svg"); }
+
+.flag-country-aq {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/aq.svg"); }
+
+.flag-country-ar {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ar.svg"); }
+
+.flag-country-as {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/as.svg"); }
+
+.flag-country-at {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/at.svg"); }
+
+.flag-country-au {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/au.svg"); }
+
+.flag-country-aw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/aw.svg"); }
+
+.flag-country-ax {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ax.svg"); }
+
+.flag-country-az {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/az.svg"); }
+
+.flag-country-ba {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ba.svg"); }
+
+.flag-country-bb {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bb.svg"); }
+
+.flag-country-bd {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bd.svg"); }
+
+.flag-country-be {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/be.svg"); }
+
+.flag-country-bf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bf.svg"); }
+
+.flag-country-bg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bg.svg"); }
+
+.flag-country-bh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bh.svg"); }
+
+.flag-country-bi {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bi.svg"); }
+
+.flag-country-bj {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bj.svg"); }
+
+.flag-country-bl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bl.svg"); }
+
+.flag-country-bm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bm.svg"); }
+
+.flag-country-bn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bn.svg"); }
+
+.flag-country-bo {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bo.svg"); }
+
+.flag-country-bq {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bq.svg"); }
+
+.flag-country-br {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/br.svg"); }
+
+.flag-country-bs {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bs.svg"); }
+
+.flag-country-bt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bt.svg"); }
+
+.flag-country-bv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bv.svg"); }
+
+.flag-country-bw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bw.svg"); }
+
+.flag-country-by {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/by.svg"); }
+
+.flag-country-bz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/bz.svg"); }
+
+.flag-country-ca {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ca.svg"); }
+
+.flag-country-cc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cc.svg"); }
+
+.flag-country-cd {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cd.svg"); }
+
+.flag-country-cf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cf.svg"); }
+
+.flag-country-cg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cg.svg"); }
+
+.flag-country-ch {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ch.svg"); }
+
+.flag-country-ci {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ci.svg"); }
+
+.flag-country-ck {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ck.svg"); }
+
+.flag-country-cl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cl.svg"); }
+
+.flag-country-cm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cm.svg"); }
+
+.flag-country-cn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cn.svg"); }
+
+.flag-country-co {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/co.svg"); }
+
+.flag-country-cr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cr.svg"); }
+
+.flag-country-cu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cu.svg"); }
+
+.flag-country-cv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cv.svg"); }
+
+.flag-country-cw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cw.svg"); }
+
+.flag-country-cx {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cx.svg"); }
+
+.flag-country-cy {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cy.svg"); }
+
+.flag-country-cz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/cz.svg"); }
+
+.flag-country-de {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/de.svg"); }
+
+.flag-country-dj {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/dj.svg"); }
+
+.flag-country-dk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/dk.svg"); }
+
+.flag-country-dm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/dm.svg"); }
+
+.flag-country-do {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/do.svg"); }
+
+.flag-country-dz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/dz.svg"); }
+
+.flag-country-ec {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ec.svg"); }
+
+.flag-country-ee {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ee.svg"); }
+
+.flag-country-eg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/eg.svg"); }
+
+.flag-country-eh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/eh.svg"); }
+
+.flag-country-er {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/er.svg"); }
+
+.flag-country-es {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/es.svg"); }
+
+.flag-country-et {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/et.svg"); }
+
+.flag-country-fi {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fi.svg"); }
+
+.flag-country-fj {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fj.svg"); }
+
+.flag-country-fk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fk.svg"); }
+
+.flag-country-fm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fm.svg"); }
+
+.flag-country-fo {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fo.svg"); }
+
+.flag-country-fr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/fr.svg"); }
+
+.flag-country-ga {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ga.svg"); }
+
+.flag-country-gb {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gb.svg"); }
+
+.flag-country-gd {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gd.svg"); }
+
+.flag-country-ge {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ge.svg"); }
+
+.flag-country-gf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gf.svg"); }
+
+.flag-country-gg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gg.svg"); }
+
+.flag-country-gh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gh.svg"); }
+
+.flag-country-gi {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gi.svg"); }
+
+.flag-country-gl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gl.svg"); }
+
+.flag-country-gm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gm.svg"); }
+
+.flag-country-gn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gn.svg"); }
+
+.flag-country-gp {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gp.svg"); }
+
+.flag-country-gq {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gq.svg"); }
+
+.flag-country-gr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gr.svg"); }
+
+.flag-country-gs {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gs.svg"); }
+
+.flag-country-gt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gt.svg"); }
+
+.flag-country-gu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gu.svg"); }
+
+.flag-country-gw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gw.svg"); }
+
+.flag-country-gy {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gy.svg"); }
+
+.flag-country-hk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/hk.svg"); }
+
+.flag-country-hm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/hm.svg"); }
+
+.flag-country-hn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/hn.svg"); }
+
+.flag-country-hr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/hr.svg"); }
+
+.flag-country-ht {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ht.svg"); }
+
+.flag-country-hu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/hu.svg"); }
+
+.flag-country-id {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/id.svg"); }
+
+.flag-country-ie {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ie.svg"); }
+
+.flag-country-il {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/il.svg"); }
+
+.flag-country-im {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/im.svg"); }
+
+.flag-country-in {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/in.svg"); }
+
+.flag-country-io {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/io.svg"); }
+
+.flag-country-iq {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/iq.svg"); }
+
+.flag-country-ir {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ir.svg"); }
+
+.flag-country-is {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/is.svg"); }
+
+.flag-country-it {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/it.svg"); }
+
+.flag-country-je {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/je.svg"); }
+
+.flag-country-jm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/jm.svg"); }
+
+.flag-country-jo {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/jo.svg"); }
+
+.flag-country-jp {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/jp.svg"); }
+
+.flag-country-ke {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ke.svg"); }
+
+.flag-country-kg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kg.svg"); }
+
+.flag-country-kh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kh.svg"); }
+
+.flag-country-ki {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ki.svg"); }
+
+.flag-country-km {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/km.svg"); }
+
+.flag-country-kn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kn.svg"); }
+
+.flag-country-kp {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kp.svg"); }
+
+.flag-country-kr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kr.svg"); }
+
+.flag-country-kw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kw.svg"); }
+
+.flag-country-ky {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ky.svg"); }
+
+.flag-country-kz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/kz.svg"); }
+
+.flag-country-la {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/la.svg"); }
+
+.flag-country-lb {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lb.svg"); }
+
+.flag-country-lc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lc.svg"); }
+
+.flag-country-li {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/li.svg"); }
+
+.flag-country-lk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lk.svg"); }
+
+.flag-country-lr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lr.svg"); }
+
+.flag-country-ls {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ls.svg"); }
+
+.flag-country-lt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lt.svg"); }
+
+.flag-country-lu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lu.svg"); }
+
+.flag-country-lv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/lv.svg"); }
+
+.flag-country-ly {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ly.svg"); }
+
+.flag-country-ma {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ma.svg"); }
+
+.flag-country-mc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mc.svg"); }
+
+.flag-country-md {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/md.svg"); }
+
+.flag-country-me {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/me.svg"); }
+
+.flag-country-mf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mf.svg"); }
+
+.flag-country-mg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mg.svg"); }
+
+.flag-country-mh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mh.svg"); }
+
+.flag-country-mk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mk.svg"); }
+
+.flag-country-ml {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ml.svg"); }
+
+.flag-country-mm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mm.svg"); }
+
+.flag-country-mn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mn.svg"); }
+
+.flag-country-mo {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mo.svg"); }
+
+.flag-country-mp {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mp.svg"); }
+
+.flag-country-mq {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mq.svg"); }
+
+.flag-country-mr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mr.svg"); }
+
+.flag-country-ms {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ms.svg"); }
+
+.flag-country-mt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mt.svg"); }
+
+.flag-country-mu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mu.svg"); }
+
+.flag-country-mv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mv.svg"); }
+
+.flag-country-mw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mw.svg"); }
+
+.flag-country-mx {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mx.svg"); }
+
+.flag-country-my {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/my.svg"); }
+
+.flag-country-mz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/mz.svg"); }
+
+.flag-country-na {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/na.svg"); }
+
+.flag-country-nc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nc.svg"); }
+
+.flag-country-ne {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ne.svg"); }
+
+.flag-country-nf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nf.svg"); }
+
+.flag-country-ng {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ng.svg"); }
+
+.flag-country-ni {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ni.svg"); }
+
+.flag-country-nl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nl.svg"); }
+
+.flag-country-no {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/no.svg"); }
+
+.flag-country-np {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/np.svg"); }
+
+.flag-country-nr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nr.svg"); }
+
+.flag-country-nu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nu.svg"); }
+
+.flag-country-nz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/nz.svg"); }
+
+.flag-country-om {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/om.svg"); }
+
+.flag-country-pa {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pa.svg"); }
+
+.flag-country-pe {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pe.svg"); }
+
+.flag-country-pf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pf.svg"); }
+
+.flag-country-pg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pg.svg"); }
+
+.flag-country-ph {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ph.svg"); }
+
+.flag-country-pk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pk.svg"); }
+
+.flag-country-pl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pl.svg"); }
+
+.flag-country-pm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pm.svg"); }
+
+.flag-country-pn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pn.svg"); }
+
+.flag-country-pr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pr.svg"); }
+
+.flag-country-ps {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ps.svg"); }
+
+.flag-country-pt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pt.svg"); }
+
+.flag-country-pw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/pw.svg"); }
+
+.flag-country-py {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/py.svg"); }
+
+.flag-country-qa {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/qa.svg"); }
+
+.flag-country-re {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/re.svg"); }
+
+.flag-country-ro {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ro.svg"); }
+
+.flag-country-rs {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/rs.svg"); }
+
+.flag-country-ru {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ru.svg"); }
+
+.flag-country-rw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/rw.svg"); }
+
+.flag-country-sa {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sa.svg"); }
+
+.flag-country-sb {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sb.svg"); }
+
+.flag-country-sc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sc.svg"); }
+
+.flag-country-sd {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sd.svg"); }
+
+.flag-country-se {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/se.svg"); }
+
+.flag-country-sg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sg.svg"); }
+
+.flag-country-sh {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sh.svg"); }
+
+.flag-country-si {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/si.svg"); }
+
+.flag-country-sj {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sj.svg"); }
+
+.flag-country-sk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sk.svg"); }
+
+.flag-country-sl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sl.svg"); }
+
+.flag-country-sm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sm.svg"); }
+
+.flag-country-sn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sn.svg"); }
+
+.flag-country-so {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/so.svg"); }
+
+.flag-country-sr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sr.svg"); }
+
+.flag-country-ss {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ss.svg"); }
+
+.flag-country-st {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/st.svg"); }
+
+.flag-country-sv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sv.svg"); }
+
+.flag-country-sx {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sx.svg"); }
+
+.flag-country-sy {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sy.svg"); }
+
+.flag-country-sz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/sz.svg"); }
+
+.flag-country-tc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tc.svg"); }
+
+.flag-country-td {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/td.svg"); }
+
+.flag-country-tf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tf.svg"); }
+
+.flag-country-tg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tg.svg"); }
+
+.flag-country-th {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/th.svg"); }
+
+.flag-country-tj {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tj.svg"); }
+
+.flag-country-tk {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tk.svg"); }
+
+.flag-country-tl {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tl.svg"); }
+
+.flag-country-tm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tm.svg"); }
+
+.flag-country-tn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tn.svg"); }
+
+.flag-country-to {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/to.svg"); }
+
+.flag-country-tr {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tr.svg"); }
+
+.flag-country-tt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tt.svg"); }
+
+.flag-country-tv {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tv.svg"); }
+
+.flag-country-tw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tw.svg"); }
+
+.flag-country-tz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/tz.svg"); }
+
+.flag-country-ua {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ua.svg"); }
+
+.flag-country-ug {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ug.svg"); }
+
+.flag-country-um {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/um.svg"); }
+
+.flag-country-us {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/us.svg"); }
+
+.flag-country-uy {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/uy.svg"); }
+
+.flag-country-uz {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/uz.svg"); }
+
+.flag-country-va {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/va.svg"); }
+
+.flag-country-vc {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/vc.svg"); }
+
+.flag-country-ve {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ve.svg"); }
+
+.flag-country-vg {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/vg.svg"); }
+
+.flag-country-vi {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/vi.svg"); }
+
+.flag-country-vn {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/vn.svg"); }
+
+.flag-country-vu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/vu.svg"); }
+
+.flag-country-wf {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/wf.svg"); }
+
+.flag-country-ws {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ws.svg"); }
+
+.flag-country-ye {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/ye.svg"); }
+
+.flag-country-yt {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/yt.svg"); }
+
+.flag-country-za {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/za.svg"); }
+
+.flag-country-zm {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/zm.svg"); }
+
+.flag-country-zw {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/zw.svg"); }
+
+.flag-country-es-ct {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/es-ct.svg"); }
+
+.flag-country-eu {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/eu.svg"); }
+
+.flag-country-gb-eng {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gb-eng.svg"); }
+
+.flag-country-gb-nir {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gb-nir.svg"); }
+
+.flag-country-gb-sct {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gb-sct.svg"); }
+
+.flag-country-gb-wls {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/gb-wls.svg"); }
+
+.flag-country-un {
+  background-image: url("<?=WEB_META_BASE_URL?>images/template/img/flags/un.svg"); }
+
+.flag-xs {
+  width: 1.25rem;
+  height: 0.9375rem; }
+
+.flag-sm {
+  width: 2rem;
+  height: 1.5rem; }
+
+.flag-md {
+  width: 3.75rem;
+  height: 2.8125rem; }
+
+.flag-lg {
+  width: 5rem;
+  height: 3.75rem; }
+
+.flag-xl {
+  width: 7rem;
+  height: 5.25rem; }

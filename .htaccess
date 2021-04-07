@@ -1,0 +1,126 @@
+# Apache configuration file
+# httpd.apache.org/docs/2.2/mod/quickreference.html
+
+php_value post_max_size 150M
+php_value upload_max_filesize 100M
+
+# gzip compression.
+SetEnvIfNoCase Request_URI ".xml.gz$" no-gzip dont-vary
+<IfModule mod_deflate.c>
+
+  # html, xml, css, and js:
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript text/javascript application/javascript application/json
+
+  # webfonts and svg:
+  <FilesMatch "\.(woff|ttf|otf|eot|svg)$" >
+    SetOutputFilter DEFLATE
+  </FilesMatch>
+</IfModule>
+
+# add expire
+<IfModule mod_expires.c>
+  Header set cache-control: public
+  ExpiresActive on
+
+# Perhaps better to whitelist expires rules? Perhaps.
+  ExpiresDefault                          "access plus 1 month"
+
+# cache.manifest needs re-reqeusts in FF 3.6 (thx Remy ~Introducing HTML5)
+  ExpiresByType text/cache-manifest       "access plus 0 seconds"
+
+# your document html
+  ExpiresByType text/html                  "access"
+
+# rss feed
+  ExpiresByType application/rss+xml       "access plus 1 hour"
+
+# favicon (cannot be renamed)
+  ExpiresByType image/vnd.microsoft.icon  "access plus 1 week"
+
+# media: images, video, audio
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/jpg                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 month"
+  ExpiresByType audio/ogg                 "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+
+# webfonts
+  ExpiresByType font/ttf                  "access plus 1 month"
+  ExpiresByType font/woff                 "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+
+# css and javascript
+#  ExpiresByType text/css                  "access plus 0 seconds"
+#  ExpiresByType application/javascript    "access plus 0 seconds"
+#  ExpiresByType text/javascript           "access plus 0 seconds"
+</IfModule>
+
+
+# Since we're sending far-future expires, we don't need ETags for
+# static content.
+#   developer.yahoo.com/performance/rules.html#etags
+FileETag None
+
+SetEnv TZ Asia/Bangkok
+
+# you probably want www.example.com to forward to example.com -- shorter URLs are sexier.
+#   no-www.org/faq.php?q=class_b
+RewriteEngine On
+
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)
+RewriteRule .* - [F]
+
+# RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+# RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# without -MultiViews, Apache will give a 404 for a rewrite if a folder of the same name does not exist (e.g. “/blog/hello”)
+# -Indexes will have Apache block users from browsing folders without a default document
+#   webmasterworld.com/apache/3808792.htm
+Options -MultiViews +Includes -Indexes +FollowSymLinks
+
+# custom 404 page
+ErrorDocument 403 /403_to_404.php
+ErrorDocument 404 /404.php
+
+
+# use utf-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
+# force utf-8 for a number of file formats
+AddCharset utf-8 .html .css .js .xml .json .rss
+
+AddType image/png png
+AddType image/jpeg jpg
+AddType image/jpeg jpeg
+AddType video/ogg ogv
+AddType video/mp4 mp4
+AddType video/x-ms-wmv wmv
+AddType text/x-component htc
+
+# alpha site
+RewriteRule ^css/comp\.css$ compressor/master.css.php [NC,QSA,L]
+RewriteRule ^js/comp.js$ compressor/script.js.php [L]
+
+# website rewrite down here
+# -------------------------------------------------------------------
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^stocks/(\w+)/(\w{2})/(\w{2})/(.*)$ cli/media_file.php?mo=$1&f=$4 [L,NC]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^stocks/(\w+)/(\w{1})(\d+)x(\d+)/(.*)$ cli/media_file.php?mo=$1&m=$2&w=$3&h=$4&f=$5 [L,NC]
+# -------------------------------------------------------------------
+  #RewriteRule ^(.*)/(.*)/ /index.php?lang=$1&page=$2
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !^(wcm)
+  RewriteRule ^(.*)\.php$ requestor_ajax.php?REQUEST_URI=$1 [NC,QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php [NC,QSA,L]
+
+  RewriteCond %{REQUEST_URI} !^/en/
+  RewriteRule ^$ /en/$1 [R=301,L]

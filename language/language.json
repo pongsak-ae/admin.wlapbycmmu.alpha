@@ -1,0 +1,13 @@
+var arrLang = {
+  "eng": {
+    "HOME": "Home",
+    "ABOUT": "About Us",
+    "CONTACT": "Contact Us",
+  },
+
+  "tha": {
+    "HOME": "หน้าหลัก",
+    "ABOUT": "ข้อมูล",
+    "CONTACT": "ติดต่อ",
+  }
+};

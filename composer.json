@@ -1,0 +1,33 @@
+{
+    "name": "template/template",
+    "repositories": [
+    {
+            "type": "package",
+            "package": {
+                "name": "customlib/curl",
+                "version": "1.0",
+                "dist": {
+                    "url": "https://github.com/dewelopinweb/curl/archive/master.zip",
+                    "type": "zip"
+                },
+                "autoload": {
+                    "classmap": ["lib/"]
+                }
+            }
+        }
+    ],
+    "require": {
+        "monolog/monolog": "~1.6",
+        "phpmailer/phpmailer": "~5.1",
+        "vrana/notorm": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "wcm"
+        ],
+        "psr-4": {
+            "OMCore\\": "system/core",
+            "OMLib\\": "system/library"
+        }
+    }
+}

@@ -1,0 +1,170 @@
+@media screen and (max-width: 980px) {
+
+  .wcmLayout:not(.sign_in) #wrapLeftMenu {
+    position:absolute !important;
+    background-color:#555555;
+    z-index: 10000;
+    padding: 5px;
+    margin-left: 5px;
+    margin-top: 20px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 0px 5px 10px #666666;
+    -moz-box-shadow: 0px 5px 10px #666666;
+    -webkit-box-shadow: 0px 5px 10px #666666;
+  }
+
+  .corner_top {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 15px 20px 15px;
+    border-color: transparent transparent #555555 transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 #555555 #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+
+  #wrapLeftMenu .corner_top {
+    margin-left: 5px;
+    margin-top: -20px;
+    position: absolute;
+  }
+
+  .wcmLayout:not(.sign_in) #leftMenu {
+    overflow-y:auto !important;
+  }
+  
+  .wcmLayout:not(.sign_in) #wrapLeftMenu .dd-node-data {
+    width: 100% !important; 
+    display: inline-block;
+  }
+
+  .wcmLayout:not(.sign_in) #leftMenu {
+    background-color:#ffffff;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+  }
+
+  .wcmLayout:not(.sign_in) #bgLeftMenu {
+    background-color: #000000;
+    height: 100%;
+    left: 0;
+    opacity: 0.2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+  }
+
+  .list_data.wcmLayout:not(.sign_in) .mainContent, 
+  .list_data.wcmLayout:not(.sign_in) .header_section,
+  .list_data.wcmLayout:not(.sign_in) .container {
+    width:834px !important;
+  }
+
+  .list_data.wcmLayout:not(.sign_in) #list_data, 
+  .list_data.wcmLayout:not(.sign_in) .table_data, 
+  .list_data.wcmLayout:not(.sign_in) .datagridfooter, 
+  .list_data.wcmLayout:not(.sign_in) .datagrid {
+    width:830px !important;
+  }
+
+  .unknown.wcmLayout:not(.sign_in) .mainContent, 
+  .unknown.wcmLayout:not(.sign_in) .header_section,
+  .unknown.wcmLayout:not(.sign_in) .container {
+    width:834px !important;
+  }
+
+  .unknown.wcmLayout:not(.sign_in) .pageContent div {
+    width:650px !important;
+  }
+
+
+  .form_data.wcmLayout:not(.sign_in) .tabcontainer {
+    width:830px !important;
+  }
+  .form_data.wcmLayout:not(.sign_in) .container,.form_data.wcmLayout:not(.sign_in) .mainContent {
+    width:834px !important;
+  }
+  .form_data.wcmLayout:not(.sign_in) #list_data, 
+  .form_data.wcmLayout:not(.sign_in) .table_data, 
+  .form_data.wcmLayout:not(.sign_in) .datagridfooter, 
+  .form_data.wcmLayout:not(.sign_in) .datagrid {
+    width:750px !important;
+  }
+
+  .wcmLayout:not(.sign_in) table.mainContent>tbody>tr>td:nth-child(1) {
+
+  }
+
+  .wcmLayout:not(.sign_in) #wrapLeftMenu a {
+    font-size:18px !important;
+    line-height:18px !important;
+    padding: 20px 10px !important;
+  }
+
+  .wcmLayout:not(.sign_in) #leftMenu .dd-breadcrumb {
+    padding: 0 !important;
+  }
+
+  .wcmLayout:not(.sign_in) #leftMenu .current {
+    background-color:#666666 !important;
+  }
+
+  .wcmLayout:not(.sign_in) .header_top .logo {
+
+  }
+
+  .wcmLayout:not(.sign_in) .header_section .title {
+    left:65px;
+  }
+
+  .wcmLayout:not(.sign_in) #menu_response {
+    left:10px;
+    top:10px;
+    position: absolute;
+  }
+
+  .wcmLayout:not(.sign_in) #menu_response {
+    display: inline-block !important;
+  }
+
+  .wcmLayout:not(.sign_in) #groupLeftMenu {
+    display: block;
+  }
+
+  .wcmLayout:not(.sign_in) #fadeLeftMenu.show {
+    display: block;
+  }
+
+  .wcmLayout:not(.sign_in) #fadeLeftMenu.hide {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 981px) {
+  #groupLeftMenu,#fadeLeftMenu {
+    display: block;
+  }
+
+  #menu_response {
+    display: none;
+  }
+
+  .wcmLayout:not(.sign_in) #menu_response, .drilldown2{
+    display:none !important;
+    height:0px !important;
+  }
+
+  .wcmLayout:not(.sign_in) div.drilldown{
+  	display:block !important; 
+  }
+
+  .wcmLayout:not(.sign_in) #fadeLeftMenu.hide {
+    display: block !important;
+  }
+}
+

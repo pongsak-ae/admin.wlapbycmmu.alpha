@@ -1,0 +1,288 @@
+html,body {
+	height: 100%;
+}
+body,td,th {
+	font-family: Arial, Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+}
+ul {margin: 0; padding: 0; outline: none;}
+body {
+	background-color: #42474c;
+	margin: 0 auto;
+	padding: 0;
+}
+a:focus {
+	outline: 0;
+}
+a:link, a:visited, a:active, a:hover img {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+.clearfix:after {
+    content: ".";
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix { clear:both;display:inline-block;font-size:0.1px;height:0pt;line-height:0pt;width:0pt}
+html[xmlns] .clearfix {
+    display: block;
+}
+* html .clearfix {
+    height: 1%;
+}
+/*--------------- OMB ----------------*/
+.OMBItemIcon{
+	width: 78px;
+}
+.OMBPanel {
+    display: block;
+    width: 648px;
+    width: 640px\9;
+    height: 440px;
+    overflow: hidden;
+    font-family: Arial, Tahoma, Verdana, Helvetica, sans-serif !important;
+}
+.OMBPanelMediaManager {
+    display: none;
+}
+.OMBPanelProperty {
+    background:#ffffff;
+    display: none;
+}
+.OMBItemBox {
+    width:102px;
+    display:block;
+    float:left;
+    background:#ffffff;
+    color:#000000;
+    margin: 2px;
+    text-align:center;
+    position: relative;
+}
+.OMBCheckbox {
+	display: none;
+	position: absolute;
+	right: 11px;
+	top: 3px;
+}
+.OMBCheckbox.showCheckbox {
+	display: inline;
+}
+.OMBCheckbox.showCheckbox input {
+	font-size: 16px;
+}
+.OMBItemIcon {
+	border: 1px solid #aaaaaa;
+	padding: 3px;
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+.OMBItemInfo {
+    font-size:10px;
+    width: 98px;
+    display:block;
+    float:bottom;
+}
+.OMBItemInfo1 {
+    overflow: hidden;
+    color: #444444;
+    font-size: 10px;
+    white-space: nowrap;
+    width: 98px;
+}
+.OMBItemInfo2 {
+    color: #666666;
+    font-size: 8px;
+}
+.OMBLoading {
+    background: url("img/loading.gif") no-repeat scroll center center transparent;
+}
+
+#elPreviewMediaBox {
+	display:block;
+	width: 240px;
+	height:240px;
+	background: url("img/transparent_bg.jpg");
+	border:1px solid #cccccc;
+}
+.OMBPanelProperty .fileInfo {
+	font-size: 12px;
+	color: #444444;
+}
+.OMBPanelProperty .fileInfo .label {
+	font-weight: bold !important;
+	width: 140px !important;
+	text-align: right !important;
+	font-size:11px !important;
+}
+.OMBPanelProperty .fileInfo .value {
+	vertical-align: top !important;
+	font-size:11px !important;
+}
+.OMBPanelProperty .fileInfo .value select {
+	font-size:11px !important;
+}
+.OMBPanelProperty .fileInfo .value input {
+	font-size:11px !important;
+}
+.OMBfooter {
+	border-top: 1px solid #eeeeee;
+}
+#file_list_data {
+	position: relative;
+}
+#file_list_data .multiply_command {
+	position: absolute;
+	display: none;
+	bottom: 10px;
+	font-size: 11px;
+	color: #aaaaaa;
+	margin: 0px;
+	padding: 8px 15px;
+	background: #555555;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	line-height: 18px;
+}
+#file_list_data .multiply_command .command a {
+	padding: 0 5px;
+	text-decoration: none;
+	color: #ffffff;
+}
+#file_list_data .multiply_command .command a:hover {
+	text-decoration: underline;
+	color: #ffffff;
+}
+.OMBHowto {
+	font-size: 10px;
+	color: #444444;
+	padding: 10px 15px;
+	background: #eeeeee;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	line-height: 14px;
+}
+/*-------------------- Button --------------------*/
+a.button {
+	border: 0px;
+	display: inline-block;
+	text-decoration: none;
+	overflow: hidden;
+	outline: none;
+	cursor: pointer;
+}
+a.button span {
+	display: block;
+	text-decoration: none;
+}
+a.button.medium {
+	font-size: 11px;
+	color: #444444;
+	font-weight: bold;
+	height: 24px;
+	margin-right: 6px;
+	padding-right: 12px;
+	background: transparent url('img/button/medium_bg_a.gif') no-repeat scroll top right;
+}
+a.button.medium span {
+	background: transparent url('img/button/medium_bg_span.gif') no-repeat;
+	line-height: 14px;
+	padding: 5px 1px 5px 12px;
+}
+a.button.medium2 {
+	font-size: 11px;
+	color: #444444;
+	font-weight: bold;
+	height: 24px;
+	margin-right: 6px;
+	padding-right: 12px;
+	background: transparent url('img/button/medium2_bg_a.gif') no-repeat scroll top right;
+}
+a.button.medium2 span {
+	background: transparent url('img/button/medium2_bg_span.gif') no-repeat;
+	line-height: 14px;
+	padding: 5px 1px 5px 12px;
+}
+
+a.button:hover {
+	background-position: right center;
+	text-decoration: none;
+}
+a.button:hover span {
+	background-position: left center;
+}
+a.button.clicked {
+	background-position: right bottom;
+}
+a.button.clicked span {
+	background-position: left bottom;
+}
+a.button span img {
+	margin-left: 2px;
+}
+/*-------------------- Button --------------------*/
+#OMBDialog {
+	z-index: 300002;
+	position: absolute;
+	background: #ffffff;
+	padding: 3px;
+	width: 400px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 0px 0px 25px #000000;
+	-moz-box-shadow: 0px 0px 25px #000000;
+  	-webkit-box-shadow: 0px 0px 25px #000000;
+}
+#OMBDialog .head {
+	background: #888888;
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: bold;
+	width: auto;
+	padding: 5px 10px;
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+#OMBDialog .main {
+	color: #444444;
+	font-size: 12px;
+	padding: 10px 10px;
+	max-height: 450px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: auto;
+}
+* html #OMBDialog .main {
+	height: 450px;
+	height: expression( document.body.clientHeight > 450 ? "300px" : "auto" );
+}
+#OMBDialog .foot {
+	border-top: 1px solid #eeeeee;
+	padding: 10px 0 10px 0;
+	text-align: right;
+}
+#OMBDialog input {
+	border:2px inset !important;
+	font-size:11px !important;
+}
+#OMBDimmer {
+	z-index: 300001;
+	position: absolute;
+	width: 100%;
+	background-color:#ffffff;
+	top: 0;
+	left: 0;
+	filter:alpha(opacity=60);
+	opacity:0.6;
+}
