@@ -1,3 +1,4 @@
+<div id="toast-container"></div>
 <div class="page">
 	<div class="sticky-top">
 		<?php include $theme_dir . "header.tpl"; ?>    
@@ -31,7 +32,6 @@
 		        			<span class="nav-link-title">Employee</span>
 		        		</a>
 		        	</li>
-
 
 		        </ul>
 		        <div class="col-md-2 col-sm-12 my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">

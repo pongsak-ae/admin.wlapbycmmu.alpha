@@ -24,7 +24,7 @@
 	<!-- <link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/bootstrap5/bootstrap.min.css"> -->
 
 	<!-- DATATABLE -->
-	<!-- <link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/datatable/dataTables.bootstrap5.min.css"> -->
+	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/datatable/dataTables.bootstrap5.min.css">
 	<!-- <link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/datatable/responsive.bootstrap4.min.css"> -->
 	<!-- Fonts -->
 	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>fontawesome-free/css/all.min.css">
@@ -63,9 +63,9 @@
 	<!-- <script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/core/moment.min.js"></script> -->
 
 	<!-- DATATABLE -->
-<!-- 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/dataTables.bootstrap4.min.js"></script>
-	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/dataTables.responsive.min.js"></script>
+<!-- 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/dataTables.responsive.min.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/responsive.bootstrap4.min.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/dataTables.buttons.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/datatable/dataTables.rowGroup.min.js"></script> -->
@@ -77,7 +77,8 @@
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/template/libs/choices.js/choices.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/template/libs/litepicker/litepicker.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/template/js/tabler.min.js"></script>
-
+	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/sweetalert1/sweetalert.min.js"></script>
+	<!-- <script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/sweetalert2/sweetalert2.min.js"></script> -->
 	<!-- template:js -->
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/comp.js<?=$OMPage->merge_media('js')?>"></script>
 </body>

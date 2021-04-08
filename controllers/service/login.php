@@ -43,7 +43,7 @@ if ($cmd != "") {
                     $_SESSION['loggedin']       = true;
                     $_SESSION['accesstoken']    = genAccessToken($accounts_user);
                     $_SESSION['user_id']        = safeEncrypt($accounts_id, WCMSetting::$ENCRYPT_EMPLOYEE);
-                    $_SESSION['last_activity']  =  time();
+                    $_SESSION['last_activity']  = time();
                     $_SESSION['expire_time']    = 86400 * 30;
                     $_SESSION['status']         = "Y";
                     $_SESSION['user_name']      = $accounts_user;
@@ -67,17 +67,19 @@ if ($cmd != "") {
 
     } else if($cmd == "check_logout")  {
         // setcookie("login_session", "", time() - 3600);
-        // unset($_SESSION['loggedin']);
-        // unset($_SESSION['accesstoken']);
-        // unset($_SESSION['employee_id']);
-        // unset($_SESSION['account_name']);
-        // unset($_SESSION['account_status']);
-        // unset($_SESSION['is_admin']);
-        // session_commit();
+        unset($_SESSION['loggedin']);
+        unset($_SESSION['accesstoken']);
+        unset($_SESSION['user_id']);
+        unset($_SESSION['last_activity']);
+        unset($_SESSION['expire_time']);
+        unset($_SESSION['status']);
+        unset($_SESSION['user_name']);
+        unset($_SESSION['is_admin']);
+        session_commit();
 
-        // $response['status'] = true;
-        // $response['msg'] = "strLogout_Alert";
-        // $response['code'] = '200';
+        $response['status'] = true;
+        $response['msg'] = "Logout successfully";
+        $response['code'] = '200';
 
     } 
 

@@ -11,7 +11,7 @@ $(this).on('show.bs.modal load', function() {
 
 $(document).ready(function(){
 
-    $('#sign_out').click(function() {
+    $('#sign_out').on("click", function() {
         $.ajax({
             type: "post",
             url: BASE_LANG + "service/login.php",
@@ -29,8 +29,10 @@ $(document).ready(function(){
                 var status = res['status'];
                 var msg = res['msg'];
                 if (status == true) {
-                  alert_top_center("success", arrLang[msg], 1000);
+                  alert_center('Process logout', msg, "success")
                   setTimeout(function(){ window.location = BASE_LANG; }, 1000);
+                }else{
+                  alert_center('Process logout', msg, "danger")
                 }
             }
         });
@@ -184,27 +186,6 @@ function alert_top_center(type_alert, title, time){
   })
 }
 
-function alert_rigth(type_alert, title, time){
-
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: time,
-      timerProgressBar: true,
-      onOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    Toast.fire({
-      icon: type_alert,
-      title: title
-    }).then((result) => {
-        // window.location.href = url;
-    })
-}
-
 function alert_rigth_url(type_alert, title, time, url){
 
     const Toast = Swal.mixin({
@@ -259,34 +240,16 @@ function alert_center_url(type_alert, title, text, url){
     })
 }
 
-function alert_center(type_alert, title, text){
-    Swal.fire({
-      title: title,
-      text: text,
-      icon: type_alert,
-      showCancelButton: false,
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'OK'
-    })
-    // .then((result) => {
-    //   if (status == true) {
-    //     Swal.fire(
-    //       'Deleted!',
-    //       'Your file has been deleted.',
-    //       'success'
-    //     )
-    //   }else{
-
-    //   }
-    // })
-}
-
-function alert_success(type_alert, title, text, time){
-    Swal.fire({
+function alert_center(title, text, icon){
+    var btn = (icon == "success") ? false : true;
+    var time = (icon == "success") ? 1000 : 0;
+    swal({
         title: title,
         text: text,
-        icon: type_alert,
-        timer: time
+        icon: icon,
+        button: btn,
+        showConfirmButton: false,
+        timer: time,
     })
 }
 
@@ -305,35 +268,6 @@ function getDistinctArray(arr) {
 
 
 //----------------------------
-
-function alert_center_toURL( title_alert, text_alert, type_alert , url){
-    Swal.fire({
-      position: 'top-end',
-      icon: type_alert,
-      title: text_alert,
-      showConfirmButton: false,
-      timer: 1500
-    }).then(
-            function () {
-                    window.location.href = url;
-            }
-    );
-    
-}
-function notify_top_right(type, location, align, message){
-        $.notify({
-            icon: "notifications",
-            message: message
-
-        },{
-            type: type,
-            timer: 1000,
-            placement: {
-                from: location,
-                align: align
-            }
-        });
-}
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -508,7 +442,6 @@ function alert_Toast(type_alert, title, text, time_show) {
     toast    += '</div>';
     
     $('#toast-container').html(toast);
-
 
     $(".toast").toast({ delay: time_show });
     $(".toast").toast('show');

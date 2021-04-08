@@ -60,10 +60,10 @@ function submit_login(form,e){
             var status = res['status'];
             var msg = res['msg'];
             if (status == true) {
-                alert_Toast("success", msg, msg, 1500)
-                setTimeout(function(){ window.location = BASE_LANG; }, 1500);
+                alert_center('Process login', msg, "success")
+                setTimeout(function(){ window.location = BASE_LANG; }, 1000);
             }else{
-                alert_Toast("danger", "Unsuccess", msg, 5000)
+                alert_center('Process login', msg, "error")
             }
         }
     });
