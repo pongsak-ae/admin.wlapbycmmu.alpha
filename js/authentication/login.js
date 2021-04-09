@@ -61,7 +61,7 @@ function submit_login(form,e){
             var msg = res['msg'];
             if (status == true) {
                 alert_center('Process login', msg, "success")
-                setTimeout(function(){ window.location = BASE_LANG; }, 1000);
+                setTimeout(function(){ window.location = BASE_LANG; }, 1500);
             }else{
                 alert_center('Process login', msg, "error")
             }

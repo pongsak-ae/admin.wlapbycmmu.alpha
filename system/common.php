@@ -546,7 +546,7 @@ function get_client_ip() {
 
 
 function getSESSION(){
-	return safeDecrypt($_SESSION['employee_id'] ,WCMSetting::$ENCRYPT_EMPLOYEE);
+	return safeDecrypt($_SESSION['user_id'] ,WCMSetting::$ENCRYPT_EMPLOYEE); 
 }
 
 
@@ -719,32 +719,16 @@ function array_has_dupes($array) {
    return count($array) !== count(array_unique($array));
 }
 
-function generate_menu(){
-
-	$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : false;
+function course(){
 	$DB = OMDb::singleton();
-	$sql = "SELECT * FROM v_menu WHERE user_id = @user_id";
-	$sql_param = array();
-	$sql_param['user_id'] = safeDecrypt($user_id, WCMSetting::$ENCRYPT_EMPLOYEE);
-	$ds = null;
-	$res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
-	
-	if ($res > 0) {
-		$menuList = array();
-		$arr_menu = array();
-		foreach($ds as $v){
-			$arr_menu['menu_name'] = $v['menu_name'];
-			$arr_menu['menu_href'] = $v['menu_path'];
-			// $arr_menu['menu_icon'] = isset($v['menulabel_icon']) ? $v['menulabel_icon'] : null;
+    $sql = "SELECT * FROM course";
 
-			$menuList[$v['menulabel_name']]['menu_icon'] = isset($v['menulabel_icon']) ? $v['menulabel_icon'] : null;
-			$menuList[$v['menulabel_name']]['sub_menu'][] = $arr_menu;
+    $sql_param = array();
+    $ds = null;
+    $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
 
-		}
-
-		return $menuList;
-	} else {
-		return null;
-	}
+    return $ds;
 }
+
+
 ?>

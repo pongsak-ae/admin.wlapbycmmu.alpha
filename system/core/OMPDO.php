@@ -36,6 +36,7 @@ Class OMPDO extends PDO {
 		$options = array(
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
+			PDO::MYSQL_ATTR_FOUND_ROWS   => TRUE
 		);
 		// $attributes = array(
 		//                     // "ATTR_ERRMODE"=>"ERRMODE_EXCEPTION"

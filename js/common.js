@@ -30,7 +30,7 @@ $(document).ready(function(){
                 var msg = res['msg'];
                 if (status == true) {
                   alert_center('Process logout', msg, "success")
-                  setTimeout(function(){ window.location = BASE_LANG; }, 1000);
+                  setTimeout(function(){ window.location = BASE_LANG; }, 1500);
                 }else{
                   alert_center('Process logout', msg, "danger")
                 }
@@ -38,6 +38,7 @@ $(document).ready(function(){
         });
     });
     
+    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
 });
 
 $.validator.addMethod("numberOnly", function(value, element, param) {
@@ -242,7 +243,7 @@ function alert_center_url(type_alert, title, text, url){
 
 function alert_center(title, text, icon){
     var btn = (icon == "success") ? false : true;
-    var time = (icon == "success") ? 1000 : 0;
+    var time = (icon == "success") ? 1500 : 0;
     swal({
         title: title,
         text: text,
