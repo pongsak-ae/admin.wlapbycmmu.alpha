@@ -1,7 +1,7 @@
 <?php
 
 $PAGE_VAR["js"][] = "register-report";
-$PAGE_VAR["js"][] = "template/libs/apexcharts/dist/apexcharts.min";
+// $PAGE_VAR["js"][] = "template/libs/apexcharts/dist/apexcharts.min";
 
 if($_SESSION['status'] != "Y"){
  header("Location: ".WEB_META_BASE_LANG."login/");
@@ -11,7 +11,7 @@ if($_SESSION['status'] != "Y"){
 $course_option = '';
 foreach(course() as $k => $v) {
   $course_active = ($v['course_active'] == 1) ? 'selected' : '';
-  $course_option .= '<option '. $course_active .' value="' . $v['course_id'] . '">' . $v['course_name'] . '</option>';
+  $course_option .= '<option data-active="'. $v['course_active'] .'" '. $course_active .' value="' . $v['course_id'] . '">' . $v['course_name'] . '</option>';
 }
 // COURSE SELECT
 
@@ -46,7 +46,7 @@ foreach(course() as $k => $v) {
 
     </div>
     <div class="table-responsive my-3">
-      <table id="datatable_register" class="table table-vcenter text-nowrap table-striped">
+      <table id="datatable_register" class="table table-vcenter text-nowrap table-striped w-100">
         <thead>
           <tr>
             <!-- <th>Tools</th> -->

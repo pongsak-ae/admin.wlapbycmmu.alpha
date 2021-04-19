@@ -4,10 +4,11 @@ $(document).ready(function(){
     // COURSE SELECT
     var course_active   = '<span class="badge bg-success me-1"></span> Active';
     var course_inactive = '<span class="badge bg-danger me-1"></span> Inactive';
-    var label_course = ($('#select_course').val() == '1') ? course_active : course_inactive;
+    var label_course = ($('#select_course option:selected').attr('data-active') == '1') ? course_active : course_inactive;
     $('#label_course').html(label_course)
     $('#select_course').on('change', function(){
-      var label_course = ($(this).val() == '1') ? course_active : course_inactive;
+
+      var label_course = ($(this).find('option:selected').attr('data-active') == '1') ? course_active : course_inactive;
       $('#label_course').html(label_course)
       datatable_register.ajax.reload();
     });
