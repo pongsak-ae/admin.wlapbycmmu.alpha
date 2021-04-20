@@ -11,7 +11,7 @@ if($_SESSION['status'] != "Y"){
 $course_option = '';
 foreach(course() as $k => $v) {
   $course_active = ($v['course_active'] == 1) ? 'selected' : '';
-  $course_option .= '<option data-active="'. $v['course_active'] .'" '. $course_active .' value="' . $v['course_id'] . '">' . $v['course_name'] . '</option>';
+  $course_option .= '<option data-active="'. $v['course_active'] .'" '. $course_active .' value="' . $v['course_id'] . '">' . $v['course_name'] . ' (' . $v['course_no'] . ')</option>';
 }
 // COURSE SELECT
 

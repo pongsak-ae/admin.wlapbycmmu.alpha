@@ -15,8 +15,7 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 if ($cmd != "") {
     if($cmd == "course"){
         // $course_id    = isset($_POST['course']) ? $_POST['course'] : "";
-        $sql = "SELECT * FROM course ORDER BY course_active DESC";
-
+        $sql = "SELECT * FROM course WHERE status = 'Y' ORDER BY course_active DESC";
         $sql_param = array();
         // $sql_param['course'] = $course_id;
         $ds = null;
@@ -24,23 +23,168 @@ if ($cmd != "") {
         $response['data'] = $ds;
         $response['status'] = true;
 
-    } else if ($cmd == "change_status"){
-        $customer_id    = isset($_POST['customer_id']) ? $_POST['customer_id'] : "";
-        $status         = isset($_POST['status']) ? $_POST['status'] : "";
-        
-        $sql_param = array();
-        $sql_param['cus_id']    = $customer_id;
-        $sql_param['status']    = $status;
-        $sql_param['update_by'] = getSESSION();
-        $res = $DB->executeUpdate('customer', 1, $sql_param); 
+    } else if ($cmd == "add_course"){
+        $add_c_active   = isset($_POST['add_c_active']) ? $_POST['add_c_active'] : "";
+        $add_c_no       = isset($_POST['add_c_no']) ? $_POST['add_c_no'] : "";
+        $add_c_name     = isset($_POST['add_c_name']) ? $_POST['add_c_name'] : "";
+        $add_c_datetime = isset($_POST['add_c_datetime']) ? $_POST['add_c_datetime'] : "";
+        $add_c_place    = isset($_POST['add_c_place']) ? $_POST['add_c_place'] : "";
+        $add_c_price    = isset($_POST['add_c_price']) ? $_POST['add_c_price'] : "";
+        $add_c_start    = isset($_POST['add_c_start']) ? $_POST['add_c_start'] : "";
+        $add_c_end      = isset($_POST['add_c_end']) ? $_POST['add_c_end'] : "";
 
-        if ($res > 0) {
-            $response['status'] = true;
-            $response['msg'] = 'Change ' . $status . ' successfully';
+        $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
+
+        $sql_param_c = array();
+        $sql_param_c['c_no'] = $add_c_no;
+        $ds_c = null;
+        $res_c = $DB->query($ds_c, $sql_c, $sql_param_c, 0, -1, "ASSOC");
+
+        if ($res_c == 0) {
+
+            if ($add_c_active == '1') {
+                // UPDATE COURSE ACTICE ALL 0
+                $sql_param = array();
+                $sql_param['course_active'] = 0;
+                $res = $DB->executeUpdate('course', 0, $sql_param); 
+            }else{
+                $res = 1;
+            }
+
+            if ($res > 0) {
+
+                $sql_param_ac = array();
+                $new_id_ac = "";
+                $sql_param_ac['course_active']      = $add_c_active;
+                $sql_param_ac['course_no']          = $add_c_no;
+                $sql_param_ac['course_name']        = $add_c_name;
+                $sql_param_ac['course_datetime']    = $add_c_datetime;
+                $sql_param_ac['course_place']       = $add_c_place;
+                $sql_param_ac['course_price']       = $add_c_price;
+                $sql_param_ac['course_startdate']   = $add_c_start;
+                $sql_param_ac['course_enddate']     = $add_c_end;
+                $sql_param_ac['create_by']          = getSESSION();
+
+                $res_ac = $DB->executeInsert('course', $sql_param_ac, $new_id_ac);
+
+                if ($res_ac > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'Create course successfully';
+                }else{
+                  $response['status'] = false;
+                    $response['msg'] = 'Create course unsuccessfully';  
+                }
+                
+            }else{
+                $response['status'] = false;
+                $response['msg'] = 'Create course unsuccessfully';
+            }
+
         }else{
             $response['status'] = false;
-            $response['msg'] = 'Change ' . $status . ' unsuccessfully';
+            $response['msg'] = 'Course No already !';  
         }
+
+    } else if ($cmd == "remove_course"){
+        $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
+
+        $sql_s = "SELECT * FROM tview_course_register WHERE course_id = @course_id GROUP BY course_id";
+        $sql_param_s = array();
+        $sql_param_s['course_id'] = $course_id;
+        $ds_s = null;
+        $res_s = $DB->query($ds_s, $sql_s, $sql_param_s, 0, -1, "ASSOC");
+
+        if ($res_s == 0) {
+            $sql_c = "SELECT course_active FROM course WHERE course_id = @course_id LIMIT 1";
+            $sql_param_c = array();
+            $sql_param_c['course_id'] = $course_id;
+            $ds_c = null;
+            $res_c = $DB->query($ds_c, $sql_c, $sql_param_c, 0, -1, "ASSOC");
+
+            if ($ds_c[0]['course_active'] == '0') {
+                $sql_param = array();
+                $sql_param['course_id'] = $course_id;
+                $sql_param['status']    = 'N';
+                $sql_param['update_by'] = getSESSION();
+                $res = $DB->executeUpdate('course', 1, $sql_param);
+
+                if ($res > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'Remove course successfully';
+                }else{
+                    $response['status'] = false;
+                    $response['msg'] = 'Remove course unsuccessfully';
+                }
+                
+            }else{
+                $response['status'] = false;
+                $response['msg'] = 'Can not remove course active';
+            }
+
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'Can not remove course used';
+        }
+
+    } else if ($cmd == "edit_course"){
+
+        $edit_c_course_id= isset($_POST['edit_c_course_id']) ? $_POST['edit_c_course_id'] : "";
+
+        $edit_c_active   = isset($_POST['edit_c_active']) ? $_POST['edit_c_active'] : "";
+        // $edit_c_no       = isset($_POST['edit_c_no']) ? $_POST['edit_c_no'] : "";
+        $edit_c_name     = isset($_POST['edit_c_name']) ? $_POST['edit_c_name'] : "";
+        $edit_c_datetime = isset($_POST['edit_c_datetime']) ? $_POST['edit_c_datetime'] : "";
+        $edit_c_place    = isset($_POST['edit_c_place']) ? $_POST['edit_c_place'] : "";
+        $edit_c_price    = isset($_POST['edit_c_price']) ? $_POST['edit_c_price'] : "";
+        $edit_c_start    = isset($_POST['edit_c_start']) ? $_POST['edit_c_start'] : "";
+        $edit_c_end      = isset($_POST['edit_c_end']) ? $_POST['edit_c_end'] : "";
+
+        // $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
+        // $sql_param_c = array();
+        // $sql_param_c['c_no'] = $edit_c_no;
+        // $ds_c = null;
+        // $res_c = $DB->query($ds_c, $sql_c, $sql_param_c, 0, -1, "ASSOC");
+
+        // if ($res_c == 0) {
+            if ($edit_c_active == '1') {
+                $sql_param = array();
+                $sql_param['course_active'] = 0;
+                $res = $DB->executeUpdate('course', 0, $sql_param); 
+            }else{
+                $res = 1;
+            }
+
+            if ($res > 0) {
+                $sql_param_ec = array();
+                $sql_param_ec['course_id']          = $edit_c_course_id;  
+                $sql_param_ec['course_active']      = $edit_c_active;  
+                // $sql_param_ec['course_no']          = $edit_c_no;
+                $sql_param_ec['course_name']        = $edit_c_name;
+                $sql_param_ec['course_datetime']    = $edit_c_datetime;
+                $sql_param_ec['course_place']       = $edit_c_place;
+                $sql_param_ec['course_price']       = $edit_c_price;
+                $sql_param_ec['course_startdate']   = $edit_c_start;
+                $sql_param_ec['course_enddate']     = $edit_c_end;
+                $sql_param_ec['update_by']          = getSESSION();
+                $res_ec = $DB->executeUpdate('course', 1, $sql_param_ec); 
+
+                if ($res_ec > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'Update course successfully';
+                }else{
+                    $response['status'] = false;
+                    $response['msg'] = 'Update course unsuccessfully';  
+                }
+
+            }else{
+                $response['status'] = false;
+                $response['msg'] = 'Update course unsuccessfully'; 
+            }
+
+        // }else{
+        //     $response['status'] = false;
+        //     $response['msg'] = 'Course No already !';  
+        // }
 
     } else {
         $response['status'] = false;

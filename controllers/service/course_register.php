@@ -32,7 +32,7 @@ if ($cmd != "") {
         $sql_param['cus_id']    = $customer_id;
         $sql_param['status']    = $status;
         $sql_param['update_by'] = getSESSION();
-        $res = $DB->executeUpdate('customer', 1, $sql_param); 
+        $res = $DB->executeUpdate('customer', 1, $sql_param);
 
         if ($res > 0) {
             $response['status'] = true;

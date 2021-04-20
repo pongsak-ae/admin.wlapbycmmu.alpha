@@ -451,3 +451,32 @@ function alert_Toast(type_alert, title, text, time_show) {
 $('body').on('click','.close',function(){
       $(this).closest('.toast').toast('hide')
 })
+
+
+function modal_remove(btn_remove_id, modalID, text, divID){
+    var modal_removeHTML = '';
+    modal_removeHTML += '<div class="modal modal-blur fade" id="' + modalID + '">';
+    modal_removeHTML += '<div class="modal-dialog modal-sm" role="document">';
+    modal_removeHTML += '<div class="modal-content">';
+    modal_removeHTML += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    modal_removeHTML += '<div class="modal-status bg-danger"></div>';
+    modal_removeHTML += '<div class="modal-body text-center py-4">';
+    modal_removeHTML += '<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v2m0 4v.01" /><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" /></svg>';
+    modal_removeHTML += '<h3>Are you sure?</h3>';
+    modal_removeHTML += '<div class="text-muted">' + text + '</div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '<div class="modal-footer">';
+    modal_removeHTML += '<div class="w-100">';
+    modal_removeHTML += '<div class="row">';
+    modal_removeHTML += '<div class="col"><button class="btn btn-white w-100" data-bs-dismiss="modal">Cancel</button></div>';
+    modal_removeHTML += '<div class="col"><button id="' + btn_remove_id + '" class="btn btn-danger w-100" data-bs-dismiss="modal">Remove</button></div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '</div>';
+    modal_removeHTML += '</div>';
+    $('#' + divID).html(modal_removeHTML);
+    $('#' + modalID).modal('show');
+
+}
