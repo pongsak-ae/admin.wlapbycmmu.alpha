@@ -14,22 +14,21 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "speaker"){
-        //var_dump("test");
-        $sql = "SELECT * FROM speaker ORDER BY speaker_sort";
+        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_sort
+                FROM speaker WHERE speaker_status = 'Y' ORDER BY speaker_sort";
         $sql_param = array();
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
-        $source_re = array();
-        foreach($ds as $v){
-            $source_re[] = array(
-                'id' => $v['speaker_id'],
-                'name' => $v['speaker_name'].'|'.$v['speaker_surname'].'|'.$v['speaker_image'],
-                'title' => $v['speaker_position'].'|'.$v['speaker_company'],
-                'sort' => $v['speaker_sort'],
-                'status' => $v['speaker_status']
-            );
-        }
-        $response['data'] = $source_re;
+        // $source_re = array();
+        // foreach($ds as $v){
+        //     $source_re[] = array(
+        //         'id' => $v['speaker_id'],
+        //         'name' => $v['speaker_name'].'|'.$v['speaker_surname'].'|'.$v['speaker_email'].'|'.$v['speaker_image'],
+        //         'title' => $v['speaker_position'].'|'.$v['speaker_company'],
+        //         'sort' => $v['speaker_sort']
+        //     );
+        // }
+        $response['data'] = $ds;
         $response['status'] = true;
     } else if ($cmd == "update_speaker"){
         $speaker_id = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
@@ -46,6 +45,31 @@ if ($cmd != "") {
         }else{
             $response['status'] = false;
             $response['msg'] = 'Change ' . $status . ' unsuccessfully';
+        }
+    } else if ($cmd == "remove_speaker") {
+        $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
+        $sql_s = "SELECT * FROM v_course_speaker WHERE speaker_id = @speaker_id LIMIT 1";
+        $sql_param_s = array();
+        $sql_param_s['speaker_id'] = $speaker_id;
+        $ds_s = null;
+        $res_s = $DB->query($ds_s, $sql_s, $sql_param_s, 0, -1, "ASSOC");
+        if ($res_s == 0) {
+            $sql_param = array();
+            $sql_param['speaker_id'] = $speaker_id;
+            $sql_param['status']    = 'N';
+            $sql_param['update_by'] = getSESSION();
+            $res = $DB->executeUpdate('speaker', 1, $sql_param);
+
+            if ($res > 0) {
+                $response['status'] = true;
+                $response['msg'] = 'Remove course successfully';
+            }else{
+                $response['status'] = false;
+                $response['msg'] = 'Remove course unsuccessfully';
+            }
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'Can not remove course used';
         }
     } else {
         $response['status'] = false;
