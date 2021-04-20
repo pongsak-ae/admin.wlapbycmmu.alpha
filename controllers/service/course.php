@@ -32,9 +32,9 @@ if ($cmd != "") {
         $add_c_price    = isset($_POST['add_c_price']) ? $_POST['add_c_price'] : "";
         $add_c_start    = isset($_POST['add_c_start']) ? $_POST['add_c_start'] : "";
         $add_c_end      = isset($_POST['add_c_end']) ? $_POST['add_c_end'] : "";
+        $add_c_speeker  = isset($_POST['add_c_speeker']) ? $_POST['add_c_speeker'] : "";
 
         $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
-
         $sql_param_c = array();
         $sql_param_c['c_no'] = $add_c_no;
         $ds_c = null;
@@ -68,8 +68,19 @@ if ($cmd != "") {
                 $res_ac = $DB->executeInsert('course', $sql_param_ac, $new_id_ac);
 
                 if ($res_ac > 0) {
+
+                    $speeker_explode = explode(",", $add_c_speeker);
+                    foreach($speeker_explode as $key=>$value) {
+                        $sql_param_sp = array();
+                        $new_id_sp = "";
+                        $sql_param_sp['course_id']  = $new_id_ac;
+                        $sql_param_sp['speaker_id'] = $value;
+                        $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    }
+
                     $response['status'] = true;
                     $response['msg'] = 'Create course successfully';
+
                 }else{
                   $response['status'] = false;
                     $response['msg'] = 'Create course unsuccessfully';  
@@ -138,6 +149,7 @@ if ($cmd != "") {
         $edit_c_price    = isset($_POST['edit_c_price']) ? $_POST['edit_c_price'] : "";
         $edit_c_start    = isset($_POST['edit_c_start']) ? $_POST['edit_c_start'] : "";
         $edit_c_end      = isset($_POST['edit_c_end']) ? $_POST['edit_c_end'] : "";
+        $edit_c_speeker  = isset($_POST['edit_c_speeker']) ? $_POST['edit_c_speeker'] : "";
 
         // $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
         // $sql_param_c = array();
@@ -169,6 +181,16 @@ if ($cmd != "") {
                 $res_ec = $DB->executeUpdate('course', 1, $sql_param_ec); 
 
                 if ($res_ec > 0) {
+                    
+                    $speeker_explode = explode(",", $edit_c_speeker);
+                    foreach($speeker_explode as $key=>$value) {
+                        $sql_param_sp = array();
+                        $new_id_sp = "";
+                        $sql_param_sp['course_id']  = $edit_c_course_id;
+                        $sql_param_sp['speaker_id'] = $value;
+                        $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    }
+
                     $response['status'] = true;
                     $response['msg'] = 'Update course successfully';
                 }else{
@@ -185,6 +207,26 @@ if ($cmd != "") {
         //     $response['status'] = false;
         //     $response['msg'] = 'Course No already !';  
         // }
+
+    } else if ($cmd == "add_course_speeker"){
+        $sql = "SELECT * FROM speaker WHERE speaker_status = 'Y'";
+        $sql_param = array();
+        // $sql_param['c_no'] = $add_c_no;
+        $ds = null;
+        $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+        $response['status'] = true;
+        $response['data'] = $ds;
+
+    } else if ($cmd == "edit_course_speeker"){
+        $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
+
+        $sql = "SELECT * FROM course_speaker WHERE course_id = @course_id";
+        $sql_param = array();
+        $sql_param['course_id'] = $course_id;
+        $ds = null;
+        $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+        $response['status'] = true;
+        $response['data'] = $ds;
 
     } else {
         $response['status'] = false;

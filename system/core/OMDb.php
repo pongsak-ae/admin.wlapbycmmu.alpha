@@ -230,7 +230,7 @@ class OMDatabase extends NotORM
 				$sql_v .= (":".$k);
             }
         }
-		$this->_SQLQueryString = "INSERT INTO " . $TableName . "(" . $sql_f . ")" . " VALUES(" . $sql_v . ")";
+		$this->_SQLQueryString = "INSERT IGNORE INTO " . $TableName . "(" . $sql_f . ")" . " VALUES(" . $sql_v . ")";
 
 		    $stmt = $this->_DB->prepare($this->_SQLQueryString);
 
