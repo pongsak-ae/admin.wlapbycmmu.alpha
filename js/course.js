@@ -194,6 +194,8 @@ function datatable_course(){
       comment(course_id, course_name);
       customer(course_id);
 
+
+
       $("#frm_comment_course").validate({
           rules: {
               select_customer: {
@@ -572,8 +574,7 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
     startDate: course_end
   });
 
-  Course_speeker();
-  editCourse_speeker(course_id)
+  Course_speeker(course_id);
 
   $("#frm_edit_course").validate({
       rules: {

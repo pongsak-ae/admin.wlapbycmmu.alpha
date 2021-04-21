@@ -480,7 +480,7 @@ function modal_remove(btn_remove_id, modalID, text, divID){
     $('#' + modalID).modal('show');
 }
 
-function Course_speeker(){
+function Course_speeker(course_id){
   $.ajax({
       type: "post",
       url: BASE_LANG + "service/course.php",
@@ -520,6 +520,7 @@ function Course_speeker(){
         });
 
         $('#add_course_speeker').html(append_data);
+        editCourse_speeker(course_id);
       }
   });
 }
@@ -637,7 +638,10 @@ function comment(course_id, course_name){
           $.each(data, function( index, value ) {
 
             var commentHTML = '';
-            commentHTML += '<div class="my-2">';
+            commentHTML += '<div id="divComment_' + value.commenter_id + '" class="my-2">';
+            commentHTML += '<span style="float: right;">';
+            commentHTML += '<button type="button" data-comid="' + value.commenter_id + '" class="remove_comment btn btn-outline-danger btn-sm mx-2"><i class="far fa-trash-alt"></i></button>';
+            commentHTML += '</span>';
             commentHTML += '<blockquote>';
             commentHTML += '<b>' + value.commenter_title + '</b>';
             commentHTML += '<p><em>' + value.commenter_detail + '</em></p>';
@@ -664,6 +668,37 @@ function comment(course_id, course_name){
         }
 
         $('#divComment').html(append_data);
+
+        // REMOVE COMMENT
+        $(".remove_comment").on('click', function(){
+          var rm_comment_id = $(this).attr('data-comid');
+          $.ajax({
+              type: "post",
+              url: BASE_LANG + "service/course.php",
+              data: {
+                "cmd": "remove_comment",
+                "comment_id": rm_comment_id
+              },
+              dataType: "json",
+              beforeSend: function(){
+                $(':button[type="button"]').prop('disabled', true);
+              },
+              complete: function(){
+                setTimeout(function() {$(':button[type="button"]').prop('disabled', false)}, 500);
+              },
+              success: function(res) {
+                var status = res['status'];
+                var msg = res['msg'];
+                if (status == true) {
+                  $("#divComment_" + rm_comment_id).fadeOut(500, function() { $(this).remove(); });
+
+                }else{
+                    alert_center('Process remove comment', msg, "error")
+                }
+
+              }
+          });
+        });
 
       }
   });

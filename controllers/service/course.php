@@ -185,7 +185,7 @@ if ($cmd != "") {
                     $sql_d = "DELETE FROM course_speaker WHERE course_id = @course_id";
 
                     $sql_param_d = array();
-                    $sql_param_d['course_id'] = 1;
+                    $sql_param_d['course_id'] = $edit_c_course_id;
                     $res_d = $DB->execute($sql_d, $sql_param_d);
 
                     $speeker_explode = explode(",", $edit_c_speeker);
@@ -282,6 +282,21 @@ if ($cmd != "") {
         }else{
             $response['status'] = false;
             $response['msg'] = 'Create comment unsuccessfully'; 
+        }
+
+    } else if ($cmd == "remove_comment"){
+        $comment_id = isset($_POST['comment_id']) ? $_POST['comment_id'] : "";
+        $sql = "DELETE FROM commenter WHERE commenter_id = @comment_id";
+
+        $sql_param = array();
+        $sql_param['comment_id'] = $comment_id;
+        $res = $DB->execute($sql, $sql_param);
+
+        if ($res > 0) {
+            $response['status'] = true;
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'Remove comment unsuccessfully'; 
         }
 
     } else {
