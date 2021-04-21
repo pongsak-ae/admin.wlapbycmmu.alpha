@@ -177,6 +177,9 @@ function datatable_course(){
       modal_CommentHTML += '<div class="col-md-6 col-sm-12 ">';
       modal_CommentHTML += '<button type="submit" class="btn btn-primary w-100 my-1">Comment</button>';
       modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<div class="col-md-6 col-sm-12" style="display: table;">';
+      modal_CommentHTML += '<em class="align-middle text-danger" style="display: table-cell;">* Please select customer</em>';
+      modal_CommentHTML += '</div>';
       modal_CommentHTML += '</div>'; // ROW
       modal_CommentHTML += '</div>';
 
@@ -188,8 +191,77 @@ function datatable_course(){
       $('#modal_commemtcourse').html(modal_CommentHTML);
       $('#modal_commemtcourseGEN').modal('show');
 
-      comment(course_id, course_name)
+      comment(course_id, course_name);
       customer(course_id);
+
+      $("#frm_comment_course").validate({
+          rules: {
+              select_customer: {
+                  required: true
+              },
+              comment_title: {
+                  required: true
+              },
+              comment_detail: {
+                  required: true
+              }
+          },
+          errorPlacement: function(error, element) {
+          },
+          errorClass: "help-inline text-danger",
+          highlight: function(element) {
+               $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
+               $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
+           },
+          unhighlight: function(element) {
+              $(element).closest('.form-group').removeClass('has-error').addClass('has-success');//.addClass('has-success');
+              $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
+
+           },
+          submitHandler: function(form, e) {
+              e.preventDefault();
+
+              var inputs = $(form).find(':input');
+              var form_data = new FormData();
+
+              if ($('#select_customer').val() != "") {
+                form_data.append("cmd"              , 'add_comment');
+                form_data.append("course_id"        , course_id);
+                form_data.append("comment_speeker"  , $('#select_customer').val());
+                form_data.append("comment_title"    , inputs.filter('#comment_title').val());
+                form_data.append("comment_detail"   , inputs.filter('#comment_detail').val());
+
+                $.ajax({
+                    type: "post",
+                    url: BASE_LANG + "service/course.php",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    data: form_data,
+                    dataType: "json",
+                    beforeSend: function(){
+                      $(':button[type="submit"]').prop('disabled', true);
+                    },
+                    complete: function(){
+                      $(':button[type="submit"]').prop('disabled', false);
+                    },
+                    success: function(res) {
+                      var status = res['status'];
+                      var msg = res['msg'];
+                      if (status == true) {
+                        comment(course_id, course_name)
+                        $("#divComment").animate({ scrollTop: $("#divComment").prop("scrollHeight") });
+                          // alert_center('Process edit course', msg, "success")
+                      }else{
+                          alert_center('Process add comment', msg, "error")
+                      }
+                    }
+                });
+
+              }
+
+          } 
+      });
 
     });   
 }
@@ -305,22 +377,22 @@ function add_course(){
 
   $("#frm_add_course").validate({
       rules: {
-          // add_c_no: {
-          //     required: true,
-          //     number: true
-          // },
-          // add_c_name: {
-          //     required: true
-          // },
-          // add_c_datetime: {
-          //     required: true
-          // },
-          // add_c_place: {
-          //     required: true
-          // },
-          // add_c_price: {
-          //     required: true
-          // }
+          add_c_no: {
+              required: true,
+              number: true
+          },
+          add_c_name: {
+              required: true
+          },
+          add_c_datetime: {
+              required: true
+          },
+          add_c_place: {
+              required: true
+          },
+          add_c_price: {
+              required: true
+          }
       },
       errorPlacement: function(error, element) {
       },

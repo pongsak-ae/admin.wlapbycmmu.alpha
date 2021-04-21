@@ -82,7 +82,7 @@ if ($cmd != "") {
                     $response['msg'] = 'Create course successfully';
 
                 }else{
-                  $response['status'] = false;
+                    $response['status'] = false;
                     $response['msg'] = 'Create course unsuccessfully';  
                 }
                 
@@ -260,6 +260,29 @@ if ($cmd != "") {
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
         $response['status'] = true;
         $response['data'] = $ds;
+
+    } else if ($cmd == "add_comment"){
+        $course_id          = isset($_POST['course_id']) ? $_POST['course_id'] : "";
+        $comment_speeker    = isset($_POST['comment_speeker']) ? $_POST['comment_speeker'] : "";
+        $comment_title      = isset($_POST['comment_title']) ? $_POST['comment_title'] : "";
+        $comment_detail     = isset($_POST['comment_detail']) ? $_POST['comment_detail'] : "";
+
+        $sql_param = array();
+        $new_id = "";
+        $sql_param['course_id']         = $course_id;
+        $sql_param['cus_id']            = $comment_speeker;
+        $sql_param['commenter_title']   = $comment_title;
+        $sql_param['commenter_detail']  = $comment_detail;
+        $sql_param['create_by']         = getSESSION();
+
+        $res = $DB->executeInsert('commenter', $sql_param, $new_id);
+
+        if ($res > 0) {
+            $response['status'] = true;
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'Create comment unsuccessfully'; 
+        }
 
     } else {
         $response['status'] = false;

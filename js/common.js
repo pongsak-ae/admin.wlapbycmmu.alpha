@@ -570,14 +570,12 @@ function customer(course_id){
         var data   = res['data'];
         var append_data = '';
 
-        append_data += '<select type="text" class="form-select w-100" id="select_customer">' ;
-        if (data.length != 0) {
-          $.each(data, function( index, value ) {
-            append_data += '<option value="' + value.cus_id + '" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(' + BASE_URL + 'images/' + value.course_name + '/customer/' + value.customer_image + ')&quot;&gt;&lt;/span&gt;">' + value.customer_fullname + '</option>' ;
-          });
-        }else{
-          append_data += '<option value="" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./images/face28.jpg)&quot;&gt;&lt;/span&gt;">No customer</option>' ;
-        }
+        append_data += '<select type="text" class="form-select validate[required] w-100" id="select_customer" name="select_customer">' ;
+        append_data += '<option selected disabled value="" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./images/face28.jpg)&quot;&gt;&lt;/span&gt;">Select customer</option>' ;
+
+        $.each(data, function( index, value ) {
+          append_data += '<option value="' + value.cus_id + '" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(' + BASE_URL + 'images/' + value.course_name + '/customer/' + value.customer_image + ')&quot;&gt;&lt;/span&gt;">' + value.customer_fullname + '</option>' ;
+        });
 
         append_data += '</select>' ;
 
@@ -612,7 +610,6 @@ function customer(course_id){
 
       }
   });
-
 }
 
 function comment(course_id, course_name){
@@ -670,5 +667,4 @@ function comment(course_id, course_name){
 
       }
   });
-
 }
