@@ -11,7 +11,6 @@ if($_SESSION['status'] != "Y"){
 ?>
 
 <div class="container-xl">
-
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">Courses list</h3>
@@ -50,3 +49,6 @@ if($_SESSION['status'] != "Y"){
 <div id="modal_addcourse"></div>
 <div id="modal_removeCourse"></div>
 <div id="modal_editcourse"></div>
+<div id="modal_commemtcourse"></div>
+
+

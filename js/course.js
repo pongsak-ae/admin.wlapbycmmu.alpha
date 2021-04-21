@@ -11,7 +11,7 @@ $(document).ready(function(){
 function datatable_course(){
     datatable_course = $("#datatable_course").DataTable({
         "scrollX": true,
-        "pageLength": 25,
+        "pageLength": 10,
         "responsive": true,
         "paging": true,
         "processing": true,
@@ -48,7 +48,7 @@ function datatable_course(){
     });
 
     function course_active(data, type, row, meta){
-        var active = (data == 1) ? '<button class="btn btn-outline-success btn-sm w-100">Active</button>' : '<button class="btn btn-outline-danger btn-sm w-100">Inactive</button>';
+        var active = (data == 1) ? '<button class="btn btn-outline-success w-100">Active</button>' : '<button class="btn btn-outline-danger w-100">Inactive</button>';
         return active;
     }
 
@@ -74,7 +74,7 @@ function datatable_course(){
         tools    += ' data-eco-end="'   + row['course_enddate'] + '"';
         tools    += 'name="edit_course" class="btn btn-outline-warning mx-1"><i class="fas fa-edit"></i></button>';
         tools    += '<button name="remove_course" data-coname="' + row['course_name'] + '" data-coid="' + data + '" class="btn btn-outline-danger mx-1"><i class="far fa-trash-alt"></i></button>';
-
+        tools    += '<button name="comment_course" data-c-active="' + row['course_active'] + '" data-c-name="' + row['course_name'] + '" data-c-coid="' + data + '" class="btn btn-outline-primary mx-1"><i class="far fa-comment-dots"></i></button>';
         return tools;
     }
 
@@ -133,8 +133,65 @@ function datatable_course(){
         var course_end   = row.find('[name="edit_course"]').attr('data-eco-end');
 
         edit_course(course_active, course_id, course_no, course_name, course_date, course_place, course_price, course_start, course_end)
-    });
-      
+    });  
+
+    $('#datatable_course tbody').on( 'click', '[name="comment_course"]', function (e) {
+      var row = $(this).closest("tr"); 
+      var course_id     = row.find('[name="comment_course"]').attr('data-c-coid');
+      var course_active = row.find('[name="comment_course"]').attr('data-c-active');
+      var course_name   = row.find('[name="comment_course"]').attr('data-c-name');
+      var course_active = (course_active == '1') ? '<div class="badge bg-success"></div>' : '<div class="badge bg-danger"></div>'
+
+      var modal_CommentHTML = '';
+      modal_CommentHTML += '<div class="modal modal-blur fade" id="modal_commemtcourseGEN" data-bs-backdrop="static" data-bs-keyboard="false">';
+      modal_CommentHTML += '<div class="modal-dialog modal-lg" role="document">';
+      modal_CommentHTML += '<div class="modal-content">';
+      modal_CommentHTML += '<form id="frm_comment_course">';
+      modal_CommentHTML += '<div class="modal-status bg-primary"></div>';
+      modal_CommentHTML += '<div class="modal-header">';
+      modal_CommentHTML += '<h5 class="modal-title">Comment course <b>' + course_active + ' ' + course_name + '</b></h5>';
+      modal_CommentHTML += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<div class="modal-body py-3">';
+
+      modal_CommentHTML += '<div class="row">'; // ROW
+      modal_CommentHTML += '<div class="col-12">'; // COL-12
+      modal_CommentHTML += '<div id="divComment" class="divide-y-4" style="overflow-y: auto;max-height: 400px;overflow-x: hidden;">';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '</div>'; // COL-12
+      modal_CommentHTML += '</div>'; // ROW
+
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<center><hr class="col-11 m-0"></center>';
+      modal_CommentHTML += '<div class="modal-footer" style="display: unset;">';
+      modal_CommentHTML += '<div class="row">'; // ROW
+      modal_CommentHTML += '<div class="col-md-6 col-sm-12 my-1">';
+      modal_CommentHTML += '<span id="span_customer"></span>' ;
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<div class="col-md-6 col-sm-12 my-1">';
+      modal_CommentHTML += '<input type="text" class="form-control" id="comment_title" name="comment_title" placeholder="Comment title..">';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<div class="col-12">';
+      modal_CommentHTML += '<textarea class="form-control my-1" id="comment_detail" name="comment_detail" placeholder="Comment detail.."></textarea>';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '<div class="col-md-6 col-sm-12 ">';
+      modal_CommentHTML += '<button type="submit" class="btn btn-primary w-100 my-1">Comment</button>';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '</div>'; // ROW
+      modal_CommentHTML += '</div>';
+
+      modal_CommentHTML += '</form>';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '</div>';
+      modal_CommentHTML += '</div>';
+
+      $('#modal_commemtcourse').html(modal_CommentHTML);
+      $('#modal_commemtcourseGEN').modal('show');
+
+      comment(course_id, course_name)
+      customer(course_id);
+
+    });   
 }
 
 function add_course(){

@@ -478,7 +478,6 @@ function modal_remove(btn_remove_id, modalID, text, divID){
     modal_removeHTML += '</div>';
     $('#' + divID).html(modal_removeHTML);
     $('#' + modalID).modal('show');
-
 }
 
 function Course_speeker(){
@@ -548,4 +547,128 @@ function editCourse_speeker(course_id){
         });
       }
   });
+}
+
+function customer(course_id){
+  
+  $.ajax({
+      type: "post",
+      url: BASE_LANG + "service/course.php",
+      data: {
+        "cmd": "customer",
+        "course_id": course_id
+      },
+      dataType: "json",
+      beforeSend: function(){
+        // $('#course_speeker_list').html(speeker_skelton);
+      },
+      complete: function(){
+        // $('#sign_out').prop('disabled', false);
+      },
+      success: function(res) {
+        var status = res['status'];
+        var data   = res['data'];
+        var append_data = '';
+
+        append_data += '<select type="text" class="form-select w-100" id="select_customer">' ;
+        if (data.length != 0) {
+          $.each(data, function( index, value ) {
+            append_data += '<option value="' + value.cus_id + '" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(' + BASE_URL + 'images/' + value.course_name + '/customer/' + value.customer_image + ')&quot;&gt;&lt;/span&gt;">' + value.customer_fullname + '</option>' ;
+          });
+        }else{
+          append_data += '<option value="" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./images/face28.jpg)&quot;&gt;&lt;/span&gt;">No customer</option>' ;
+        }
+
+        append_data += '</select>' ;
+
+        $('#span_customer').html(append_data);
+
+        var el;
+        window.Choices && (new Choices(el = document.getElementById('select_customer'), {
+          classNames: {
+            containerInner: el.className,
+            input: 'form-control',
+            inputCloned: 'form-control-sm',
+            listDropdown: 'dropdown-menu',
+            itemChoice: 'dropdown-item',
+            activeState: 'show',
+            selectedState: 'active',
+          },
+          shouldSort: false,
+          searchEnabled: true,
+          callbackOnCreateTemplates: function(template) {
+            var classNames = this.config.className,
+                itemSelectText = this.config.itemSelectText;
+            return {
+              item: function(classNames, data) {
+                return template('<div class="' + String(classNames.item) + ' ' + String( data.highlighted ? classNames.highlightedState : classNames.itemSelectable ) + '" data-item data-id="' + String(data.id) + '" data-value="' + String(data.value) + '"' + String(data.active ? 'aria-selected="true"' : '') + '' + String(data.disabled ? 'aria-disabled="true"' : '') + '><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + String(data.label) + '</div>');
+              },
+              choice: function(classNames, data) {
+                return template('<div class="' + String(classNames.item) + ' ' + String(classNames.itemChoice) + ' ' + String( data.disabled ? classNames.itemDisabled : classNames.itemSelectable ) + '" data-select-text="' + String(itemSelectText) + '" data-choice  ' + String( data.disabled ? 'data-choice-disabled aria-disabled="true"' : 'data-choice-selectable' ) + ' data-id="' + String(data.id) + '" data-value="' + String(data.value) + '" ' + String( data.groupId > 0 ? 'role="treeitem"' : 'role="option"' ) + ' ><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + String(data.label) + '</div>');
+              },
+            };
+          },
+        }));
+
+      }
+  });
+
+}
+
+function comment(course_id, course_name){
+  
+  $.ajax({
+      type: "post",
+      url: BASE_LANG + "service/course.php",
+      data: {
+        "cmd": "comment",
+        "course_id": course_id
+      },
+      dataType: "json",
+      beforeSend: function(){
+        // $('#course_speeker_list').html(speeker_skelton);
+      },
+      complete: function(){
+        // $('#sign_out').prop('disabled', false);
+      },
+      success: function(res) {
+        var status = res['status'];
+        var data   = res['data'];
+        var append_data = '';
+
+        if (data.length != 0) {
+          $.each(data, function( index, value ) {
+
+            var commentHTML = '';
+            commentHTML += '<div class="my-2">';
+            commentHTML += '<blockquote>';
+            commentHTML += '<b>' + value.commenter_title + '</b>';
+            commentHTML += '<p><em>' + value.commenter_detail + '</em></p>';
+            commentHTML += '</blockquote>';
+            commentHTML += '<div class="row">';
+            commentHTML += '<div class="col-auto">';
+            commentHTML += '<span class="avatar" style="background-image: url(' + BASE_URL + 'images/' + course_name + '/customer/' + value.customer_image + ')"></span>';
+            commentHTML += '</div>';
+            commentHTML += '<div class="col">';
+            commentHTML += '<div class="text-truncate">';
+            commentHTML += '<b>' + value.customer_fullname + '</b> commented ' + moment(value.commentdate, "YYYYMMDD hh:mm:").fromNow(); + ' post.';
+            commentHTML += '</div>';
+            commentHTML += '<div class="text-muted">' + value.customer_company + ' (' + value.customer_position + ')</div>';
+            commentHTML += '</div>';
+            commentHTML += '</div>';
+            commentHTML += '</div>';
+
+            append_data += commentHTML;
+
+          });
+
+        }else{
+          append_data = '<blockquote>No comment..</blockquote>'
+        }
+
+        $('#divComment').html(append_data);
+
+      }
+  });
+
 }

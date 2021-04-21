@@ -9,6 +9,13 @@
 	<link rel="shortcut icon" href="<?=WEB_META_BASE_URL?>images/favicon.png" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+	<style type="text/css">
+		body {
+		    font-family: 'Kanit', sans-serif !important;
+		    font-size: 16px !important;
+		}
+	</style>
 	<link href="<?=WEB_META_BASE_URL?>css/comp.css<?=$OMPage->merge_media('css')?>" rel="stylesheet" type="text/css" />
 
 	<!-- CSS Template -->

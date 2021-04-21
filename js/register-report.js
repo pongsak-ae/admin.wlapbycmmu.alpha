@@ -18,7 +18,7 @@ $(document).ready(function(){
 function datatable_register(){
     datatable_register = $("#datatable_register").DataTable({
         "scrollX": true,
-        "pageLength": 25,
+        "pageLength": 10,
         "responsive": true,
         "paging": true,
         "processing": true,
@@ -68,11 +68,11 @@ function datatable_register(){
     function status(data, type, row, meta){
         var status = '';
         if (data == 'Pending') {
-          status = '<button class="btn btn-outline-warning btn-sm w-100">' + data + '</button>';
+          status = '<button class="btn btn-outline-warning w-100">' + data + '</button>';
         }else if (data == 'Approve'){
-          status = '<button class="btn btn-outline-success btn-sm w-100">' + data + '</button>';
+          status = '<button class="btn btn-outline-success w-100">' + data + '</button>';
         }else{
-          status = '<button class="btn btn-outline-danger btn-sm w-100">' + data + '</button>';
+          status = '<button class="btn btn-outline-danger w-100">' + data + '</button>';
         }
 
         return '<span data-cusid="' + row['cus_id'] + '" data-status="' + data + '" name="change_status">' + status + '</span>';

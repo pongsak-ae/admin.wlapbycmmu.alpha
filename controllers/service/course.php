@@ -181,7 +181,13 @@ if ($cmd != "") {
                 $res_ec = $DB->executeUpdate('course', 1, $sql_param_ec); 
 
                 if ($res_ec > 0) {
-                    
+
+                    $sql_d = "DELETE FROM course_speaker WHERE course_id = @course_id";
+
+                    $sql_param_d = array();
+                    $sql_param_d['course_id'] = 1;
+                    $res_d = $DB->execute($sql_d, $sql_param_d);
+
                     $speeker_explode = explode(",", $edit_c_speeker);
                     foreach($speeker_explode as $key=>$value) {
                         $sql_param_sp = array();
@@ -221,6 +227,33 @@ if ($cmd != "") {
         $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
 
         $sql = "SELECT * FROM course_speaker WHERE course_id = @course_id";
+        $sql_param = array();
+        $sql_param['course_id'] = $course_id;
+        $ds = null;
+        $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+        $response['status'] = true;
+        $response['data'] = $ds;
+
+    } else if ($cmd == "customer"){
+        $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
+
+        $sql = "SELECT cus_id, customer_fullname, customer_image, customer_company, course_name FROM customer c
+                LEFT JOIN course co ON c.course_id = co.course_id
+                WHERE c.course_id = @course_id";
+        $sql_param = array();
+        $sql_param['course_id'] = $course_id;
+        $ds = null;
+        $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+        $response['status'] = true;
+        $response['data'] = $ds;
+
+    } else if ($cmd == "comment"){
+        $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
+
+        $sql = "SELECT commenter_id, commenter_title, commenter_detail, customer_fullname
+                        , customer_company, customer_image, customer_position, cm.createdatetime AS commentdate
+                FROM commenter cm LEFT JOIN customer c ON cm.cus_id = c.cus_id WHERE c.course_id = @course_id";
+
         $sql_param = array();
         $sql_param['course_id'] = $course_id;
         $ds = null;
