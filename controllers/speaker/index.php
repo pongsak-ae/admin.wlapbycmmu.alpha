@@ -167,6 +167,17 @@ if ($_SESSION['status'] != "Y") {
                                 <label class="form-label">Position</label>
                                 <input type="text" id="edit_s_pos" name="edit_s_pos" class="form-control" placeholder="Enter position">
                             </div>
+                            <div class="form-group mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Speaker Order</label>
+                                    <select class="form-select" id="edit_s_order" name="edit_s_order">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <img id="speaker_edit_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">

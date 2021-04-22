@@ -1,5 +1,7 @@
 $(function(){
-    var dt_speaker = $('#datatable_speaker').DataTable( {
+    var dt_speaker = $('#datatable_speaker').DataTable({
+        responsive: true,
+        pageLength: 10,
         ajax: {
             "url" : BASE_LANG + "service/speaker.php",
             "type": "POST",
@@ -17,11 +19,7 @@ $(function(){
         columnDefs: [
             { targets: [0, 3], className: "text-center", width: "10%" },
             { targets: [1, 2], width: "35%" }
-        ],
-        rowReorder: true,
-        scrollY: 500,
-        paging: false,
-        responsive: true
+        ]
     });
     
     $('#datatable_speaker').on('click', '[name="edit_speaker"]', function(e){
