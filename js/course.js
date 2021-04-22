@@ -52,7 +52,6 @@ function datatable_course(){
         return active;
     }
 
-
     function course_startdate(data, type, row, meta){
         return moment(data).format('YYYY-MM-DD');
     }
@@ -62,19 +61,23 @@ function datatable_course(){
     }
 
     function tools(data, type, row, meta){
+
+        var course_detail    = encode_quote(row['course_detail']);
         var tools = '<button ';
         tools    += ' data-eco-id="'    + data + '"';
         tools    += ' data-eco-active="'+ row['course_active'] + '"';
         tools    += ' data-eco-no="'    + row['course_no'] + '"';
         tools    += ' data-eco-name="'  + row['course_name'] + '"';
+        tools    += ' data-eco-detail="'+ course_detail + '"';
         tools    += ' data-eco-date="'  + row['course_datetime'] + '"';
         tools    += ' data-eco-place="' + row['course_place'] + '"';
         tools    += ' data-eco-price="' + row['course_price'] + '"';
         tools    += ' data-eco-start="' + row['course_startdate'] + '"';
         tools    += ' data-eco-end="'   + row['course_enddate'] + '"';
+        tools    += ' data-eco-sche="'  + row['course_schedule'] + '"';
         tools    += 'name="edit_course" class="btn btn-outline-warning mx-1"><i class="fas fa-edit"></i></button>';
-        tools    += '<button name="remove_course" data-coname="' + row['course_name'] + '" data-coid="' + data + '" class="btn btn-outline-danger mx-1"><i class="far fa-trash-alt"></i></button>';
         tools    += '<button name="comment_course" data-c-active="' + row['course_active'] + '" data-c-name="' + row['course_name'] + '" data-c-coid="' + data + '" class="btn btn-outline-primary mx-1"><i class="far fa-comment-dots"></i></button>';
+        tools    += '<button name="remove_course" data-coname="' + row['course_name'] + '" data-coid="' + data + '" class="btn btn-outline-danger mx-1"><i class="far fa-trash-alt"></i></button>';
         return tools;
     }
 
@@ -117,7 +120,6 @@ function datatable_course(){
               }
           });
         });
-
     });
 
     $('#datatable_course tbody').on( 'click', '[name="edit_course"]', function (e) {
@@ -126,13 +128,15 @@ function datatable_course(){
         var course_active= row.find('[name="edit_course"]').attr('data-eco-active');
         var course_no    = row.find('[name="edit_course"]').attr('data-eco-no');
         var course_name  = row.find('[name="edit_course"]').attr('data-eco-name');
+        var course_detail= decode_quote(row.find('[name="edit_course"]').attr('data-eco-detail'));
         var course_date  = row.find('[name="edit_course"]').attr('data-eco-date');
         var course_place = row.find('[name="edit_course"]').attr('data-eco-place');
         var course_price = row.find('[name="edit_course"]').attr('data-eco-price');
         var course_start = row.find('[name="edit_course"]').attr('data-eco-start');
         var course_end   = row.find('[name="edit_course"]').attr('data-eco-end');
+        var course_schedule  = row.find('[name="edit_course"]').attr('data-eco-sche');
 
-        edit_course(course_active, course_id, course_no, course_name, course_date, course_place, course_price, course_start, course_end)
+        edit_course(course_active, course_id, course_no, course_detail, course_name, course_date, course_place, course_price, course_start, course_end, course_schedule)
     });  
 
     $('#datatable_course tbody').on( 'click', '[name="comment_course"]', function (e) {
@@ -172,7 +176,7 @@ function datatable_course(){
       modal_CommentHTML += '<input type="text" class="form-control" id="comment_title" name="comment_title" placeholder="Comment title..">';
       modal_CommentHTML += '</div>';
       modal_CommentHTML += '<div class="col-12">';
-      modal_CommentHTML += '<textarea class="form-control my-1" id="comment_detail" name="comment_detail" placeholder="Comment detail.."></textarea>';
+      modal_CommentHTML += '<textarea class="form-control my-1" id="comment_detail" name="comment_detail"></textarea>';
       modal_CommentHTML += '</div>';
       modal_CommentHTML += '<div class="col-md-6 col-sm-12 ">';
       modal_CommentHTML += '<button type="submit" class="btn btn-primary w-100 my-1">Comment</button>';
@@ -191,10 +195,8 @@ function datatable_course(){
       $('#modal_commemtcourse').html(modal_CommentHTML);
       $('#modal_commemtcourseGEN').modal('show');
 
-      comment(course_id, course_name);
+      comment(course_id);
       customer(course_id);
-
-
 
       $("#frm_comment_course").validate({
           rules: {
@@ -264,12 +266,10 @@ function datatable_course(){
 
           } 
       });
-
     });   
 }
 
 function add_course(){
-
   var modal_addCourseHTML = '';
   modal_addCourseHTML += '<div class="modal modal-blur fade" id="modal_addcourseGEN" data-bs-backdrop="static" data-bs-keyboard="false">';
   modal_addCourseHTML += '<div class="modal-dialog modal-xl" role="document">';
@@ -286,42 +286,49 @@ function add_course(){
   modal_addCourseHTML += '<div class="col-md-7 col-sm-12">'; // COL-7
   modal_addCourseHTML += '<div class="row">'; // ROW
   modal_addCourseHTML += '<center><label class="mb-2">COURSE DETAIL</label></center>';
-  modal_addCourseHTML += '<div class="col-6 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
   modal_addCourseHTML += '<select id="add_c_active" name="add_c_active" class="form-select">';
   modal_addCourseHTML += '<option value="1">Active</option><option value="0">Inactive</option></select>';
   modal_addCourseHTML += '<label for="add_c_active">COURSE STATUS</label>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
-  modal_addCourseHTML += '<div class="col-6 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
-  modal_addCourseHTML += '<input id="add_c_no" name="add_c_no" type="tel" class="form-control">';
+  modal_addCourseHTML += '<input id="add_c_no" name="add_c_no" type="tel" class="form-control" placeholder="">';
   modal_addCourseHTML += '<label for="add_c_no">COURSE NO.</label>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
-  modal_addCourseHTML += '<div class="col-12 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
-  modal_addCourseHTML += '<input id="add_c_name" name="add_c_name" type="text" class="form-control">';
+  modal_addCourseHTML += '<input id="add_c_name" name="add_c_name" type="text" class="form-control" placeholder="">';
   modal_addCourseHTML += '<label for="add_c_name">COURSE NAME</label>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
-  modal_addCourseHTML += '<div class="col-12 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
-  modal_addCourseHTML += '<input id="add_c_datetime" name="add_c_datetime" type="text" class="form-control">';
+  modal_addCourseHTML += '<input id="add_c_datetime" name="add_c_datetime" type="text" class="form-control" placeholder="">';
   modal_addCourseHTML += '<label for="add_c_datetime">COURSE DATETIME</label>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
-  modal_addCourseHTML += '<div class="col-12 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
-  modal_addCourseHTML += '<input id="add_c_place" name="add_c_place" type="text" class="form-control">';
+  modal_addCourseHTML += '<input id="add_c_place" name="add_c_place" type="text" class="form-control" placeholder="">';
   modal_addCourseHTML += '<label for="add_c_place">COURSE PLACE</label>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
-  modal_addCourseHTML += '<div class="col-12 my-1">';
+  modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_addCourseHTML += '<div class="form-floating">';
-  modal_addCourseHTML += '<input id="add_c_price" name="add_c_price" type="text" class="form-control">';
+  modal_addCourseHTML += '<input id="add_c_price" name="add_c_price" type="text" class="form-control" placeholder="">';
   modal_addCourseHTML += '<label for="add_c_price">COURSE PRICE</label>';
   modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '<div class="col-12 my-1">';
+  // modal_addCourseHTML += '<div class="form-floating">';
+  modal_addCourseHTML += '<div id="add_c_detail" class="quill" style="height: 80px;overflow-y: auto;overflow-x: hidden;"></div>';
+  // modal_addCourseHTML += '<textarea id="add_c_detail" name="add_c_detail" class="form-control" style="height: 123px;" placeholder=""></textarea>';
+  // modal_addCourseHTML += '<label for="add_c_detail">COURSE DETAIL</label>';
+  // modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1 text-center">';
   modal_addCourseHTML += '<label for="add_c_start">START</label>';
@@ -336,9 +343,25 @@ function add_course(){
 
   modal_addCourseHTML += '<div class="col-md-5 col-sm-12">'; // COL-5
   modal_addCourseHTML += '<div class="row">'; // ROW
+  modal_addCourseHTML += '<div class="col-12">';
   modal_addCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
-  modal_addCourseHTML += '<div id="add_course_speeker" style="overflow-y: auto;height: 39.5rem;">'; // SCROLL Y
+  modal_addCourseHTML += '<div id="add_course_speeker" style="overflow-x: hidden;overflow-y: auto;height: 20.4rem;">'; // SCROLL Y
   modal_addCourseHTML += '</div>'; // SCROLL Y
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '<div class="col-12">';
+  modal_addCourseHTML += '<center><label class="my-2">CLASS SCHEDULE</label></center>';
+  modal_addCourseHTML += '<div class="card card-sm">';
+  modal_addCourseHTML += '<a class="d-block" target="_blank">';
+  modal_addCourseHTML += '<img id="img_addSchedule" src="' + BASE_URL + 'images/no-image.jpg" class="card-img-top" style="height: 14rem;object-fit: cover;">';
+  modal_addCourseHTML += '</a>';
+  modal_addCourseHTML += '<div class="card-body">';
+  modal_addCourseHTML += '<div class="d-flex align-items-center">';
+  modal_addCourseHTML += '<input id="add_schedule" name="add_schedule" type="file" class="form-control">';
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+
   modal_addCourseHTML += '</div>'; // ROW
   modal_addCourseHTML += '</div>'; // COL-5
 
@@ -375,9 +398,37 @@ function add_course(){
     startDate: moment()
   });
 
+  var edit_detal = new Quill('#add_c_detail', {
+    theme: 'snow',
+    placeholder: 'COURSE DETAIL...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'align': [] }],
+        // [{ 'color': [] }, { 'background': [] }],
+        ['clean'] 
+      ]
+    },
+  });
+
   Course_speeker();
 
+  $("#add_schedule").on('change', function(){
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+          $('img#img_addSchedule').attr('src', reader.result);
+      }
+      if (file) {
+          reader.readAsDataURL(file);
+      } else {
+          return false;
+      }
+  });
+
   $("#frm_add_course").validate({
+      ignore: ".quill *",
       rules: {
           add_c_no: {
               required: true,
@@ -394,6 +445,9 @@ function add_course(){
           },
           add_c_price: {
               required: true
+          },
+          add_schedule: {
+              required: true
           }
       },
       errorPlacement: function(error, element) {
@@ -406,18 +460,18 @@ function add_course(){
       unhighlight: function(element) {
           $(element).closest('.form-group').removeClass('has-error').addClass('has-success');//.addClass('has-success');
           $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
-
        },
       submitHandler: function(form, e) {
           e.preventDefault();
 
           // ADD COURSE
-          submit_add_course(form, e, start_date, end_date);
+          var add_course_detail = edit_detal.root.innerHTML;
+          submit_add_course(form, e, start_date, end_date, add_course_detail);
       } 
   });
 }
 
-function submit_add_course(form, e, start_date, end_date) {
+function submit_add_course(form, e, start_date, end_date, add_course_detail) {
     var inputs = $(form).find(':input');
     var form_data = new FormData();
 
@@ -430,12 +484,14 @@ function submit_add_course(form, e, start_date, end_date) {
     form_data.append("add_c_active"   , inputs.filter('#add_c_active').val());
     form_data.append("add_c_no"       , inputs.filter('#add_c_no').val());
     form_data.append("add_c_name"     , inputs.filter('#add_c_name').val());
+    form_data.append("add_c_detail"   , add_course_detail);
     form_data.append("add_c_datetime" , inputs.filter('#add_c_datetime').val());
     form_data.append("add_c_place"    , inputs.filter('#add_c_place').val());
     form_data.append("add_c_price"    , inputs.filter('#add_c_price').val());
     form_data.append("add_c_start"    , start_date.getDate().format('YYYY-MM-DD'));
     form_data.append("add_c_end"      , end_date.getDate().format('YYYY-MM-DD'));
     form_data.append("add_c_speeker"  , speekerArray);
+    form_data.append("add_c_schedule" , inputs.filter('#add_schedule').prop("files")[0]);
 
     $.ajax({
         type: "post",
@@ -465,7 +521,9 @@ function submit_add_course(form, e, start_date, end_date) {
     });
 }
 
-function edit_course(course_active, course_id, course_no, course_name, course_date, course_place, course_price, course_start, course_end){
+function edit_course(course_active, course_id, course_no, course_detail, course_name, course_date, course_place, course_price, course_start, course_end, course_schedule){
+  var url_course_schedule = BASE_URL + 'images/table/' + course_schedule;
+
   var modal_editCourseHTML = '';
   modal_editCourseHTML += '<div class="modal modal-blur fade" id="modal_editcourseGEN" data-bs-backdrop="static" data-bs-keyboard="false">';
   modal_editCourseHTML += '<div class="modal-dialog modal-xl" role="document">';
@@ -483,42 +541,49 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
   modal_editCourseHTML += '<center><label class="mb-2">COURSE DETAIL</label></center>';
 
   modal_editCourseHTML += '<div class="row">'; // ROW
-  modal_editCourseHTML += '<div class="col-6 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
   modal_editCourseHTML += '<select id="edit_c_active" name="edit_c_active" class="form-select">';
   modal_editCourseHTML += '<option value="1">Active</option><option value="0">Inactive</option></select>';
   modal_editCourseHTML += '<label for="edit_c_active">COURSE STATUS</label>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="col-6 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
-  modal_editCourseHTML += '<input id="edit_c_no" name="edit_c_no" disabled value="' + course_no + '" type="tel" class="form-control">';
+  modal_editCourseHTML += '<input id="edit_c_no" name="edit_c_no" disabled value="' + course_no + '" type="tel" class="form-control" placeholder="">';
   modal_editCourseHTML += '<label for="edit_c_no">COURSE NO.</label>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="col-12 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
-  modal_editCourseHTML += '<input id="edit_c_name" name="edit_c_name" value="' + course_name + '" type="text" class="form-control">';
+  modal_editCourseHTML += '<input id="edit_c_name" name="edit_c_name" value="' + course_name + '" type="text" class="form-control" placeholder="">';
   modal_editCourseHTML += '<label for="edit_c_name">COURSE NAME</label>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="col-12 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
-  modal_editCourseHTML += '<input id="edit_c_datetime" name="edit_c_datetime" value="' + course_date + '" type="text" class="form-control">';
+  modal_editCourseHTML += '<input id="edit_c_datetime" name="edit_c_datetime" value="' + course_date + '" type="text" class="form-control" placeholder="">';
   modal_editCourseHTML += '<label for="edit_c_datetime">COURSE DATETIME</label>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="col-12 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
-  modal_editCourseHTML += '<input id="edit_c_place" name="edit_c_place" value="' + course_place + '" type="text" class="form-control">';
+  modal_editCourseHTML += '<input id="edit_c_place" name="edit_c_place" value="' + course_place + '" type="text" class="form-control" placeholder="">';
   modal_editCourseHTML += '<label for="edit_c_place">COURSE PLACE</label>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="col-12 my-1">';
+  modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1">';
   modal_editCourseHTML += '<div class="form-floating">';
-  modal_editCourseHTML += '<input id="edit_c_price" name="edit_c_price" value="' + course_price + '" type="text" class="form-control">';
+  modal_editCourseHTML += '<input id="edit_c_price" name="edit_c_price" value="' + course_price + '" type="text" class="form-control" placeholder="">';
   modal_editCourseHTML += '<label for="edit_c_price">COURSE PRICE</label>';
   modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '<div class="col-12 my-1">';
+  modal_editCourseHTML += '<div id="edit_c_detail" class="quill" style="height: 80px;overflow-y: auto;overflow-x: hidden;"></div>';
+  // modal_editCourseHTML += '<div class="form-floating">';
+  // modal_editCourseHTML += '<textarea id="edit_c_detail" name="edit_c_detail" class="form-control" style="height: 123px;" placeholder="">' + course_detail + '</textarea>';
+  // modal_editCourseHTML += '<label for="edit_c_detail">COURSE DETAIL</label>';
+  // modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '<div class="col-md-6 col-sm-12 my-1 text-center">';
   modal_editCourseHTML += '<label for="edit_c_start">START</label>';
@@ -533,9 +598,25 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
 
   modal_editCourseHTML += '<div class="col-md-5 col-sm-12">'; // COL-5
   modal_editCourseHTML += '<div class="row">'; // ROW
+  modal_editCourseHTML += '<div class="col-12">';
   modal_editCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
-  modal_editCourseHTML += '<div id="add_course_speeker" style="overflow-y: auto;height: 39.5rem;">'; // SCROLL Y
+  modal_editCourseHTML += '<div id="edit_course_speeker" style="overflow-x: hidden;overflow-y: auto;height: 20.4rem;">'; // SCROLL Y
   modal_editCourseHTML += '</div>'; // SCROLL Y
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '<div class="col-12">';
+  modal_editCourseHTML += '<center><label class="my-2">CLASS SCHEDULE</label></center>';
+  modal_editCourseHTML += '<div class="card card-sm">';
+  modal_editCourseHTML += '<a href="' + url_course_schedule + '" class="d-block" target="_blank">';
+  modal_editCourseHTML += '<img id="img_editSchedule" src="' + url_course_schedule + '" class="card-img-top" style="height: 14rem;object-fit: cover;">';
+  modal_editCourseHTML += '</a>';
+  modal_editCourseHTML += '<div class="card-body">';
+  modal_editCourseHTML += '<div class="d-flex align-items-center">';
+  modal_editCourseHTML += '<input id="edit_schedule" name="edit_schedule" type="file" class="form-control">';
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '</div>';
+
   modal_editCourseHTML += '</div>'; // ROW
   modal_editCourseHTML += '</div>'; // COL-5
 
@@ -553,6 +634,19 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
   $('#modal_editcourseGEN').modal('show');
 
   $('#edit_c_active').val(course_active).trigger('change');
+
+  $("#edit_schedule").on('change', function(){
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+          $('img#img_editSchedule').attr('src', reader.result);
+      }
+      if (file) {
+          reader.readAsDataURL(file);
+      } else {
+          return false;
+      }
+  });
 
   var edit_start_date = new Litepicker({ 
     element: document.getElementById('edit_c_start'),
@@ -574,9 +668,25 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
     startDate: course_end
   });
 
-  Course_speeker(course_id);
+  var edit_detail = new Quill('#edit_c_detail', {
+    theme: 'snow',
+    placeholder: 'COURSE DETAIL...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'align': [] }],
+        // [{ 'color': [] }, { 'background': [] }],
+        ['clean'] 
+      ]
+    },
+  });
+
+  edit_detail.container.firstChild.innerHTML = course_detail;
+  editCourse_speeker(course_id);
 
   $("#frm_edit_course").validate({
+      ignore: ".quill *",
       rules: {
           edit_c_no: {
               required: true,
@@ -592,6 +702,9 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
               required: true
           },
           edit_c_price: {
+              required: true
+          },
+          edit_c_detail: {
               required: true
           }
       },
@@ -611,12 +724,13 @@ function edit_course(course_active, course_id, course_no, course_name, course_da
           e.preventDefault();
 
           // Edit COURSE
-          submit_edit_course(form, e, course_id, edit_start_date, edit_end_date);
+          var edit_course_detail = edit_detail.root.innerHTML;
+          submit_edit_course(form, e, course_id, edit_start_date, edit_end_date, edit_course_detail);
       } 
   });
 }
 
-function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date) {
+function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date, edit_course_detail) {
     var inputs = $(form).find(':input');
     var form_data = new FormData();
 
@@ -630,12 +744,14 @@ function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date) 
     form_data.append("edit_c_active"   , inputs.filter('#edit_c_active').val());
     // form_data.append("edit_c_no"       , inputs.filter('#edit_c_no').val());
     form_data.append("edit_c_name"     , inputs.filter('#edit_c_name').val());
+    form_data.append("edit_c_detail"   , edit_course_detail);
     form_data.append("edit_c_datetime" , inputs.filter('#edit_c_datetime').val());
     form_data.append("edit_c_place"    , inputs.filter('#edit_c_place').val());
     form_data.append("edit_c_price"    , inputs.filter('#edit_c_price').val());
     form_data.append("edit_c_start"    , edit_start_date.getDate().format('YYYY-MM-DD'));
     form_data.append("edit_c_end"      , edit_end_date.getDate().format('YYYY-MM-DD'));
     form_data.append("edit_c_speeker"  , edit_speekerArray);
+    form_data.append("edit_c_schedule" , inputs.filter('#edit_schedule').prop("files")[0]);
 
     $.ajax({
         type: "post",

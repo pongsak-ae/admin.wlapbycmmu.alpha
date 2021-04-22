@@ -329,7 +329,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 function encode_quote(text){
     // {$#A01$} = '
     // {$#A02$} = "
-    var value = text.replaceAll("'", "{$#A01$}").replaceAll('"', "{$#A02$}");
+    var value = text.replaceAll("'", "{$#A01$}").replaceAll('"', "{$#A02$}").replaceAll(':', "{$#A03$}").replaceAll('.', "{$#A04$}");
 
     return btoa(value);
 }
@@ -337,7 +337,7 @@ function encode_quote(text){
 function decode_quote(text){
     // {$#A01$} = '
     // {$#A02$} = "
-    var value = atob(text).replaceAll("{$#A01$}", "'").replaceAll('{$#A02$}', '"');
+    var value = atob(text).replaceAll("{$#A01$}", "'").replaceAll('{$#A02$}', '"').replaceAll('{$#A03$}', ':').replaceAll('{$#A04$}', '.');
 
     return value;
 }
@@ -520,12 +520,57 @@ function Course_speeker(course_id){
         });
 
         $('#add_course_speeker').html(append_data);
-        editCourse_speeker(course_id);
+
       }
   });
 }
 
 function editCourse_speeker(course_id){
+  $.ajax({
+      type: "post",
+      url: BASE_LANG + "service/course.php",
+      data: {
+        "cmd": "add_course_speeker",
+      },
+      dataType: "json",
+      beforeSend: function(){
+        // $('#course_speeker_list').html(speeker_skelton);
+      },
+      complete: function(){
+        // $('#sign_out').prop('disabled', false);
+      },
+      success: function(res) {
+        var status = res['status'];
+        var data   = res['data'];
+
+        var append_data = '';
+        $.each(data, function( index, value ) {
+            var modal_addCourseHTML = '';
+            modal_addCourseHTML += '<div class="col-12 my-1">';
+            modal_addCourseHTML += '<div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">';
+            modal_addCourseHTML += '<label class="form-selectgroup-item flex-fill">';
+            modal_addCourseHTML += '<input type="checkbox" value="' + value.speaker_id + '" name="add-course-speeker" class="form-selectgroup-input">';
+            modal_addCourseHTML += '<div class="form-selectgroup-label d-flex align-items-center p-2">';
+            modal_addCourseHTML += '<div class="me-3"><span class="form-selectgroup-check"></span></div>';
+            modal_addCourseHTML += '<div class="form-selectgroup-label-content d-flex align-items-center">';
+            modal_addCourseHTML += '<span class="avatar me-3" style="background-image: url(' + BASE_URL + 'images/speeker/' + value.speaker_image + ')"></span>';
+            modal_addCourseHTML += '<div><div class="font-weight-medium">' + value.speaker_name + ' ' + value.speaker_surname + '</div><div class="text-muted">' + value.speaker_company + ' (' + value.speaker_position + ')</div></div>';
+            modal_addCourseHTML += '</div>';
+            modal_addCourseHTML += '</div>';
+            modal_addCourseHTML += '</label>';
+            modal_addCourseHTML += '</div>';
+            modal_addCourseHTML += '</div>';
+
+            append_data += modal_addCourseHTML;
+        });
+
+        $('#edit_course_speeker').html(append_data);
+        editSelectCourse_speeker(course_id);
+      }
+  });
+}
+
+function editSelectCourse_speeker(course_id){
   $.ajax({
       type: "post",
       url: BASE_LANG + "service/course.php",
@@ -575,7 +620,7 @@ function customer(course_id){
         append_data += '<option selected disabled value="" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./images/face28.jpg)&quot;&gt;&lt;/span&gt;">Select customer</option>' ;
 
         $.each(data, function( index, value ) {
-          append_data += '<option value="' + value.cus_id + '" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(' + BASE_URL + 'images/' + value.course_name + '/customer/' + value.customer_image + ')&quot;&gt;&lt;/span&gt;">' + value.customer_fullname + '</option>' ;
+          append_data += '<option value="' + value.cus_id + '" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(' + BASE_URL + 'images/customer/' + value.customer_image + ')&quot;&gt;&lt;/span&gt;">' + value.customer_fullname + '</option>' ;
         });
 
         append_data += '</select>' ;
@@ -613,7 +658,7 @@ function customer(course_id){
   });
 }
 
-function comment(course_id, course_name){
+function comment(course_id){
   
   $.ajax({
       type: "post",
@@ -648,7 +693,7 @@ function comment(course_id, course_name){
             commentHTML += '</blockquote>';
             commentHTML += '<div class="row">';
             commentHTML += '<div class="col-auto">';
-            commentHTML += '<span class="avatar" style="background-image: url(' + BASE_URL + 'images/' + course_name + '/customer/' + value.customer_image + ')"></span>';
+            commentHTML += '<span class="avatar" style="background-image: url(' + BASE_URL + 'images/customer/' + value.customer_image + ')"></span>';
             commentHTML += '</div>';
             commentHTML += '<div class="col">';
             commentHTML += '<div class="text-truncate">';

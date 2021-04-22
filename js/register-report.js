@@ -90,7 +90,7 @@ function datatable_register(){
     }
 
     function image(data, type, row, meta){
-      var imagesUrl = BASE_URL + 'images/' + row['course_name'] + '/customer/' + data;
+      var imagesUrl = BASE_URL + 'images/customer/' + data;
       var images = '';
       images += '<div class="col-auto">';
       images += ' <img name="cus_img" src="' + imagesUrl + '" ';

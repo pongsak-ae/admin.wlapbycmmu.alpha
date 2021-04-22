@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/template/css/demo.min.css">
 	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/choices/choices.min.css">
 	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/bootstrap-tagsinput/bootstrap-tagsinput.css">
+	<link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/wysiwyg/quill-snow/quill.snow.css">
 
 	<!-- BOOTSTRAP 5 -->
 	<!-- <link rel="stylesheet" href="<?=WEB_META_BASE_URL?>css/extensions/bootstrap5/bootstrap.min.css"> -->
@@ -85,6 +86,8 @@
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/template/libs/litepicker/litepicker.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/template/js/tabler.min.js"></script>
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/sweetalert1/sweetalert.min.js"></script>
+	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/wysiwyg/quill-snow/quill.js"></script>
+
 	<!-- <script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/extensions/sweetalert2/sweetalert2.min.js"></script> -->
 	<!-- template:js -->
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/comp.js<?=$OMPage->merge_media('js')?>"></script>

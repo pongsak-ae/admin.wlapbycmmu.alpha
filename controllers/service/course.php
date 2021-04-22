@@ -14,25 +14,56 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "course"){
+        $ds_arr = array();
+
         // $course_id    = isset($_POST['course']) ? $_POST['course'] : "";
         $sql = "SELECT * FROM course WHERE status = 'Y' ORDER BY course_active DESC";
         $sql_param = array();
         // $sql_param['course'] = $course_id;
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
-        $response['data'] = $ds;
+
+        foreach ($ds as $key => $value) {
+            $ds_arr_2 = array(
+                  'course_active'       => $value['course_active']
+                , 'course_no'           => $value['course_no']
+                , 'course_name'         => $value['course_name']
+                , 'course_detail'       => base64_decode($value['course_detail'])
+                , 'course_datetime'     => $value['course_datetime']
+                , 'course_place'        => $value['course_place']
+                , 'course_price'        => $value['course_price']
+                , 'course_startdate'    => $value['course_startdate']
+                , 'course_enddate'      => $value['course_enddate']
+                , 'course_id'           => $value['course_id']
+                , 'course_schedule'     => $value['course_schedule']
+                , 'status'              => $value['status']
+                , 'createdatetime'      => $value['createdatetime']
+            );
+
+            array_push($ds_arr, $ds_arr_2);
+        }
+
+        $response['data'] = $ds_arr;
         $response['status'] = true;
 
     } else if ($cmd == "add_course"){
         $add_c_active   = isset($_POST['add_c_active']) ? $_POST['add_c_active'] : "";
         $add_c_no       = isset($_POST['add_c_no']) ? $_POST['add_c_no'] : "";
         $add_c_name     = isset($_POST['add_c_name']) ? $_POST['add_c_name'] : "";
+        $add_c_detail   = isset($_POST['add_c_detail']) ? $_POST['add_c_detail'] : "";
         $add_c_datetime = isset($_POST['add_c_datetime']) ? $_POST['add_c_datetime'] : "";
         $add_c_place    = isset($_POST['add_c_place']) ? $_POST['add_c_place'] : "";
         $add_c_price    = isset($_POST['add_c_price']) ? $_POST['add_c_price'] : "";
         $add_c_start    = isset($_POST['add_c_start']) ? $_POST['add_c_start'] : "";
         $add_c_end      = isset($_POST['add_c_end']) ? $_POST['add_c_end'] : "";
         $add_c_speeker  = isset($_POST['add_c_speeker']) ? $_POST['add_c_speeker'] : "";
+        $add_c_schedule = isset($_FILES["add_c_schedule"]) ? $_FILES["add_c_schedule"] : "";
+
+        $image_schedule = null;
+        if (!empty($_FILES["add_c_schedule"])) {
+            $image_schedule = pathinfo($add_c_schedule['name'])['filename'] . '-' .date('Ymd')."." . str_replace(" ", "", basename($add_c_schedule["type"]));
+            copy($add_c_schedule["tmp_name"], ROOT_DIR . "images/table/" . $image_schedule);
+        }
 
         $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
         $sql_param_c = array();
@@ -58,11 +89,13 @@ if ($cmd != "") {
                 $sql_param_ac['course_active']      = $add_c_active;
                 $sql_param_ac['course_no']          = $add_c_no;
                 $sql_param_ac['course_name']        = $add_c_name;
+                $sql_param_ac['course_detail']      = base64_encode($add_c_detail);
                 $sql_param_ac['course_datetime']    = $add_c_datetime;
                 $sql_param_ac['course_place']       = $add_c_place;
                 $sql_param_ac['course_price']       = $add_c_price;
                 $sql_param_ac['course_startdate']   = $add_c_start;
                 $sql_param_ac['course_enddate']     = $add_c_end;
+                $sql_param_ac['course_schedule']    = $image_schedule;
                 $sql_param_ac['create_by']          = getSESSION();
 
                 $res_ac = $DB->executeInsert('course', $sql_param_ac, $new_id_ac);
@@ -144,12 +177,20 @@ if ($cmd != "") {
         $edit_c_active   = isset($_POST['edit_c_active']) ? $_POST['edit_c_active'] : "";
         // $edit_c_no       = isset($_POST['edit_c_no']) ? $_POST['edit_c_no'] : "";
         $edit_c_name     = isset($_POST['edit_c_name']) ? $_POST['edit_c_name'] : "";
+        $edit_c_detail   = isset($_POST['edit_c_detail']) ? $_POST['edit_c_detail'] : "";
         $edit_c_datetime = isset($_POST['edit_c_datetime']) ? $_POST['edit_c_datetime'] : "";
         $edit_c_place    = isset($_POST['edit_c_place']) ? $_POST['edit_c_place'] : "";
         $edit_c_price    = isset($_POST['edit_c_price']) ? $_POST['edit_c_price'] : "";
         $edit_c_start    = isset($_POST['edit_c_start']) ? $_POST['edit_c_start'] : "";
         $edit_c_end      = isset($_POST['edit_c_end']) ? $_POST['edit_c_end'] : "";
         $edit_c_speeker  = isset($_POST['edit_c_speeker']) ? $_POST['edit_c_speeker'] : "";
+        $edit_c_schedule = isset($_FILES["edit_c_schedule"]) ? $_FILES["edit_c_schedule"] : "";
+
+        $image_schedule = null;
+        if (!empty($_FILES["edit_c_schedule"])) {
+            $image_schedule = pathinfo($edit_c_schedule['name'])['filename'] . '-' .date('Ymd')."." . str_replace(" ", "", basename($edit_c_schedule["type"]));
+            copy($edit_c_schedule["tmp_name"], ROOT_DIR . "images/table/" . $image_schedule);
+        }
 
         // $sql_c = "SELECT course_no FROM course WHERE course_no = @c_no";
         // $sql_param_c = array();
@@ -172,11 +213,16 @@ if ($cmd != "") {
                 $sql_param_ec['course_active']      = $edit_c_active;  
                 // $sql_param_ec['course_no']          = $edit_c_no;
                 $sql_param_ec['course_name']        = $edit_c_name;
+                $sql_param_ec['course_detail']      = base64_encode($edit_c_detail);
                 $sql_param_ec['course_datetime']    = $edit_c_datetime;
                 $sql_param_ec['course_place']       = $edit_c_place;
                 $sql_param_ec['course_price']       = $edit_c_price;
                 $sql_param_ec['course_startdate']   = $edit_c_start;
                 $sql_param_ec['course_enddate']     = $edit_c_end;
+                if ($image_schedule != null) {
+                    $sql_param_ec['course_schedule']    = $image_schedule;
+                }
+
                 $sql_param_ec['update_by']          = getSESSION();
                 $res_ec = $DB->executeUpdate('course', 1, $sql_param_ec); 
 
