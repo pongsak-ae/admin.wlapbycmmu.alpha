@@ -30,6 +30,8 @@ if ($cmd != "") {
         // }
         $response['data'] = $ds;
         $response['status'] = true;
+    } else if ($cmd == "add_speaker") {
+        $response['status'] = true;
     } else if ($cmd == "update_speaker"){
         $speaker_id = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
         $status = isset($_POST['speaker_status']) ? $_POST['speaker_status'] : "";
@@ -56,20 +58,19 @@ if ($cmd != "") {
         if ($res_s == 0) {
             $sql_param = array();
             $sql_param['speaker_id'] = $speaker_id;
-            $sql_param['status']    = 'N';
+            $sql_param['speaker_status']    = 'N';
             $sql_param['update_by'] = getSESSION();
             $res = $DB->executeUpdate('speaker', 1, $sql_param);
-
             if ($res > 0) {
                 $response['status'] = true;
-                $response['msg'] = 'Remove course successfully';
+                $response['msg'] = 'successfully';
             }else{
                 $response['status'] = false;
-                $response['msg'] = 'Remove course unsuccessfully';
+                $response['msg'] = 'failed';
             }
         }else{
             $response['status'] = false;
-            $response['msg'] = 'Can not remove course used';
+            $response['msg'] = 'Can\'t remove speaker in course';
         }
     } else {
         $response['status'] = false;

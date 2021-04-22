@@ -45,7 +45,7 @@ $(function(){
         });
     });
 
-    $('#modal-remove').on('click', '.btn-confirm-del', function(e){
+    $('#modal-remove').on('click', '.btn-confirm-del', function(){
         $.ajax({
             type: "post",
             url: BASE_LANG + "service/speaker.php",
@@ -54,15 +54,14 @@ $(function(){
                 "speaker_id": $(this).data('speakerId')
             },
             dataType: "json",
-            success: function (data) {
-                console.log("Success");
-                // Toastify({
-                //     text: "Delete successful!",
-                //     duration: 3000,
-                //     close:true,
-                //     backgroundColor: "#4fbe87",
-                // }).showToast();
-                dt_speaker.ajax.reload();
+            success: function (res) {
+                var msg = res['msg'];
+                if (res['status']) {
+                    alert_center('Remove speaker', msg, "success")
+                    dt_speaker.ajax.reload();
+                }else{
+                    alert_center('Remove speaker', msg, "error")
+                }
             }
         });
     });
@@ -71,6 +70,64 @@ $(function(){
         var data = $(e.relatedTarget).data();
         $('.title', this).text(data.name + ' ' + data.surname);
         $('.btn-confirm-del', this).data('speakerId', data.speakerId);
+    });
+    
+    $('#frm_add_speaker').validate({
+        rules: {
+            add_s_name: {
+                required: true
+            },
+            add_s_lname: {
+                required: true
+            },
+            add_s_email: {
+                required: true,
+                email: true
+            },
+            add_s_comp: {
+                required: true
+            },
+            add_s_pos: {
+                required: true
+            },
+            add_s_img: {
+                required: true
+            }
+        },
+        errorClass: "help-inline text-danger",
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
+            $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
+        },
+        submitHandler: function(form, e) {
+            e.preventDefault();
+            var data = new FormData($(form)[0]);
+            data.append("cmd", "add_speaker");
+            $.ajax({
+                type: "post",
+                url: BASE_LANG + "service/speaker.php",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function(res){
+                    var status = res['status'];
+                    var msg = res['msg'];
+                    if (status == true) {
+                        $('#frm_add_speaker')[0].reset();
+                        alert_center('Add speaker', msg, "success")
+                        dt_speaker.ajax.reload();
+                    } else {
+                        alert_center('Add speaker', msg, "error")
+                    }
+                }
+            });
+        }
     });
 
     function speaker_name(data, type, row) {
