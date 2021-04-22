@@ -23,29 +23,22 @@ $(function(){
         paging: false,
         responsive: true
     });
-
-    $('#datatable_speaker').on('click', '[name="remove_speaker"]', function(){
-        $.ajax({
-            type: "post",
-            url: BASE_LANG + "service/form.php",
-            data: {
-                "cmd": "del",
-                "id": $(this).attr("data-id")
-            },
-            dataType: "json",
-            success: function (data) {
-                Toastify({
-                    text: "Delete successful!",
-                    duration: 3000,
-                    close:true,
-                    backgroundColor: "#4fbe87",
-                }).showToast();
-                tblFormView.ajax.reload();
-            }
-        });
+    
+    $('#datatable_speaker').on('click', '[name="edit_speaker"]', function(e){
+        var data = $(e.currentTarget).data();
+        $('#edit_s_name').val(data.name);
+        $('#edit_s_lname').val(data.surname);
+        $('#edit_s_email').val(data.email);
+        $('#edit_s_comp').val(data.company);
+        $('#edit_s_pos').val(data.position);
+        if(data.image !== null && data.image !== '' && data.image !== 'null') {
+            $('#speaker_edit_image').attr('src', '../images/speaker/' + data.image);
+        }
+        $('#edit_s_id').val(data.id);
+        $('#modal_edit').modal('show');
     });
 
-    $('#modal-remove').on('click', '.btn-confirm-del', function(){
+    $('#modal_remove').on('click', '.btn-confirm-del', function(){
         $.ajax({
             type: "post",
             url: BASE_LANG + "service/speaker.php",
@@ -66,12 +59,33 @@ $(function(){
         });
     });
     
-    $('#modal-remove').on('show.bs.modal', function(e) {
+    $("#modal_add").on("hidden.bs.modal", function () {
+        $('#frm_add_speaker')[0].reset();
+        $('#speaker_image').attr('src', '../images/no-image.jpg');
+        $('#frm_add_speaker').find('.is-invalid').removeClass("is-invalid");
+        $('#frm_add_speaker').find('.is-valid').removeClass("is-valid");
+        $('#frm_add_speaker').find('label.text-danger').remove();
+    });
+
+    $('#modal_remove').on('show.bs.modal', function(e) {
         var data = $(e.relatedTarget).data();
         $('.title', this).text(data.name + ' ' + data.surname);
         $('.btn-confirm-del', this).data('speakerId', data.speakerId);
     });
-    
+
+    $('#add_s_img').on('change', function () {
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            $('#speaker_image').attr('src', reader.result);
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            return false;
+        }
+    });
+
     $('#frm_add_speaker').validate({
         rules: {
             add_s_name: {
@@ -94,7 +108,7 @@ $(function(){
                 required: true
             }
         },
-        errorClass: "help-inline text-danger",
+        errorClass: "text-danger",
         highlight: function(element) {
             $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
             $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
@@ -119,11 +133,66 @@ $(function(){
                     var status = res['status'];
                     var msg = res['msg'];
                     if (status == true) {
-                        $('#frm_add_speaker')[0].reset();
+                        $('#modal_add').modal('hide');
                         alert_center('Add speaker', msg, "success")
                         dt_speaker.ajax.reload();
                     } else {
                         alert_center('Add speaker', msg, "error")
+                    }
+                }
+            });
+        }
+    });
+
+    $('#frm_edit_speaker').validate({
+        rules: {
+            edit_s_name: {
+                required: true
+            },
+            edit_s_lname: {
+                required: true
+            },
+            edit_s_email: {
+                required: true,
+                email: true
+            },
+            edit_s_comp: {
+                required: true
+            },
+            edit_s_pos: {
+                required: true
+            }
+        },
+        errorClass: "text-danger",
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
+            $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
+        },
+        submitHandler: function(form, e) {
+            e.preventDefault();
+            var data = new FormData($(form)[0]);
+            data.append("cmd", "update_speaker");
+            $.ajax({
+                type: "post",
+                url: BASE_LANG + "service/speaker.php",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function(res){
+                    var status = res['status'];
+                    var msg = res['msg'];
+                    if (status == true) {
+                        $('#modal_edit').modal('hide');
+                        alert_center('Update speaker', msg, "success")
+                        dt_speaker.ajax.reload();
+                    } else {
+                        alert_center('Update speaker', msg, "error")
                     }
                 }
             });
@@ -160,9 +229,10 @@ $(function(){
             tools += ' data-position = "' + row['speaker_position'] + '"';
             tools += ' data-company = "'  + row['speaker_company'] + '"';
             tools += ' data-email = "' + row['speaker_email'] + '"';
+            tools += ' data-image = "' + row['speaker_image'] + '"';
             tools += ' name="edit_speaker" class="btn btn-outline-warning mx-1"><i class="fas fa-edit"></i></button>';
             tools += '<button name="remove_speaker" data-name = "' + row['speaker_name'] + '" data-surname = "' + row['speaker_surname'];
-            tools += '" data-speaker-id="' + data + '" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal-remove">'
+            tools += '" data-speaker-id="' + data + '" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal_remove">'
             tools += '<i class="far fa-trash-alt"></i></button>';
         return tools
     }

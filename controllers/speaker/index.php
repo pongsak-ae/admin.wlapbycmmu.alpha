@@ -13,7 +13,7 @@ if ($_SESSION['status'] != "Y") {
         <div class="card-header">
             <h3 class="card-title">Speaker List</h3>
             <div class="col-auto ms-auto d-print-none">
-                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#modal-add">
+                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#modal_add">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />
@@ -21,7 +21,7 @@ if ($_SESSION['status'] != "Y") {
                     </svg>
                     Add Speaker
                 </a>
-                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-add" aria-label="Add Speaker">
+                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal_add" aria-label="Add Speaker">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />
@@ -44,7 +44,7 @@ if ($_SESSION['status'] != "Y") {
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="modal-remove" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal_remove" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -73,7 +73,7 @@ if ($_SESSION['status'] != "Y") {
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal_add" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <form id="frm_add_speaker">
@@ -110,8 +110,7 @@ if ($_SESSION['status'] != "Y") {
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <div id="speaker_image" class="upload-image-default mb-2"></div>
-                            <div class="form-label">Speaker image</div>
+                            <img id="speaker_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">
                             <input type="file" id="add_s_img" name="add_s_img" class="form-control" accept="image/*"/>
                         </div>
                     </div>
@@ -120,13 +119,68 @@ if ($_SESSION['status'] != "Y") {
                     <button class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="submit" class="btn btn-primary ms-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                         </svg>
                         Create new speaker
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="frm_edit_speaker">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit speaker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group mb-3 ">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First name</label>
+                                        <input type="text" id="edit_s_name" name="edit_s_name" class="form-control" placeholder="Enter first name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last name</label>
+                                        <input type="text" id="edit_s_lname" name="edit_s_lname" class="form-control" placeholder="Enter last name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 ">
+                                <label class="form-label">Email address</label>
+                                <input type="email" id="edit_s_email" name="edit_s_email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                            <div class="form-group mb-3 ">
+                                <label class="form-label">Company</label>
+                                <input type="text" id="edit_s_comp" name="edit_s_comp" class="form-control" placeholder="Enter company">
+                            </div>
+                            <div class="form-group mb-3 ">
+                                <label class="form-label">Position</label>
+                                <input type="text" id="edit_s_pos" name="edit_s_pos" class="form-control" placeholder="Enter position">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img id="speaker_edit_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">
+                            <input type="file" id="edit_s_img" name="edit_s_img" class="form-control" accept="image/*"/>
+                        </div>
+                    </div>
+                    <input id="edit_s_id" name="edit_s_id" type="hidden">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary ms-auto">
+                        Update speaker
                     </button>
                 </div>
             </form>

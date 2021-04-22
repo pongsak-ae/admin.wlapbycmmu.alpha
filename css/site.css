@@ -161,9 +161,9 @@ div.dataTables_info, div.dataTables_paginate  {
 }
 
 .upload-image-default {
-  background-image: url('../images/face28.jpg');
+  background-image: url('../images/no-image.jpg');
   background-size: cover;
   background-position: center;
   max-width: 100%;
-  height: 230px;
+  height: 252px;
 }

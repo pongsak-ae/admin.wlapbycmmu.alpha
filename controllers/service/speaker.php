@@ -1,6 +1,7 @@
 <?php
 
 use OMCore\OMDb;
+use OMCore\OMImage;
 // use OMCore\OMMail;
 $DB = OMDb::singleton();
 $log = new OMCore\OMLog;
@@ -19,34 +20,75 @@ if ($cmd != "") {
         $sql_param = array();
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
-        // $source_re = array();
-        // foreach($ds as $v){
-        //     $source_re[] = array(
-        //         'id' => $v['speaker_id'],
-        //         'name' => $v['speaker_name'].'|'.$v['speaker_surname'].'|'.$v['speaker_email'].'|'.$v['speaker_image'],
-        //         'title' => $v['speaker_position'].'|'.$v['speaker_company'],
-        //         'sort' => $v['speaker_sort']
-        //     );
-        // }
         $response['data'] = $ds;
         $response['status'] = true;
     } else if ($cmd == "add_speaker") {
-        $response['status'] = true;
-    } else if ($cmd == "update_speaker"){
-        $speaker_id = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
-        $status = isset($_POST['speaker_status']) ? $_POST['speaker_status'] : "";
+        $add_s_name = isset($_POST['add_s_name']) ? $_POST['add_s_name'] : "";
+        $add_s_lname = isset($_POST['add_s_lname']) ? $_POST['add_s_lname'] : "";
+        $add_s_email = isset($_POST['add_s_email']) ? $_POST['add_s_email'] : "";
+        $add_s_comp = isset($_POST['add_s_comp']) ? $_POST['add_s_comp'] : "";
+        $add_s_pos = isset($_POST['add_s_pos']) ? $_POST['add_s_pos'] : "";
+        $newfilename = '';
+        if (!empty($_FILES["add_s_img"])) {
+            $newfilename = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["add_s_img"]["type"]));
+            copy($_FILES["add_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
+        }
+        
+        $sql_max_order = "select MAX(speaker_sort) as max_order from speaker";
+        $sql_param_max = array();
+        $ds_max = null;
+        $DB->query($ds_max, $sql_max_order, $sql_param_max, 0, -1, "ASSOC");
+        $max_order = (empty($ds_max[0]['max_order'])) ? 0 : intval($ds_max[0]['max_order']);
         $sql_param = array();
-        $sql_param['speaker_id']    = $customer_id;
-        $sql_param['speaker_status']    = $status;
-        $sql_param['update_by'] = getSESSION();
-        $res = $DB->executeUpdate('speaker', 1, $sql_param); 
+        $new_id = "";
+        $sql_param['speaker_name'] = $add_s_name;
+        $sql_param['speaker_surname'] = $add_s_lname;
+        $sql_param['speaker_position'] = $add_s_pos;
+        $sql_param['speaker_company'] = $add_s_comp;
+        $sql_param['speaker_email'] = $add_s_email;
+        $sql_param['speaker_image'] = $newfilename;
+        $sql_param['speaker_sort'] = $max_order + 1;
+        $sql_param['create_by'] = getSESSION();
 
+        $res = $DB->executeInsert('speaker', $sql_param, $new_id);
         if ($res > 0) {
             $response['status'] = true;
-            $response['msg'] = 'Change ' . $status . ' successfully';
+            $response['msg'] = 'Create speaker successfully';
+        } else {
+            $response['status'] = false;
+            $response['msg'] = 'Create speaker unsuccessfully';  
+        }
+    } else if ($cmd == "update_speaker"){
+        $edit_s_id = isset($_POST['edit_s_id']) ? $_POST['edit_s_id'] : "";
+        $edit_s_name = isset($_POST['edit_s_name']) ? $_POST['edit_s_name'] : "";
+        $edit_s_lname = isset($_POST['edit_s_lname']) ? $_POST['edit_s_lname'] : "";
+        $edit_s_email = isset($_POST['edit_s_email']) ? $_POST['edit_s_email'] : "";
+        $edit_s_comp = isset($_POST['edit_s_comp']) ? $_POST['edit_s_comp'] : "";
+        $edit_s_pos = isset($_POST['edit_s_pos']) ? $_POST['edit_s_pos'] : "";
+        $newfilename = '';
+        if (!empty($_FILES["edit_s_img"]["tmp_name"])) {
+            $newfilename = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_s_img"]["type"]));
+            copy($_FILES["edit_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
+        }
+
+        $sql_param = array();
+        $sql_param['speaker_id'] = $edit_s_id;
+        $sql_param['speaker_name'] = $edit_s_name;
+        $sql_param['speaker_surname'] = $edit_s_lname;
+        $sql_param['speaker_position'] = $edit_s_pos;
+        $sql_param['speaker_company'] = $edit_s_comp;
+        $sql_param['speaker_email'] = $edit_s_email;
+        if ($newfilename != '') {
+            $sql_param['speaker_image'] = $newfilename;
+        }
+        $sql_param['update_by'] = getSESSION();
+        $res = $DB->executeUpdate('speaker', 1, $sql_param); 
+        if ($res > 0) {
+            $response['status'] = true;
+            $response['msg'] = 'Update successfully';
         }else{
             $response['status'] = false;
-            $response['msg'] = 'Change ' . $status . ' unsuccessfully';
+            $response['msg'] = 'Update unsuccessfully';
         }
     } else if ($cmd == "remove_speaker") {
         $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
