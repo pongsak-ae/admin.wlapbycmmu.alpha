@@ -324,11 +324,7 @@ function add_course(){
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '<div class="col-12 my-1">';
-  // modal_addCourseHTML += '<div class="form-floating">';
   modal_addCourseHTML += '<div id="add_c_detail" class="quill" style="height: 80px;overflow-y: auto;overflow-x: hidden;"></div>';
-  // modal_addCourseHTML += '<textarea id="add_c_detail" name="add_c_detail" class="form-control" style="height: 123px;" placeholder=""></textarea>';
-  // modal_addCourseHTML += '<label for="add_c_detail">COURSE DETAIL</label>';
-  // modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '</div>';
   modal_addCourseHTML += '<div class="col-md-6 col-sm-12 my-1 text-center">';
   modal_addCourseHTML += '<label for="add_c_start">START</label>';
@@ -345,9 +341,29 @@ function add_course(){
   modal_addCourseHTML += '<div class="row">'; // ROW
   modal_addCourseHTML += '<div class="col-12">';
   modal_addCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
-  modal_addCourseHTML += '<div id="add_course_speeker" style="overflow-x: hidden;overflow-y: auto;height: 20.4rem;">'; // SCROLL Y
-  modal_addCourseHTML += '</div>'; // SCROLL Y
+  modal_addCourseHTML += '<ul class="nav nav-tabs nav-fill" data-bs-toggle="tabs">';
+  modal_addCourseHTML += '<li class="nav-item"><a href="#stage1" class="stage nav-link active" data-bs-toggle="tab">Stage 1</a></li>';
+  modal_addCourseHTML += '<li class="nav-item"><a href="#stage2" class="stage nav-link" data-bs-toggle="tab">Stage 2</a></li>';
+  modal_addCourseHTML += '<li class="nav-item"><a href="#stage3" class="stage nav-link" data-bs-toggle="tab">Stage 3</a></li>';
+  modal_addCourseHTML += '<li class="nav-item"><a href="#stage4" class="stage nav-link" data-bs-toggle="tab">Stage 4</a></li>';
+  modal_addCourseHTML += '</ul>';
+
+  modal_addCourseHTML += '<div class="tab-content">';
+  modal_addCourseHTML += '<div class="tab-pane active" id="stage1">';
+  modal_addCourseHTML += '<div id="add_course_speeker_stage1" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
   modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '<div class="tab-pane" id="stage2">';
+  modal_addCourseHTML += '<div id="add_course_speeker_stage2" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '<div class="tab-pane" id="stage3">';
+  modal_addCourseHTML += '<div id="add_course_speeker_stage3" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '<div class="tab-pane" id="stage4">';
+  modal_addCourseHTML += '<div id="add_course_speeker_stage4" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+  modal_addCourseHTML += '</div>';
+
   modal_addCourseHTML += '<div class="col-12">';
   modal_addCourseHTML += '<center><label class="my-2">CLASS SCHEDULE</label></center>';
   modal_addCourseHTML += '<div class="card card-sm">';
@@ -475,9 +491,18 @@ function submit_add_course(form, e, start_date, end_date, add_course_detail) {
     var inputs = $(form).find(':input');
     var form_data = new FormData();
 
-    var speekerArray = [];
-    $("input:checkbox[name=add-course-speeker]:checked").each(function(){
-        speekerArray.push($(this).val());
+    var stageSpeekerArray = {};
+    var i = 1;
+    $(".stage").each(function(){
+      var stageArr = $(this).attr('href').replace('#', '');
+      var speekerArray = [];
+      $("input:checkbox[name=add-course-speeker-" + i + "]:checked").each(function(){     
+          speekerArray.push($(this).val());
+      }); 
+
+      stageSpeekerArray[stageArr] = speekerArray;
+      i = i + 1
+
     });
 
     form_data.append("cmd"            , 'add_course');
@@ -490,7 +515,7 @@ function submit_add_course(form, e, start_date, end_date, add_course_detail) {
     form_data.append("add_c_price"    , inputs.filter('#add_c_price').val());
     form_data.append("add_c_start"    , start_date.getDate().format('YYYY-MM-DD'));
     form_data.append("add_c_end"      , end_date.getDate().format('YYYY-MM-DD'));
-    form_data.append("add_c_speeker"  , speekerArray);
+    form_data.append("add_c_speeker"  , JSON.stringify(stageSpeekerArray));
     form_data.append("add_c_schedule" , inputs.filter('#add_schedule').prop("files")[0]);
 
     $.ajax({
@@ -599,9 +624,33 @@ function edit_course(course_active, course_id, course_no, course_detail, course_
   modal_editCourseHTML += '<div class="col-md-5 col-sm-12">'; // COL-5
   modal_editCourseHTML += '<div class="row">'; // ROW
   modal_editCourseHTML += '<div class="col-12">';
+
   modal_editCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
-  modal_editCourseHTML += '<div id="edit_course_speeker" style="overflow-x: hidden;overflow-y: auto;height: 20.4rem;">'; // SCROLL Y
-  modal_editCourseHTML += '</div>'; // SCROLL Y
+  modal_editCourseHTML += '<ul class="nav nav-tabs nav-fill" data-bs-toggle="tabs">';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage1" class="editstage nav-link active" data-bs-toggle="tab">Stage 1</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage2" class="editstage nav-link" data-bs-toggle="tab">Stage 2</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage3" class="editstage nav-link" data-bs-toggle="tab">Stage 3</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage4" class="editstage nav-link" data-bs-toggle="tab">Stage 4</a></li>';
+  modal_editCourseHTML += '</ul>';
+
+  modal_editCourseHTML += '<div class="tab-content">';
+  modal_editCourseHTML += '<div class="tab-pane active" id="editstage1">';
+  modal_editCourseHTML += '<div id="edit_course_speeker_stage1" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage2">';
+  modal_editCourseHTML += '<div id="edit_course_speeker_stage2" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage3">';
+  modal_editCourseHTML += '<div id="edit_course_speeker_stage3" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage4">';
+  modal_editCourseHTML += '<div id="edit_course_speeker_stage4" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
+  modal_editCourseHTML += '</div>';
+  modal_editCourseHTML += '</div>';
+
+  // modal_editCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
+  // modal_editCourseHTML += '<div id="edit_course_speeker" style="overflow-x: hidden;overflow-y: auto;height: 20.4rem;">'; // SCROLL Y
+  // modal_editCourseHTML += '</div>'; // SCROLL Y
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '<div class="col-12">';
   modal_editCourseHTML += '<center><label class="my-2">CLASS SCHEDULE</label></center>';
@@ -734,10 +783,24 @@ function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date, 
     var inputs = $(form).find(':input');
     var form_data = new FormData();
 
-    var edit_speekerArray = [];
-    $("input:checkbox[name=add-course-speeker]:checked").each(function(){
-        edit_speekerArray.push($(this).val());
+    var edit_stageSpeekerArray = {};
+    var i = 1;
+    $(".editstage").each(function(){
+      var edit_stageArr = $(this).attr('href').replace('#', '');
+      var edit_speekerArray = [];
+      $("input:checkbox[name=edit-course-speeker-" + i + "]:checked").each(function(){     
+          edit_speekerArray.push($(this).val());
+      }); 
+
+      edit_stageSpeekerArray[edit_stageArr] = edit_speekerArray;
+      i = i + 1
+
     });
+
+    // var edit_speekerArray = [];
+    // $("input:checkbox[name=add-course-speeker]:checked").each(function(){
+    //     edit_speekerArray.push($(this).val());
+    // });
 
     form_data.append("cmd"             , 'edit_course');
     form_data.append("edit_c_course_id", course_id);
@@ -750,7 +813,7 @@ function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date, 
     form_data.append("edit_c_price"    , inputs.filter('#edit_c_price').val());
     form_data.append("edit_c_start"    , edit_start_date.getDate().format('YYYY-MM-DD'));
     form_data.append("edit_c_end"      , edit_end_date.getDate().format('YYYY-MM-DD'));
-    form_data.append("edit_c_speeker"  , edit_speekerArray);
+    form_data.append("edit_c_speeker"  , JSON.stringify(edit_stageSpeekerArray));
     form_data.append("edit_c_schedule" , inputs.filter('#edit_schedule').prop("files")[0]);
 
     $.ajax({
