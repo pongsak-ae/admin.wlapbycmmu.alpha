@@ -102,14 +102,26 @@ if ($cmd != "") {
 
                 if ($res_ac > 0) {
 
-                    $speeker_explode = explode(",", $add_c_speeker);
-                    foreach($speeker_explode as $key=>$value) {
-                        $sql_param_sp = array();
-                        $new_id_sp = "";
-                        $sql_param_sp['course_id']  = $new_id_ac;
-                        $sql_param_sp['speaker_id'] = $value;
-                        $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    foreach(json_decode($add_c_speeker) as $stage=>$value) {
+                        foreach($value as $k=>$speaker) {
+                            $stage = str_replace('stage', '', $stage);
+                            $sql_param_sp = array();
+                            $new_id_sp = "";
+                            $sql_param_sp['course_id']      = $new_id_ac;
+                            $sql_param_sp['speaker_id']     = $speaker;
+                            $sql_param_sp['speaker_stage']  = $stage;
+                            $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                        }
                     }
+
+                    // $speeker_explode = explode(",", $add_c_speeker);
+                    // foreach($speeker_explode as $key=>$value) {
+                    //     $sql_param_sp = array();
+                    //     $new_id_sp = "";
+                    //     $sql_param_sp['course_id']  = $new_id_ac;
+                    //     $sql_param_sp['speaker_id'] = $value;
+                    //     $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    // }
 
                     $response['status'] = true;
                     $response['msg'] = 'Create course successfully';
@@ -234,14 +246,26 @@ if ($cmd != "") {
                     $sql_param_d['course_id'] = $edit_c_course_id;
                     $res_d = $DB->execute($sql_d, $sql_param_d);
 
-                    $speeker_explode = explode(",", $edit_c_speeker);
-                    foreach($speeker_explode as $key=>$value) {
-                        $sql_param_sp = array();
-                        $new_id_sp = "";
-                        $sql_param_sp['course_id']  = $edit_c_course_id;
-                        $sql_param_sp['speaker_id'] = $value;
-                        $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    foreach(json_decode($edit_c_speeker) as $stage=>$value) {
+                        foreach($value as $k=>$speaker) {
+                            $stage = str_replace('stage', '', $stage);
+                            $sql_param_sp = array();
+                            $new_id_sp = "";
+                            $sql_param_sp['course_id']      = $edit_c_course_id;
+                            $sql_param_sp['speaker_id']     = $speaker;
+                            $sql_param_sp['speaker_stage']  = $stage;
+                            $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                        }
                     }
+
+                    // $speeker_explode = explode(",", $edit_c_speeker);
+                    // foreach($speeker_explode as $key=>$value) {
+                    //     $sql_param_sp = array();
+                    //     $new_id_sp = "";
+                    //     $sql_param_sp['course_id']  = $edit_c_course_id;
+                    //     $sql_param_sp['speaker_id'] = $value;
+                    //     $res_sp = $DB->executeInsert('course_speaker', $sql_param_sp, $new_id_sp);
+                    // }
 
                     $response['status'] = true;
                     $response['msg'] = 'Update course successfully';
@@ -261,7 +285,7 @@ if ($cmd != "") {
         // }
 
     } else if ($cmd == "add_course_speeker"){
-        $sql = "SELECT * FROM speaker WHERE speaker_status = 'Y'";
+        $sql = "SELECT * FROM speaker WHERE speaker_status = 'Y' AND speaker_active = '1'";
         $sql_param = array();
         // $sql_param['c_no'] = $add_c_no;
         $ds = null;
