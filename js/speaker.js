@@ -11,14 +11,14 @@ $(function(){
         },
         type: "JSON",
         columns: [
-            { data: "speaker_sort"},
             { data: "speaker_name", render: speaker_name},
             { data: "speaker_position", render: speaker_position},
+            { data: "speaker_active", render: speaker_active},
             { data: "speaker_id", render: speaker_tools}
         ],
         columnDefs: [
-            { targets: [0, 3], className: "text-center", width: "10%" },
-            { targets: [1, 2], width: "35%" }
+            { targets: [2, 3], className: "text-center", width: "15%" },
+            { targets: [0, 1], width: "35%" }
         ]
     });
     
@@ -34,6 +34,36 @@ $(function(){
         }
         $('#edit_s_id').val(data.id);
         $('#modal_edit').modal('show');
+    });
+
+    $('#datatable_speaker').on('click', '[name="upd_active"]', function(e){
+        e.preventDefault();
+        var data = $(e.currentTarget).data();
+        $('.btn-confirm-upd').data('speakerId', data.speakerId);
+        $('.btn-confirm-upd').data('active', data.active);
+        $('#modal_active').modal('show');
+    });
+
+    $('#modal_active').on('click', '.btn-confirm-upd', function(){
+        $.ajax({
+            type: "post",
+            url: BASE_LANG + "service/speaker.php",
+            data: {
+                "cmd": "update_active",
+                "speaker_id": $(this).data('speakerId'),
+                "speaker_active": $(this).data('active')
+            },
+            dataType: "json",
+            success: function (res) {
+                var msg = res['msg'];
+                if (res['status']) {
+                    alert_center('Update speaker active', msg, "success")
+                    dt_speaker.ajax.reload();
+                }else{
+                    alert_center('Update speaker active', msg, "error")
+                }
+            }
+        });
     });
 
     $('#modal_remove').on('click', '.btn-confirm-del', function(){
@@ -217,6 +247,19 @@ $(function(){
     function speaker_position(data, type, row) {
         return '<div>' + row["speaker_company"] + '</div> \
                 <div class="text-muted">' + data +'</div>';
+    }
+
+    function speaker_active(data, type, row) {
+        if (data == 1)
+            return '<label class="form-check form-check-inline form-switch"> \
+                        <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'" checked> \
+                        <span class="form-check-label">Active</span> \
+                    </label>';
+        else
+            return '<label class="form-check form-check-inline form-switch"> \
+                        <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'"> \
+                        <span class="form-check-label">Inactive</span> \
+                    </label>';
     }
 
     function speaker_tools(data, type, row) {

@@ -15,8 +15,8 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "speaker"){
-        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_sort
-                FROM speaker WHERE speaker_status = 'Y' ORDER BY speaker_sort";
+        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_active
+                FROM speaker WHERE speaker_status = 'Y'";
         $sql_param = array();
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
@@ -90,6 +90,21 @@ if ($cmd != "") {
             $response['status'] = false;
             $response['msg'] = 'Update unsuccessfully';
         }
+    } else if ($cmd == "update_active") {
+        $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
+        $speaker_active  = isset($_POST['speaker_active']) ? $_POST['speaker_active'] : "";
+        $sql_param = array();
+        $sql_param['speaker_id'] = $speaker_id;
+        $sql_param['speaker_active'] = ($speaker_active == '1') ? '0' : '1';
+        $sql_param['update_by'] = getSESSION();
+        $res = $DB->executeUpdate('speaker', 1, $sql_param);
+        if ($res > 0) {
+            $response['status'] = true;
+            $response['msg'] = 'successfully';
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'failed';
+        }
     } else if ($cmd == "remove_speaker") {
         $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
         $sql_s = "SELECT * FROM v_course_speaker WHERE speaker_id = @speaker_id LIMIT 1";
@@ -100,7 +115,7 @@ if ($cmd != "") {
         if ($res_s == 0) {
             $sql_param = array();
             $sql_param['speaker_id'] = $speaker_id;
-            $sql_param['speaker_status']    = 'N';
+            $sql_param['speaker_status'] = 'N';
             $sql_param['update_by'] = getSESSION();
             $res = $DB->executeUpdate('speaker', 1, $sql_param);
             if ($res > 0) {

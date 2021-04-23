@@ -34,9 +34,9 @@ if ($_SESSION['status'] != "Y") {
             <table id="datatable_speaker" class="table table-vcenter text-nowrap table-striped w-100">
                 <thead>
                     <tr>
-                        <th>Order</th>
                         <th>Name</th>
                         <th>Title</th>
+                        <th>Status</th>
                         <th>Tools</th>
                     </tr>
                 </thead>
@@ -167,17 +167,6 @@ if ($_SESSION['status'] != "Y") {
                                 <label class="form-label">Position</label>
                                 <input type="text" id="edit_s_pos" name="edit_s_pos" class="form-control" placeholder="Enter position">
                             </div>
-                            <div class="form-group mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label">Speaker Order</label>
-                                    <select class="form-select" id="edit_s_order" name="edit_s_order">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-5">
                             <img id="speaker_edit_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">
@@ -195,6 +184,35 @@ if ($_SESSION['status'] != "Y") {
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal_active" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-warning"></div>
+            <div class="modal-body text-center py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-warning icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 9v2m0 4v.01" />
+                    <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>Are you sure?</h3>
+                <div class="text-muted">Do you really want to change speaker status ?</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-white w-100" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-warning w-100 btn-confirm-upd" data-bs-dismiss="modal">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
