@@ -556,7 +556,7 @@ function editCourse_speeker(course_id){
             modal_addCourseHTML += '<div class="col-12 my-1">';
             modal_addCourseHTML += '<div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">';
             modal_addCourseHTML += '<label class="form-selectgroup-item flex-fill">';
-            modal_addCourseHTML += '<input type="checkbox" value="' + value.speaker_id + '" name="add-course-speeker" class="form-selectgroup-input">';
+            modal_addCourseHTML += '<input type="checkbox" value="' + value.speaker_id + '" name="edit-course-speeker" class="form-selectgroup-input">';
             modal_addCourseHTML += '<div class="form-selectgroup-label d-flex align-items-center p-2">';
             modal_addCourseHTML += '<div class="me-3"><span class="form-selectgroup-check"></span></div>';
             modal_addCourseHTML += '<div class="form-selectgroup-label-content d-flex align-items-center">';
@@ -573,7 +573,7 @@ function editCourse_speeker(course_id){
         var stageNum = 4;
         for (i = 1; i <= stageNum; i++) {
           $('#edit_course_speeker_stage' + i).html(append_data);
-          $('[name="add-course-speeker"]').attr('name', 'add-course-speeker-' + i);
+          $('[name="edit-course-speeker"]').attr('name', 'edit-course-speeker-' + i);
         }
         // $('#edit_course_speeker').html(append_data);
         editSelectCourse_speeker(course_id);
@@ -600,7 +600,7 @@ function editSelectCourse_speeker(course_id){
         var status = res['status'];
         var data   = res['data'];
         $.each(data, function( index, value ) {
-          $('input:checkbox[name=add-course-speeker-' + value.speaker_stage + '][value="' + value.speaker_id + '"]').prop('checked', true);
+          $('input:checkbox[name=edit-course-speeker-' + value.speaker_stage + '][value="' + value.speaker_id + '"]').prop('checked', true);
         });
       }
   });

@@ -248,7 +248,7 @@ if ($cmd != "") {
 
                     foreach(json_decode($edit_c_speeker) as $stage=>$value) {
                         foreach($value as $k=>$speaker) {
-                            $stage = str_replace('stage', '', $stage);
+                            $stage = str_replace('editstage', '', $stage);
                             $sql_param_sp = array();
                             $new_id_sp = "";
                             $sql_param_sp['course_id']      = $edit_c_course_id;
@@ -373,6 +373,7 @@ if ($cmd != "") {
         $response['status'] = false;
         $response['error_msg'] = 'no command';
         $response['code'] = '500';
+    
     }
 
 } else {

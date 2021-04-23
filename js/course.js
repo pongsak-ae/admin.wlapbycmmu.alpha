@@ -627,23 +627,23 @@ function edit_course(course_active, course_id, course_no, course_detail, course_
 
   modal_editCourseHTML += '<center><label class="mb-2">COURSE SPEEKER</label></center>';
   modal_editCourseHTML += '<ul class="nav nav-tabs nav-fill" data-bs-toggle="tabs">';
-  modal_editCourseHTML += '<li class="nav-item"><a href="#stage1" class="stage nav-link active" data-bs-toggle="tab">Stage 1</a></li>';
-  modal_editCourseHTML += '<li class="nav-item"><a href="#stage2" class="stage nav-link" data-bs-toggle="tab">Stage 2</a></li>';
-  modal_editCourseHTML += '<li class="nav-item"><a href="#stage3" class="stage nav-link" data-bs-toggle="tab">Stage 3</a></li>';
-  modal_editCourseHTML += '<li class="nav-item"><a href="#stage4" class="stage nav-link" data-bs-toggle="tab">Stage 4</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage1" class="editstage nav-link active" data-bs-toggle="tab">Stage 1</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage2" class="editstage nav-link" data-bs-toggle="tab">Stage 2</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage3" class="editstage nav-link" data-bs-toggle="tab">Stage 3</a></li>';
+  modal_editCourseHTML += '<li class="nav-item"><a href="#editstage4" class="editstage nav-link" data-bs-toggle="tab">Stage 4</a></li>';
   modal_editCourseHTML += '</ul>';
 
   modal_editCourseHTML += '<div class="tab-content">';
-  modal_editCourseHTML += '<div class="tab-pane active" id="stage1">';
+  modal_editCourseHTML += '<div class="tab-pane active" id="editstage1">';
   modal_editCourseHTML += '<div id="edit_course_speeker_stage1" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="tab-pane" id="stage2">';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage2">';
   modal_editCourseHTML += '<div id="edit_course_speeker_stage2" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="tab-pane" id="stage3">';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage3">';
   modal_editCourseHTML += '<div id="edit_course_speeker_stage3" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
   modal_editCourseHTML += '</div>';
-  modal_editCourseHTML += '<div class="tab-pane" id="stage4">';
+  modal_editCourseHTML += '<div class="tab-pane" id="editstage4">';
   modal_editCourseHTML += '<div id="edit_course_speeker_stage4" style="overflow-x: hidden;overflow-y: auto;height: 18rem;"></div>'; // SCROLL Y
   modal_editCourseHTML += '</div>';
   modal_editCourseHTML += '</div>';
@@ -785,10 +785,10 @@ function submit_edit_course(form, e, course_id, edit_start_date, edit_end_date, 
 
     var edit_stageSpeekerArray = {};
     var i = 1;
-    $(".stage").each(function(){
+    $(".editstage").each(function(){
       var edit_stageArr = $(this).attr('href').replace('#', '');
       var edit_speekerArray = [];
-      $("input:checkbox[name=add-course-speeker-" + i + "]:checked").each(function(){     
+      $("input:checkbox[name=edit-course-speeker-" + i + "]:checked").each(function(){     
           edit_speekerArray.push($(this).val());
       }); 
 
