@@ -95,26 +95,20 @@ $(function(){
         $('#frm_add_speaker').find('label.text-danger').remove();
     });
 
+    $("#modal_edit").on("hidden.bs.modal", function () {
+        $('#frm_edit_speaker')[0].reset();
+        $('#frm_edit_speaker').find('.is-invalid').removeClass("is-invalid");
+        $('#frm_edit_speaker').find('.is-valid').removeClass("is-valid");
+        $('#frm_edit_speaker').find('label.text-danger').remove();
+    });
+
     $('#modal_remove').on('show.bs.modal', function(e) {
         var data = $(e.relatedTarget).data();
         $('.title', this).text(data.name + ' ' + data.surname);
         $('.btn-confirm-del', this).data('speakerId', data.speakerId);
     });
 
-    $('#add_s_img').on('change', function () {
-        var file = this.files[0];
-        var reader = new FileReader();
-        reader.onloadend = function () {
-            $('#speaker_image').attr('src', reader.result);
-        }
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            return false;
-        }
-    });
-
-    $('#frm_add_speaker').validate({
+    var frm_add_validator = $('#frm_add_speaker').validate({
         rules: {
             add_s_name: {
                 required: true
@@ -133,7 +127,9 @@ $(function(){
                 required: true
             },
             add_s_img: {
-                required: true
+                required: true,
+                accept: "image/*",
+                maxImageWH: 300
             }
         },
         errorClass: "text-danger",
@@ -172,7 +168,39 @@ $(function(){
         }
     });
 
-    $('#frm_edit_speaker').validate({
+    $('#add_s_img').on('change', function () {
+        var $imgInput = $('#add_s_img'),
+            $submitBtn = $('#frm_add_speaker').find('input:submit');
+
+        $imgInput.removeData('imageWidth');
+        $imgInput.removeData('imageHeight');
+        var file = this.files[0];
+        if (file.type.match(/image\/.*/)) {
+            $submitBtn.attr('disabled', true);
+            
+            var reader = new FileReader();
+        
+            reader.onload = function() {
+                $('#speaker_image').attr('src', reader.result);
+                var $img = new Image();
+                $img.src = reader.result;
+                $img.onload = function () {
+                    var imageWidth = $img.width;
+                    var imageHeight = $img.height;
+                    $imgInput.data('imageWidth', imageWidth);
+                    $imgInput.data('imageHeight', imageHeight);
+                    $submitBtn.attr('disabled', false);
+                    frm_add_validator.element($imgInput);
+                };
+            }
+        
+            reader.readAsDataURL(file);
+        } else {
+            frm_add_validator.element($imgInput);
+        }
+    });
+
+    var frm_edit_validator = $('#frm_edit_speaker').validate({
         rules: {
             edit_s_name: {
                 required: true
@@ -189,6 +217,10 @@ $(function(){
             },
             edit_s_pos: {
                 required: true
+            },
+            edit_s_img: {
+                accept: "image/*",
+                maxImageWH: 300
             }
         },
         errorClass: "text-danger",
@@ -224,6 +256,35 @@ $(function(){
                     }
                 }
             });
+        }
+    });
+
+    $('#edit_s_img').on('change', function () {
+        var $imgInput = $('#edit_s_img'),
+            $submitBtn = $('#frm_edit_speaker').find('input:submit');
+
+        $imgInput.removeData('imageWidth');
+        $imgInput.removeData('imageHeight');
+        var file = this.files[0];
+        if (file.type.match(/image\/.*/)) {
+            $submitBtn.attr('disabled', true);
+            var reader = new FileReader();
+            reader.onload = function() {
+                $('#speaker_edit_image').attr('src', reader.result);
+                var $img = new Image();
+                $img.src = reader.result;
+                $img.onload = function () {
+                    var imageWidth = $img.width;
+                    var imageHeight = $img.height;
+                    $imgInput.data('imageWidth', imageWidth);
+                    $imgInput.data('imageHeight', imageHeight);
+                    $submitBtn.attr('disabled', false);
+                    frm_edit_validator.element($imgInput);
+                };
+            }
+            reader.readAsDataURL(file);
+        } else {
+            frm_edit_validator.element($imgInput);
         }
     });
 
