@@ -129,6 +129,12 @@ $.validator.addMethod("campKeyword", function(value) { //add custom method
     return ($("#tagsx_tagsinput").find(".tag").length > 0);
 });
 
+$.validator.addMethod('maxImageWH', function(value, element, param) {
+  return ($(element).data('imageWidth') || 0) <= param && ($(element).data('imageHeight') || 0) <= param;
+}, function(param, element) {
+  return "The width and height of your image cannot be greater than " + param + "px";
+});
+
 function fm_number(number){
     num = Number(number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return num;
