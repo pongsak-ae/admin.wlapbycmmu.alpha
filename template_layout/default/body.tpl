@@ -15,7 +15,7 @@
 		        		</a>
 		        	</li>
 		        	<li class="nav-item">
-		        		<a class="nav-link" href="<?=WEB_META_BASE_LANG ; ?>" >
+		        		<a class="nav-link" href="<?=WEB_META_BASE_LANG ; ?>banner" >
 		        			<i class="nav-link-icon d-md-none d-lg-inline-block fas fa-th-large" style="margin: 1px 5px 0px 0px;"></i>
 		        			<span class="nav-link-title">Banner</span>
 		        		</a>
@@ -26,12 +26,14 @@
 		        			<span class="nav-link-title">Courses</span>
 		        		</a>
 		        	</li>
+		        	<!--
 		        	<li class="nav-item">
 		        		<a class="nav-link" href="<?=WEB_META_BASE_LANG ; ?>" >
 		        			<i class="nav-link-icon d-md-none d-lg-inline-block fas fa-users-cog" style="margin: 1px 5px 0px 0px;"></i>
 		        			<span class="nav-link-title">Employee</span>
 		        		</a>
 		        	</li>
+		        	-->
 					<li class="nav-item">
 		        		<a class="nav-link" href="<?=WEB_META_BASE_LANG?>speaker">
 		        			<i class="nav-link-icon d-md-none d-lg-inline-block fas fa-user-tie" style="margin: 1px 5px 0px 0px;"></i>
