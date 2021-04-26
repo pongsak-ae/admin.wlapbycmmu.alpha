@@ -11,7 +11,7 @@ $today = date("Y-m-d H:i:s");
 $exp = strtotime('+30 days', strtotime($today));
 $expires = date('Y-m-d H:i:s', $exp);
 
-$sql = "SELECT course_id, course_name, course_detail, course_datetime, course_place, course_price, course_startdate, course_enddate, course_schedule
+$sql = "SELECT course_id, course_no, course_name, course_detail, course_datetime, course_place, course_price, course_startdate, course_enddate, course_schedule
         FROM course WHERE course_active = '1' limit 1";
 $sql_param = array();
 $ds = null;

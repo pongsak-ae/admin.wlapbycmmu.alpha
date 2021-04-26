@@ -294,20 +294,24 @@ $(function(){
             speaker_img = '<span class="avatar me-2" style="background-image: url(./images/speaker/' + row["speaker_image"] + ')"></span>';
         else
             speaker_img = '<span class="avatar me-2">' + data.charAt(0).toUpperCase() + row["speaker_surname"].charAt(0).toUpperCase() + '</span>';
-
+        var name = (data) ? data : '(ไม่มีข้อมูล)';
+        var surname = (row["speaker_surname"]) ? row["speaker_surname"] : '(ไม่มีข้อมูล)';
+        var email = (row["speaker_email"]) ? row["speaker_email"] : '(ไม่มีข้อมูล)';
         var nameHtml = '<div class="d-flex py-1 align-items-center">';
             nameHtml += speaker_img;
             nameHtml += '<div class="flex-fill">';
-            nameHtml += '   <div class="font-weight-medium">' + data + ' ' + row["speaker_surname"] + '</div>';
-            nameHtml += '   <div class="text-muted"><a href="#" class="text-reset">' + row["speaker_email"] + '</a></div>';
+            nameHtml += '   <div class="font-weight-medium">' + name + ' ' + surname + '</div>';
+            nameHtml += '   <div class="text-muted"><a class="text-reset">' + email + '</a></div>';
             nameHtml += '</div>';
             nameHtml += '</div>';
         return nameHtml
     }
 
     function speaker_position(data, type, row) {
-        return '<div>' + row["speaker_company"] + '</div> \
-                <div class="text-muted">' + data +'</div>';
+        var position = (data) ? data : '(ไม่มีข้อมูล)';
+        var company = (row["speaker_company"]) ? row["speaker_company"] : '(ไม่มีข้อมูล)';
+        return '<div>' + company + '</div> \
+                <div class="text-muted">' + position +'</div>';
     }
 
     function speaker_active(data, type, row) {
