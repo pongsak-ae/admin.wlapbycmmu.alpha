@@ -66,6 +66,7 @@
 
 	<!-- jquery validate :js -->
 	<script src="<?=WEB_META_BASE_URL?>js/extensions/jquery-validation/jquery.validate.min.js"></script>
+	<script src="<?=WEB_META_BASE_URL?>js/extensions/jquery-validation/additional-methods.min.js"></script>
 	<!-- jquery select2 :js -->
 	<!-- <script src="<?=WEB_META_BASE_URL?>js/extensions/select2/select2-4.0.5.full.min.js"></script> -->
 	<script type="text/javascript" src="<?=WEB_META_BASE_URL?>js/core/moment.min.js"></script>

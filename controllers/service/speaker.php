@@ -15,8 +15,8 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "speaker"){
-        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_sort
-                FROM speaker WHERE speaker_status = 'Y' ORDER BY speaker_sort";
+        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_active
+                FROM speaker WHERE speaker_status = 'Y'";
         $sql_param = array();
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
@@ -34,11 +34,6 @@ if ($cmd != "") {
             copy($_FILES["add_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
         }
         
-        $sql_max_order = "select MAX(speaker_sort) as max_order from speaker";
-        $sql_param_max = array();
-        $ds_max = null;
-        $DB->query($ds_max, $sql_max_order, $sql_param_max, 0, -1, "ASSOC");
-        $max_order = (empty($ds_max[0]['max_order'])) ? 0 : intval($ds_max[0]['max_order']);
         $sql_param = array();
         $new_id = "";
         $sql_param['speaker_name'] = $add_s_name;
@@ -47,7 +42,6 @@ if ($cmd != "") {
         $sql_param['speaker_company'] = $add_s_comp;
         $sql_param['speaker_email'] = $add_s_email;
         $sql_param['speaker_image'] = $newfilename;
-        $sql_param['speaker_sort'] = $max_order + 1;
         $sql_param['create_by'] = getSESSION();
 
         $res = $DB->executeInsert('speaker', $sql_param, $new_id);
@@ -73,11 +67,11 @@ if ($cmd != "") {
 
         $sql_param = array();
         $sql_param['speaker_id'] = $edit_s_id;
-        $sql_param['speaker_name'] = $edit_s_name;
-        $sql_param['speaker_surname'] = $edit_s_lname;
-        $sql_param['speaker_position'] = $edit_s_pos;
-        $sql_param['speaker_company'] = $edit_s_comp;
-        $sql_param['speaker_email'] = $edit_s_email;
+        $sql_param['speaker_name'] = addslashes($edit_s_name);
+        $sql_param['speaker_surname'] = addslashes($edit_s_lname);
+        $sql_param['speaker_position'] = addslashes($edit_s_pos);
+        $sql_param['speaker_company'] = addslashes($edit_s_comp);
+        $sql_param['speaker_email'] = addslashes($edit_s_email);
         if ($newfilename != '') {
             $sql_param['speaker_image'] = $newfilename;
         }
@@ -90,6 +84,21 @@ if ($cmd != "") {
             $response['status'] = false;
             $response['msg'] = 'Update unsuccessfully';
         }
+    } else if ($cmd == "update_active") {
+        $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
+        $speaker_active  = isset($_POST['speaker_active']) ? $_POST['speaker_active'] : "";
+        $sql_param = array();
+        $sql_param['speaker_id'] = $speaker_id;
+        $sql_param['speaker_active'] = ($speaker_active == '1') ? '0' : '1';
+        $sql_param['update_by'] = getSESSION();
+        $res = $DB->executeUpdate('speaker', 1, $sql_param);
+        if ($res > 0) {
+            $response['status'] = true;
+            $response['msg'] = 'successfully';
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'failed';
+        }
     } else if ($cmd == "remove_speaker") {
         $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
         $sql_s = "SELECT * FROM v_course_speaker WHERE speaker_id = @speaker_id LIMIT 1";
@@ -100,7 +109,7 @@ if ($cmd != "") {
         if ($res_s == 0) {
             $sql_param = array();
             $sql_param['speaker_id'] = $speaker_id;
-            $sql_param['speaker_status']    = 'N';
+            $sql_param['speaker_status'] = 'N';
             $sql_param['update_by'] = getSESSION();
             $res = $DB->executeUpdate('speaker', 1, $sql_param);
             if ($res > 0) {
