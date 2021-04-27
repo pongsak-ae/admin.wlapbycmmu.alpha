@@ -220,7 +220,7 @@ $(function(){
             },
             edit_s_img: {
                 accept: "image/*",
-                maxImageWH: 300
+                maxImageWH: 315
             }
         },
         errorClass: "text-danger",
