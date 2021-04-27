@@ -1,6 +1,7 @@
 <?php
 
 use OMCore\OMDb;
+use OMCore\OMImage;
 // use OMCore\OMMail;
 $DB = OMDb::singleton();
 $log = new OMCore\OMLog;
@@ -20,7 +21,7 @@ if ($cmd != "") {
 
         $image_banner = null;
         if (!empty($_FILES["add_banner_img"])) {
-            $image_banner = pathinfo($add_banner_img['name'])['filename'] . '-' .date('Ymd')."." . str_replace(" ", "", basename($add_banner_img["type"]));
+            $image_banner = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["add_banner_img"]["type"]));
             copy($add_banner_img["tmp_name"], ROOT_DIR . "images/banner/" . $image_banner);
         }
 
@@ -64,6 +65,23 @@ if ($cmd != "") {
         }else{
             $response['status'] = false;
             $response['msg'] = 'Remove banner unsuccessfully';
+        }
+
+    } else if ($cmd == "update_banner"){
+        $active_banner_id    = isset($_POST['active_banner_id']) ? $_POST['active_banner_id'] : "";
+        $active    = isset($_POST['active']) ? $_POST['active'] : "";
+
+        $sql_param = array();
+        $sql_param['banner_id']     = $active_banner_id;
+        $sql_param['banner_active'] = $active;
+        $res = $DB->executeUpdate('banner', 1, $sql_param);
+
+        if ($res > 0) {
+            $response['status'] = true;
+            $response['msg'] = 'Update banner successfully';
+        }else{
+            $response['status'] = false;
+            $response['msg'] = 'Update banner unsuccessfully';
         }
 
     } else {

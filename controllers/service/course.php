@@ -1,6 +1,7 @@
 <?php
 
 use OMCore\OMDb;
+use OMCore\OMImage;
 // use OMCore\OMMail;
 $DB = OMDb::singleton();
 $log = new OMCore\OMLog;
@@ -61,7 +62,7 @@ if ($cmd != "") {
 
         $image_schedule = null;
         if (!empty($_FILES["add_c_schedule"])) {
-            $image_schedule = pathinfo($add_c_schedule['name'])['filename'] . '-' .date('Ymd')."." . str_replace(" ", "", basename($add_c_schedule["type"]));
+            $image_schedule = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["add_c_schedule"]["type"]));
             copy($add_c_schedule["tmp_name"], ROOT_DIR . "images/table/" . $image_schedule);
         }
 
@@ -200,7 +201,8 @@ if ($cmd != "") {
 
         $image_schedule = null;
         if (!empty($_FILES["edit_c_schedule"])) {
-            $image_schedule = pathinfo($edit_c_schedule['name'])['filename'] . '-' .date('Ymd')."." . str_replace(" ", "", basename($edit_c_schedule["type"]));
+            $image_schedule = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_c_schedule"]["type"]));
+            
             copy($edit_c_schedule["tmp_name"], ROOT_DIR . "images/table/" . $image_schedule);
         }
 

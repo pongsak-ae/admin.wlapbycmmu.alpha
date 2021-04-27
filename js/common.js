@@ -516,7 +516,7 @@ function Course_speeker(){
             modal_addCourseHTML += '<div class="me-3"><span class="form-selectgroup-check"></span></div>';
             modal_addCourseHTML += '<div class="form-selectgroup-label-content d-flex align-items-center">';
             modal_addCourseHTML += '<span class="avatar me-3" style="background-image: url(' + BASE_URL + 'images/speaker/' + value.speaker_image + ')"></span>';
-            modal_addCourseHTML += '<div><div class="font-weight-medium">' + value.speaker_name + ' ' + value.speaker_surname + '</div><div class="text-muted">' + value.speaker_company + ' (' + value.speaker_position + ')</div></div>';
+            modal_addCourseHTML += '<div><div class="font-weight-medium">' + value.speaker_name + ' ' + value.speaker_surname + '</div><div class="text-muted">' + value.speaker_position + '</div></div>';
             modal_addCourseHTML += '</div>';
             modal_addCourseHTML += '</div>';
             modal_addCourseHTML += '</label>';
@@ -567,7 +567,7 @@ function editCourse_speeker(course_id){
             modal_addCourseHTML += '<div class="me-3"><span class="form-selectgroup-check"></span></div>';
             modal_addCourseHTML += '<div class="form-selectgroup-label-content d-flex align-items-center">';
             modal_addCourseHTML += '<span class="avatar me-3" style="background-image: url(' + BASE_URL + 'images/speaker/' + value.speaker_image + ')"></span>';
-            modal_addCourseHTML += '<div><div class="font-weight-medium">' + value.speaker_name + ' ' + value.speaker_surname + '</div><div class="text-muted">' + value.speaker_company + ' (' + value.speaker_position + ')</div></div>';
+            modal_addCourseHTML += '<div><div class="font-weight-medium">' + value.speaker_name + ' ' + value.speaker_surname + '</div><div class="text-muted">' + value.speaker_position + '</div></div>';
             modal_addCourseHTML += '</div>';
             modal_addCourseHTML += '</div>';
             modal_addCourseHTML += '</label>';

@@ -16,7 +16,7 @@
 				<div class="row align-items-center">
 					<div class="col">
 						<h2 class="page-title">
-							Gallery
+							Banner
 						</h2>
 						<div class="text-muted mt-1">1-12 of 241 photos</div>
 					</div>
@@ -30,7 +30,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="show_banner" class="row row-cards">
+			<div id="show_banner" class="row row-cards" style="max-height: 53rem;overflow-y: auto;">
 			</div>
 		</div>
 	</div>

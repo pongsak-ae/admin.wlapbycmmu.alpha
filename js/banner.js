@@ -99,36 +99,36 @@ function show_banner(){
 		        });
             });
 
-            $('[nane="update_banner"]').on('change', function(){
+            $('[name="update_banner"]').on('click', function(){
             	var active_banner_id 	= $(this).attr('data-active-id');
-            	console.log(active_banner_id)
-            	console.log($(this))
-		          // $.ajax({
-		          //     type: "post",
-		          //     url: BASE_LANG + "service/banner.php",
-		          //     data: {
-		          //         "cmd": "update_banner",
-		          //         "active_banner_id": active_banner_id
-		          //     },
-		          //     dataType: "json",
-		          //     beforeSend: function(){
-		          //       $('[name="remove_banner"]').prop('disabled', true);
-		          //     },
-		          //     complete: function(){
-		          //       $('[name="remove_banner"]').prop('disabled', false);
-		          //     },
-		          //     success: function(res) {
-		          //         var status = res['status'];
-		          //         var msg = res['msg'];
-		          //         if (status == true) {
-		          //             alert_center('Process remove banner', msg, "success")
-		          //             show_banner();
-		          //             $('#' + modalID).modal('hide');
-		          //         }else{
-		          //             alert_center('Process remove banner', msg, "error")
-		          //         }
-		          //     }
-		          // });
+            	var active = (this.checked == true) ? '1' : '0';
+
+		          $.ajax({
+		              type: "post",
+		              url: BASE_LANG + "service/banner.php",
+		              data: {
+		                  "cmd": "update_banner",
+		                  "active_banner_id": active_banner_id,
+		                  "active": active
+		              },
+		              dataType: "json",
+		              beforeSend: function(){
+		                $('[name="update_banner"]').prop('disabled', true);
+		              },
+		              complete: function(){
+		                $('[name="update_banner"]').prop('disabled', false);
+		              },
+		              success: function(res) {
+		                  var status = res['status'];
+		                  var msg = res['msg'];
+		                  if (status == true) {
+		                      alert_center('Process update banner', msg, "success")
+		                      show_banner();
+		                  }else{
+		                      alert_center('Process update banner', msg, "error")
+		                  }
+		              }
+		          });
             });
         }
     });
@@ -210,8 +210,7 @@ function add_banner_validate(){
   $("#add_banner").validate({
       rules: {
           banner_status: {
-            required: true,
-            number: true
+            required: true
           },
           add_banner_name: {
             required: true
