@@ -730,5 +730,15 @@ function course(){
     return $ds;
 }
 
+function employee(){
+	$DB = OMDb::singleton();
+    $sql = "SELECT * FROM employee";
+
+    $sql_param = array();
+    $ds = null;
+    $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+
+    return $ds;
+}
 
 ?>
