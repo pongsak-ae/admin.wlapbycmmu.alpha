@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 header('Content-Type: application/json');
 use OMCore\OMDb;
 $DB = OMDb::singleton();
@@ -11,7 +12,7 @@ $today = date("Y-m-d H:i:s");
 $exp = strtotime('+30 days', strtotime($today));
 $expires = date('Y-m-d H:i:s', $exp);
 
-$sql = "SELECT banner_name, banner_image FROM banner WHERE banner_active = '1' ORDER BY banner_id desc";
+$sql = "SELECT banner_name, banner_image FROM banner WHERE banner_active = '1' and banner_status = 'Y' ORDER BY banner_id desc";
 $sql_param = array();
 $ds = null;
 $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
