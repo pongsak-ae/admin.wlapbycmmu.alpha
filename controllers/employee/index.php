@@ -1,5 +1,5 @@
 <?php
-$PAGE_VAR["js"][] = "speaker";
+$PAGE_VAR["js"][] = "employee";
 
 if ($_SESSION['status'] != "Y") {
     header("Location: " . WEB_META_BASE_LANG . "login/");
@@ -29,12 +29,15 @@ if ($_SESSION['status'] != "Y") {
             </div>
         </div>
         <div class="table-responsive my-3">
-            <table id="datatable_speaker" class="table table-vcenter text-nowrap table-striped w-100">
+            <table id="datatable_employee" class="table table-vcenter text-nowrap table-striped w-100">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Title</th>
-                        <th>Status</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Telephone</th>
+                        <th>E-mail</th>
+                        <th>Position</th>
+                        <th>Is Admin</th>
                         <th>Tools</th>
                     </tr>
                 </thead>

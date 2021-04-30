@@ -1,24 +1,26 @@
 $(function(){
-    var dt_speaker = $('#datatable_speaker').DataTable({
+    var dt_speaker = $('#datatable_employee').DataTable({
         responsive: true,
         pageLength: 10,
         ajax: {
-            "url" : BASE_LANG + "service/speaker.php",
+            "url" : BASE_LANG + "service/employee.php",
             "type": "POST",
             "data": function( d ){ 
-                d.cmd = "speaker";
+                d.cmd = "employee";
             }
         },
         type: "JSON",
         columns: [
-            { data: "speaker_name", render: speaker_name},
-            { data: "speaker_position", render: speaker_position},
-            { data: "speaker_active", render: speaker_active},
-            { data: "speaker_id", render: speaker_tools}
+            { data: "username"},
+            { data: "full_name"},
+            { data: "telephone"},
+            { data: "email"},
+            { data: "position"},
+            { data: "is_admin", render: employee_is_admin},
+            { data: "emp_id", render: employee_tools}
         ],
         columnDefs: [
-            { targets: [2, 3], className: "text-center", width: "15%" },
-            { targets: [0, 1], width: "35%" }
+            { targets: "_all", defaultContent: "-"}
         ]
     });
     
@@ -168,38 +170,6 @@ $(function(){
         }
     });
 
-    $('#add_s_img').on('change', function () {
-        var $imgInput = $('#add_s_img'),
-            $submitBtn = $('#frm_add_speaker').find('input:submit');
-
-        $imgInput.removeData('imageWidth');
-        $imgInput.removeData('imageHeight');
-        var file = this.files[0];
-        if (file.type.match(/image\/.*/)) {
-            $submitBtn.attr('disabled', true);
-            
-            var reader = new FileReader();
-        
-            reader.onload = function() {
-                $('#speaker_image').attr('src', reader.result);
-                var $img = new Image();
-                $img.src = reader.result;
-                $img.onload = function () {
-                    var imageWidth = $img.width;
-                    var imageHeight = $img.height;
-                    $imgInput.data('imageWidth', imageWidth);
-                    $imgInput.data('imageHeight', imageHeight);
-                    $submitBtn.attr('disabled', false);
-                    frm_add_validator.element($imgInput);
-                };
-            }
-        
-            reader.readAsDataURL(file);
-        } else {
-            frm_add_validator.element($imgInput);
-        }
-    });
-
     var frm_edit_validator = $('#frm_edit_speaker').validate({
         rules: {
             edit_s_name: {
@@ -259,73 +229,20 @@ $(function(){
         }
     });
 
-    $('#edit_s_img').on('change', function () {
-        var $imgInput = $('#edit_s_img'),
-            $submitBtn = $('#frm_edit_speaker').find('input:submit');
-
-        $imgInput.removeData('imageWidth');
-        $imgInput.removeData('imageHeight');
-        var file = this.files[0];
-        if (file.type.match(/image\/.*/)) {
-            $submitBtn.attr('disabled', true);
-            var reader = new FileReader();
-            reader.onload = function() {
-                $('#speaker_edit_image').attr('src', reader.result);
-                var $img = new Image();
-                $img.src = reader.result;
-                $img.onload = function () {
-                    var imageWidth = $img.width;
-                    var imageHeight = $img.height;
-                    $imgInput.data('imageWidth', imageWidth);
-                    $imgInput.data('imageHeight', imageHeight);
-                    $submitBtn.attr('disabled', false);
-                    frm_edit_validator.element($imgInput);
-                };
-            }
-            reader.readAsDataURL(file);
-        } else {
-            frm_edit_validator.element($imgInput);
-        }
-    });
-
-    function speaker_name(data, type, row) {
-        var speaker_img;
-        if (row["speaker_image"])
-            speaker_img = '<span class="avatar me-2" style="background-image: url(./images/speaker/' + row["speaker_image"] + ')"></span>';
-        else
-            speaker_img = '<span class="avatar me-2">' + data.charAt(0).toUpperCase() + row["speaker_surname"].charAt(0).toUpperCase() + '</span>';
-        var name = (data) ? data : '(ไม่มีข้อมูล)';
-        var surname = (row["speaker_surname"]) ? row["speaker_surname"] : '(ไม่มีข้อมูล)';
-        var email = (row["speaker_email"]) ? row["speaker_email"] : '(ไม่มีข้อมูล)';
-        var nameHtml = '<div class="d-flex py-1 align-items-center">';
-            nameHtml += speaker_img;
-            nameHtml += '<div class="flex-fill">';
-            nameHtml += '   <div class="font-weight-medium">' + name + ' ' + surname + '</div>';
-            nameHtml += '   <div class="text-muted"><a class="text-reset">' + email + '</a></div>';
-            nameHtml += '</div>';
-            nameHtml += '</div>';
-        return nameHtml
-    }
-
-    function speaker_position(data, type, row) {
-        var position = (data) ? data : '(ไม่มีข้อมูล)';
-        var company = (row["speaker_company"]) ? row["speaker_company"] : '(ไม่มีข้อมูล)';
-        return '<div>' + company + '</div> \
-                <div class="text-muted">' + position +'</div>';
-    }
-
-    function speaker_active(data, type, row) {
-        if (data == 1)
+    function employee_is_admin(data, type, row) {
+        if (data == 'Y')
             return '<label class="form-check form-check-inline form-switch"> \
                         <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'" checked> \
+                        <span class="form-check-label">Active</span> \
                     </label>';
         else
             return '<label class="form-check form-check-inline form-switch"> \
                         <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'"> \
+                        <span class="form-check-label">Inactive</span> \
                     </label>';
     }
 
-    function speaker_tools(data, type, row) {
+    function employee_tools(data, type, row) {
         var tools = '<button ';
             tools += ' data-id = "' + data + '"';
             tools += ' data-name = "' + row['speaker_name'] + '"';
