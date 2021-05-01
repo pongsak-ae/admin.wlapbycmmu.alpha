@@ -36,11 +36,11 @@ if ($cmd != "") {
         
         $sql_param = array();
         $new_id = "";
-        $sql_param['speaker_name'] = $add_s_name;
-        $sql_param['speaker_surname'] = $add_s_lname;
-        $sql_param['speaker_position'] = $add_s_pos;
-        $sql_param['speaker_company'] = $add_s_comp;
-        $sql_param['speaker_email'] = $add_s_email;
+        $sql_param['speaker_name'] = addslashes($add_s_name);
+        $sql_param['speaker_surname'] = addslashes($add_s_lname);
+        $sql_param['speaker_position'] = addslashes($add_s_pos);
+        $sql_param['speaker_company'] = addslashes($add_s_comp);
+        $sql_param['speaker_email'] = addslashes($add_s_email);
         $sql_param['speaker_image'] = $newfilename;
         $sql_param['create_by'] = getSESSION();
 

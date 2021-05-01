@@ -15,112 +15,129 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "employee"){
-        $sql = "SELECT emp_id, username, password, full_name, telephone, email, position, is_admin FROM employee WHERE status = 'Y'";
+        $sql = "SELECT emp_id, username, full_name, telephone, email, position, is_admin FROM employee WHERE status = 'Y'";
         $sql_param = array();
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
         $response['data'] = $ds;
         $response['status'] = true;
-    } else if ($cmd == "add_speaker") {
-        $add_s_name = isset($_POST['add_s_name']) ? $_POST['add_s_name'] : "";
-        $add_s_lname = isset($_POST['add_s_lname']) ? $_POST['add_s_lname'] : "";
-        $add_s_email = isset($_POST['add_s_email']) ? $_POST['add_s_email'] : "";
-        $add_s_comp = isset($_POST['add_s_comp']) ? $_POST['add_s_comp'] : "";
-        $add_s_pos = isset($_POST['add_s_pos']) ? $_POST['add_s_pos'] : "";
-        $newfilename = '';
-        if (!empty($_FILES["add_s_img"])) {
-            $newfilename = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["add_s_img"]["type"]));
-            copy($_FILES["add_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
-        }
-        
-        $sql_param = array();
-        $new_id = "";
-        $sql_param['speaker_name'] = $add_s_name;
-        $sql_param['speaker_surname'] = $add_s_lname;
-        $sql_param['speaker_position'] = $add_s_pos;
-        $sql_param['speaker_company'] = $add_s_comp;
-        $sql_param['speaker_email'] = $add_s_email;
-        $sql_param['speaker_image'] = $newfilename;
-        $sql_param['create_by'] = getSESSION();
+    } else if ($cmd == "add_employee") {
+        if ($_SESSION['isAdmin'] == "Y") {
+            $add_e_username = isset($_POST['add_e_username']) ? $_POST['add_e_username'] : "";
+            $sql = "SELECT * FROM employee WHERE username = @username LIMIT 1";
+            $sql_param = array();
+            $sql_param['username'] = $add_e_username;
+            $ds = null;
+            $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+            if ($res == 0) {
+                $add_e_password = isset($_POST['add_e_password']) ? $_POST['add_e_password'] : "";
+                $add_e_name = !empty($_POST['add_e_name']) ? $_POST['add_e_name'] : null;
+                $add_e_phone = !empty($_POST['add_e_phone']) ? $_POST['add_e_phone'] : null;
+                $add_e_email = !empty($_POST['add_e_email']) ? $_POST['add_e_email'] : null;
+                $add_e_pos = !empty($_POST['add_e_pos']) ? $_POST['add_e_pos'] : null;
+                $add_e_admin = !empty($_POST['add_e_admin']) ? $_POST['add_e_admin'] : null;
+                
+                $new_id = "";
+                $sql_param['password'] = password_hash($add_e_password, PASSWORD_DEFAULT);
+                $sql_param['full_name'] = $add_e_name;
+                $sql_param['telephone'] = $add_e_phone;
+                $sql_param['email'] = addslashes($add_e_email);
+                $sql_param['position'] = addslashes($add_e_pos);
+                $sql_param['is_admin'] = $add_e_admin;
+                $sql_param['create_by'] = getSESSION();
 
-        $res = $DB->executeInsert('speaker', $sql_param, $new_id);
-        if ($res > 0) {
-            $response['status'] = true;
-            $response['msg'] = 'Create speaker successfully';
+                $res = $DB->executeInsert('employee', $sql_param, $new_id);
+                if ($res > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'Create employee successfully';
+                } else {
+                    $response['status'] = false;
+                    $response['msg'] = 'Create employee unsuccessfully';  
+                }
+            } else {
+                $response['status'] = false;
+                $response['msg'] = "User name already exists";
+            }
         } else {
             $response['status'] = false;
-            $response['msg'] = 'Create speaker unsuccessfully';  
+            $response['msg'] = 'You are not authorized to add employee.';
         }
-    } else if ($cmd == "update_speaker"){
-        $edit_s_id = isset($_POST['edit_s_id']) ? $_POST['edit_s_id'] : "";
-        $edit_s_name = isset($_POST['edit_s_name']) ? $_POST['edit_s_name'] : "";
-        $edit_s_lname = isset($_POST['edit_s_lname']) ? $_POST['edit_s_lname'] : "";
-        $edit_s_email = isset($_POST['edit_s_email']) ? $_POST['edit_s_email'] : "";
-        $edit_s_comp = isset($_POST['edit_s_comp']) ? $_POST['edit_s_comp'] : "";
-        $edit_s_pos = isset($_POST['edit_s_pos']) ? $_POST['edit_s_pos'] : "";
-        $newfilename = '';
-        if (!empty($_FILES["edit_s_img"]["tmp_name"])) {
-            $newfilename = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_s_img"]["type"]));
-            copy($_FILES["edit_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
-        }
-
-        $sql_param = array();
-        $sql_param['speaker_id'] = $edit_s_id;
-        $sql_param['speaker_name'] = addslashes($edit_s_name);
-        $sql_param['speaker_surname'] = addslashes($edit_s_lname);
-        $sql_param['speaker_position'] = addslashes($edit_s_pos);
-        $sql_param['speaker_company'] = addslashes($edit_s_comp);
-        $sql_param['speaker_email'] = addslashes($edit_s_email);
-        if ($newfilename != '') {
-            $sql_param['speaker_image'] = $newfilename;
-        }
-        $sql_param['update_by'] = getSESSION();
-        $res = $DB->executeUpdate('speaker', 1, $sql_param); 
-        if ($res > 0) {
-            $response['status'] = true;
-            $response['msg'] = 'Update successfully';
-        }else{
-            $response['status'] = false;
-            $response['msg'] = 'Update unsuccessfully';
-        }
-    } else if ($cmd == "update_active") {
-        $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
-        $speaker_active  = isset($_POST['speaker_active']) ? $_POST['speaker_active'] : "";
-        $sql_param = array();
-        $sql_param['speaker_id'] = $speaker_id;
-        $sql_param['speaker_active'] = ($speaker_active == '1') ? '0' : '1';
-        $sql_param['update_by'] = getSESSION();
-        $res = $DB->executeUpdate('speaker', 1, $sql_param);
-        if ($res > 0) {
-            $response['status'] = true;
-            $response['msg'] = 'successfully';
-        }else{
-            $response['status'] = false;
-            $response['msg'] = 'failed';
-        }
-    } else if ($cmd == "remove_speaker") {
-        $speaker_id  = isset($_POST['speaker_id']) ? $_POST['speaker_id'] : "";
-        $sql_s = "SELECT * FROM v_course_speaker WHERE speaker_id = @speaker_id LIMIT 1";
-        $sql_param_s = array();
-        $sql_param_s['speaker_id'] = $speaker_id;
-        $ds_s = null;
-        $res_s = $DB->query($ds_s, $sql_s, $sql_param_s, 0, -1, "ASSOC");
-        if ($res_s == 0) {
-            $sql_param = array();
-            $sql_param['speaker_id'] = $speaker_id;
-            $sql_param['speaker_status'] = 'N';
-            $sql_param['update_by'] = getSESSION();
-            $res = $DB->executeUpdate('speaker', 1, $sql_param);
-            if ($res > 0) {
-                $response['status'] = true;
-                $response['msg'] = 'successfully';
-            }else{
+    } else if ($cmd == "update_employee"){
+        if ($_SESSION['isAdmin'] == "Y") {
+            if (!empty($_POST['edit_e_id']) && !empty($_POST['edit_e_username'])) {
+                $sql_param = array();
+                $sql_param['emp_id'] = $_POST['edit_e_id'];
+                $sql_param['username'] = addslashes($_POST['edit_e_username']);
+                if (isset($_POST['edit_e_password']) && !empty($_POST['edit_e_password'])) {
+                    $sql_param['password'] = password_hash($_POST['edit_e_password'], PASSWORD_DEFAULT);
+                }
+                if (!empty($_POST['edit_e_name'])) $sql_param['full_name'] = $_POST['edit_e_name'];
+                if (!empty($_POST['edit_e_phone'])) $sql_param['telephone'] = $_POST['edit_e_phone'];
+                if (!empty($_POST['edit_e_email'])) $sql_param['email'] = $_POST['edit_e_email'];
+                if (!empty($_POST['edit_e_pos'])) $sql_param['position'] = $_POST['edit_e_pos'];
+                $sql_param['is_admin'] = $_POST['edit_e_admin'];
+                $sql_param['update_by'] = getSESSION();
+                $res = $DB->executeUpdate('employee', 1, $sql_param); 
+                if ($res > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'Update successfully';
+                }else{
+                    $response['status'] = false;
+                    $response['msg'] = 'Update unsuccessfully';
+                }
+            } else {
                 $response['status'] = false;
-                $response['msg'] = 'failed';
+                $response['msg'] = 'invalid data';
             }
-        }else{
+        } else {
             $response['status'] = false;
-            $response['msg'] = 'Can\'t remove speaker in course';
+            $response['msg'] = 'You are not authorized to edit employee.';
+        }
+    } else if ($cmd == "update_status") {
+        if ($_SESSION['isAdmin'] == "Y") {
+            if (!empty($_POST['emp_id']) && !empty($_POST['emp_active'])) {
+                $sql_param = array();
+                $sql_param['emp_id'] = $_POST['emp_id'];
+                $sql_param['is_admin'] = $_POST['emp_active'];
+                $sql_param['update_by'] = getSESSION();
+                $res = $DB->executeUpdate('employee', 1, $sql_param);
+                if ($res > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'successfully';
+                }else{
+                    $response['status'] = false;
+                    $response['msg'] = 'failed';
+                }
+            } else {
+                $response['status'] = false;
+                $response['msg'] = 'invalid data';
+            }
+        } else {
+            $response['status'] = false;
+            $response['msg'] = 'You are not authorized to update status employee.';
+        }
+    } else if ($cmd == "remove_employee") {
+        if ($_SESSION['isAdmin'] == "Y") {
+            if (isset($_POST['emp_id'])) {
+                $sql_param = array();
+                $sql_param['emp_id'] = $_POST['emp_id'];
+                $sql_param['status'] = 'N';
+                $sql_param['update_by'] = getSESSION();
+                $res = $DB->executeUpdate('employee', 1, $sql_param);
+                if ($res > 0) {
+                    $response['status'] = true;
+                    $response['msg'] = 'successfully';
+                }else{
+                    $response['status'] = false;
+                    $response['msg'] = 'failed';
+                }
+            } else {
+                $response['status'] = false;
+                $response['msg'] = 'invalid data';
+            }
+        } else {
+            $response['status'] = false;
+            $response['msg'] = 'You are not authorized to remove employee.';
         }
     } else {
         $response['status'] = false;

@@ -46,6 +46,14 @@
 		        			<span class="nav-link-title">Gallery</span>
 		        		</a>
 		        	</li>
+					<?php if ($_SESSION['isAdmin'] == 'Y') { ?>
+						<li class="nav-item">
+							<a class="nav-link" href="<?=WEB_META_BASE_LANG?>employee">
+								<i class="nav-link-icon d-md-none d-lg-inline-block fas fa-users-cog" style="margin: 1px 5px 0px 0px;"></i>
+								<span class="nav-link-title">Employee</span>
+							</a>
+						</li>
+					<?php } ?>
 		        </ul>
 		        <div class="col-md-2 col-sm-12 my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
 		          <form action="." method="get">

@@ -1,7 +1,7 @@
 <?php
 $PAGE_VAR["js"][] = "employee";
 
-if ($_SESSION['status'] != "Y") {
+if ($_SESSION['status'] != "Y" && $_SESSION['isAdmin'] != 'Y') {
     header("Location: " . WEB_META_BASE_LANG . "login/");
 }
 ?>
@@ -9,7 +9,7 @@ if ($_SESSION['status'] != "Y") {
 <div class="container-xl">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Speaker List</h3>
+            <h3 class="card-title">Employee List</h3>
             <div class="col-auto ms-auto d-print-none">
                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#modal_add">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -17,7 +17,7 @@ if ($_SESSION['status'] != "Y") {
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
-                    Add Speaker
+                    Add Employee
                 </a>
                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal_add" aria-label="Add Speaker">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -37,7 +37,7 @@ if ($_SESSION['status'] != "Y") {
                         <th>Telephone</th>
                         <th>E-mail</th>
                         <th>Position</th>
-                        <th>Is Admin</th>
+                        <!-- <th>Is Admin</th> -->
                         <th>Tools</th>
                     </tr>
                 </thead>
@@ -75,45 +75,44 @@ if ($_SESSION['status'] != "Y") {
     </div>
 </div>
 <div class="modal modal-blur fade" id="modal_add" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form id="frm_add_speaker">
+            <form id="frm_add_employee">
                 <div class="modal-header">
-                    <h5 class="modal-title">New speaker</h5>
+                    <h5 class="modal-title">New employee</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="form-group mb-3 ">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="form-label">First name</label>
-                                        <input type="text" id="add_s_name" name="add_s_name" class="form-control" placeholder="Enter first name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Last name</label>
-                                        <input type="text" id="add_s_lname" name="add_s_lname" class="form-control" placeholder="Enter last name">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Email address</label>
-                                <input type="email" id="add_s_email" name="add_s_email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Company</label>
-                                <input type="text" id="add_s_comp" name="add_s_comp" class="form-control" placeholder="Enter company">
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Position</label>
-                                <input type="text" id="add_s_pos" name="add_s_pos" class="form-control" placeholder="Enter position">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <img id="speaker_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">
-                            <input type="file" id="add_s_img" name="add_s_img" class="form-control" accept="image/*"/>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="add_e_username" name="add_e_username" class="form-control" placeholder="Enter user name">
+                        <label for="add_e_username">User Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" id="add_e_password" name="add_e_password" class="form-control" placeholder="Password">
+                        <label for="add_e_password">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="add_e_name" name="add_e_name" class="form-control" placeholder="Enter full name">
+                        <label for="add_e_name">Full Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="tel" id="add_e_phone" name="add_e_phone" class="form-control" placeholder="Enter telephone number" pattern="[0-9]{9}|[0-9]{10}" maxlength="10">
+                        <label for="add_e_phone">Telephone</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" id="add_e_email" name="add_e_email" class="form-control" placeholder="Enter e-mail">
+                        <label for="add_e_email">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="add_e_pos" name="add_e_pos" class="form-control" placeholder="Enter position">
+                        <label for="add_e_pos">Position</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select id="add_e_admin" name="add_e_admin" class="form-select">
+                            <option value="Y" selected>Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                        <label for="add_e_admin">Is Admin</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -126,7 +125,7 @@ if ($_SESSION['status'] != "Y") {
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                         </svg>
-                        Create new speaker
+                        Create new employee
                     </button>
                 </div>
             </form>
@@ -134,54 +133,53 @@ if ($_SESSION['status'] != "Y") {
     </div>
 </div>
 <div class="modal modal-blur fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form id="frm_edit_speaker">
+            <form id="frm_edit_employee">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit speaker</h5>
+                    <h5 class="modal-title">Edit employee</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="form-group mb-3 ">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="form-label">First name</label>
-                                        <input type="text" id="edit_s_name" name="edit_s_name" class="form-control" placeholder="Enter first name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Last name</label>
-                                        <input type="text" id="edit_s_lname" name="edit_s_lname" class="form-control" placeholder="Enter last name">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Email address</label>
-                                <input type="email" id="edit_s_email" name="edit_s_email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Company</label>
-                                <input type="text" id="edit_s_comp" name="edit_s_comp" class="form-control" placeholder="Enter company">
-                            </div>
-                            <div class="form-group mb-3 ">
-                                <label class="form-label">Position</label>
-                                <input type="text" id="edit_s_pos" name="edit_s_pos" class="form-control" placeholder="Enter position">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <img id="speaker_edit_image" src="../images/no-image.jpg" class="card-img-top mb-3" style="height: 252px;object-fit: cover;">
-                            <input type="file" id="edit_s_img" name="edit_s_img" class="form-control" accept="image/*"/>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="edit_e_username" name="edit_e_username" class="form-control" placeholder="Enter user name">
+                        <label for="edit_e_username">User Name</label>
                     </div>
-                    <input id="edit_s_id" name="edit_s_id" type="hidden">
+                    <div class="form-floating mb-3">
+                        <input type="password" id="edit_e_password" name="edit_e_password" class="form-control" placeholder="Password">
+                        <label for="edit_e_password">New Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="edit_e_name" name="edit_e_name" class="form-control" placeholder="Enter full name">
+                        <label for="edit_e_name">Full Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="tel" id="edit_e_phone" name="edit_e_phone" class="form-control" placeholder="Enter telephone number" pattern="[0-9]{9}|[0-9]{10}" maxlength="10">
+                        <label for="edit_e_phone">Telephone</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" id="edit_e_email" name="edit_e_email" class="form-control" placeholder="Enter e-mail">
+                        <label for="edit_e_email">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="edit_e_pos" name="edit_e_pos" class="form-control" placeholder="Enter position">
+                        <label for="edit_e_pos">Position</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select id="edit_e_admin" name="edit_e_admin" class="form-select">
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                        <label for="edit_e_admin">Is Admin</label>
+                    </div>
+                    <input id="edit_e_id" name="edit_e_id" type="hidden">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Cancel
                     </button>
                     <button type="submit" class="btn btn-primary ms-auto">
-                        Update speaker
+                        Update employee
                     </button>
                 </div>
             </form>
@@ -200,7 +198,7 @@ if ($_SESSION['status'] != "Y") {
                     <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
                 </svg>
                 <h3>Are you sure?</h3>
-                <div class="text-muted">Do you really want to change speaker status ?</div>
+                <div class="text-muted">Do you want to change employee status ?</div>
             </div>
             <div class="modal-footer">
                 <div class="w-100">

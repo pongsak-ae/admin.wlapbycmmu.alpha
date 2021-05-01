@@ -316,11 +316,11 @@ $(function(){
 
     function speaker_active(data, type, row) {
         if (data == 1)
-            return '<label class="form-check form-check-inline form-switch"> \
+            return '<label class="form-switch"> \
                         <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'" checked> \
                     </label>';
         else
-            return '<label class="form-check form-check-inline form-switch"> \
+            return '<label class="form-switch"> \
                         <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'"> \
                     </label>';
     }
