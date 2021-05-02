@@ -15,7 +15,7 @@ $ds = null;
 $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
 $result = array();
 foreach($ds as $v) {
-        $result[] = array(
+        $result[$v['shirt_gender']][] = array(
                 'shirt_id' => $v['shirt_id'],
                 'shirt_gender' => $v['shirt_gender'],
                 'shirt_size' => $v['shirt_size'],

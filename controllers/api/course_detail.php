@@ -74,6 +74,25 @@ if(isset($_GET['course_id'])){
                 }
                 $result['course_comment'] = $course_comment;
         }
+
+        // ============== COURSE GALLERY ===================
+        $sql_g = "SELECT gallery_name, gallery_img, gallery_alt
+                        FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_status = 'Y'";
+        $sql_param_g = array();
+        $sql_param_g['course_id'] = $_GET['course_id'];
+        $ds_course_gallery = null;
+        $res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+        if ($res_course_gallery > 0) {
+                $course_gallery = array();
+                foreach($ds_course_gallery as $v) {
+                        $course_gallery[] = array(
+                                'gallery_name' => $v['gallery_name'],
+                                'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
+                                'gallery_alt' => $v['gallery_alt']
+                        );
+                }
+                $result['course_gallery'] = $course_gallery;
+        }
         
         $response['data'] = $result;
 }
