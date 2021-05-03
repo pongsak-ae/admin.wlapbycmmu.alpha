@@ -741,4 +741,15 @@ function employee(){
     return $ds;
 }
 
+function contact(){
+	$DB = OMDb::singleton();
+    $sql = "SELECT * FROM contact WHERE contact_id = 1 LIMIT 1";
+
+    $sql_param = array();
+    $ds = null;
+    $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+
+    return $ds[0];
+}
+
 ?>
