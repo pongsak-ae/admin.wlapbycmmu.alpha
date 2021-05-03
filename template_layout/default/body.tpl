@@ -46,6 +46,12 @@
 		        			<span class="nav-link-title">Gallery</span>
 		        		</a>
 		        	</li>
+					<li class="nav-item">
+		        		<a class="nav-link" href="<?=WEB_META_BASE_LANG?>contact">
+		        			<i class="nav-link-icon d-md-none d-lg-inline-block fas fa-id-card-alt" style="margin: 1px 5px 0px 0px;"></i>
+		        			<span class="nav-link-title">Contact</span>
+		        		</a>
+		        	</li>
 					<?php if ($_SESSION['isAdmin'] == 'Y') { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="<?=WEB_META_BASE_LANG?>employee">
