@@ -19,8 +19,9 @@ if(isset($_GET['course_id'])){
         $ds = null;
         $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
         $result = array();
+        $course_detail = array();
         foreach($ds as $v) {
-                $result['course_detail'] = array(
+                $course_detail[] = array(
                         'course_name' => $v['course_name'],
                         'course_detail' => base64_decode($v['course_detail']),
                         'course_datetime' => $v['course_datetime'],
@@ -31,6 +32,7 @@ if(isset($_GET['course_id'])){
                         'course_schedule' => WEB_META_BASE_URL.'images/table/'.$v['course_schedule']
                 );
         }
+        $result['course_detail'] = $course_detail;
         // ============== COURSE SPEAKER ===================
         $sql_cs = "SELECT speaker_name, speaker_surname, speaker_position, speaker_company, speaker_image, speaker_stage
         FROM v_course_speaker WHERE course_id = @course_id order by speaker_stage";
