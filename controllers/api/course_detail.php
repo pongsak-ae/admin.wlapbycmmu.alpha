@@ -94,8 +94,7 @@ if(isset($_GET['course_id'])){
                 $result['course_gallery'] = $course_gallery;
         }
         
-        $response['data'] = $result;
-}
-
-echo json_encode($result);
+        $response[] = $result;
+} 
+echo json_encode($response);
 ?>
