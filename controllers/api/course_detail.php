@@ -38,9 +38,8 @@ if(isset($_GET['course_id'])){
         $sql_param_cs['course_id'] = $_GET['course_id'];
         $ds_course_speaker = null;
         $res_course_speaker = $DB->query($ds_course_speaker, $sql_cs, $sql_param_cs, 0, -1, "ASSOC");
-        
+        $course_speaker = array();
         if ($res_course_speaker > 0) {
-                $course_speaker = array();
                 foreach($ds_course_speaker as $v) {
                         $course_speaker[] = array(
                                 'speaker_name' => $v['speaker_name'],
@@ -51,9 +50,8 @@ if(isset($_GET['course_id'])){
                                 'speaker_stage' => $v['speaker_stage']
                         );
                 }
-                $result['course_speaker'] = $course_speaker;
         }
-        
+        $result['course_speaker'] = $course_speaker;
         // ============== COURSE COMMENT ===================
         $sql_cc = "SELECT customer_fullname, customer_nickname, customer_image, commenter_title, commenter_detail
                         FROM v_comment_customer where course_id = @course_id";
@@ -61,8 +59,8 @@ if(isset($_GET['course_id'])){
         $sql_param_cc['course_id'] = $_GET['course_id'];
         $ds_course_comment = null;
         $res_course_comment = $DB->query($ds_course_comment, $sql_cc, $sql_param_cc, 0, -1, "ASSOC");
+        $course_comment = array();
         if ($res_course_comment > 0) {
-                $course_comment = array();
                 foreach($ds_course_comment as $v) {
                         $course_comment[] = array(
                                 'customer_fullname' => $v['customer_fullname'],
@@ -72,9 +70,9 @@ if(isset($_GET['course_id'])){
                                 'commenter_detail' => $v['commenter_detail']
                         );
                 }
-                $result['course_comment'] = $course_comment;
+                
         }
-
+        $result['course_comment'] = $course_comment;
         // ============== COURSE GALLERY ===================
         $sql_g = "SELECT gallery_name, gallery_img, gallery_alt
                         FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_status = 'Y'";
@@ -82,8 +80,8 @@ if(isset($_GET['course_id'])){
         $sql_param_g['course_id'] = $_GET['course_id'];
         $ds_course_gallery = null;
         $res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+        $course_gallery = array();
         if ($res_course_gallery > 0) {
-                $course_gallery = array();
                 foreach($ds_course_gallery as $v) {
                         $course_gallery[] = array(
                                 'gallery_name' => $v['gallery_name'],
@@ -91,9 +89,9 @@ if(isset($_GET['course_id'])){
                                 'gallery_alt' => $v['gallery_alt']
                         );
                 }
-                $result['course_gallery'] = $course_gallery;
+                
         }
-        
+        $result['course_gallery'] = $course_gallery;
         $response[] = $result;
 } 
 echo json_encode($response);

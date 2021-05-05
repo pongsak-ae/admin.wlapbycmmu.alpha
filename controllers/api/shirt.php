@@ -9,10 +9,11 @@ $today = date("Y-m-d H:i:s");
 $exp = strtotime('+30 days', strtotime($today));
 $expires = date('Y-m-d H:i:s', $exp);
 
-$sql = "SELECT shirt_id, shirt_gender, shirt_size, shirt_width, shirt_height FROM shirt";
+$sql = "SELECT shirt_id, shirt_gender, shirt_size, shirt_width, shirt_height FROM shirt ORDER BY shirt_gender, shirt_width";
 $sql_param = array();
 $ds = null;
 $res = $DB->query($ds, $sql, $sql_param, 0, -1, "ASSOC");
+$response = array();
 $result = array();
 foreach($ds as $v) {
         $result[$v['shirt_gender']][] = array(
@@ -23,6 +24,6 @@ foreach($ds as $v) {
                 'shirt_height' => $v['shirt_height']
         );
 }
-
-echo json_encode($result);
+$response[] = $result;
+echo json_encode($response);
 ?>
