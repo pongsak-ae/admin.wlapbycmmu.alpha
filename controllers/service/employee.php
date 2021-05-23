@@ -38,7 +38,7 @@ if ($cmd != "") {
                 $add_e_admin = !empty($_POST['add_e_admin']) ? $_POST['add_e_admin'] : null;
                 
                 $new_id = "";
-                $sql_param['password'] = password_hash($add_e_password, PASSWORD_DEFAULT);
+                $sql_param['password'] = my_encrypt($password, WCMSetting::$ENCRYPT_LOGIN);
                 $sql_param['full_name'] = $add_e_name;
                 $sql_param['telephone'] = $add_e_phone;
                 $sql_param['email'] = addslashes($add_e_email);
