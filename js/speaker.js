@@ -129,7 +129,7 @@ $(function(){
             add_s_img: {
                 required: true,
                 accept: "image/*",
-                maxImageWH: 300
+                maxImageWH: 500
             }
         },
         errorClass: "text-danger",
@@ -212,15 +212,15 @@ $(function(){
                 required: true,
                 email: true
             },
-            edit_s_comp: {
-                required: true
-            },
-            edit_s_pos: {
-                required: true
-            },
+            // edit_s_comp: {
+            //     required: true
+            // },
+            // edit_s_pos: {
+            //     required: true
+            // },
             edit_s_img: {
                 accept: "image/*",
-                maxImageWH: 315
+                maxImageWH: 500
             }
         },
         errorClass: "text-danger",
