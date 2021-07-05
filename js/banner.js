@@ -10,7 +10,7 @@ $(document).ready(function(){
 function show_banner(){
     $.ajax({
         type: "post",
-        url: BASE_LANG + "service/banner.php",
+        url: BASE_LANG + "service/banner_cover.php",
         data: {
           "cmd": "show_banner",
         },
@@ -72,7 +72,7 @@ function show_banner(){
 		        $('#' + btn_remove_id).on('click', function(){
 		          $.ajax({
 		              type: "post",
-		              url: BASE_LANG + "service/banner.php",
+		              url: BASE_LANG + "service/banner_cover.php",
 		              data: {
 		                  "cmd": "remove_banner",
 		                  "banner_id": banner_id
@@ -105,7 +105,7 @@ function show_banner(){
 
 		          $.ajax({
 		              type: "post",
-		              url: BASE_LANG + "service/banner.php",
+		              url: BASE_LANG + "service/banner_cover.php",
 		              data: {
 		                  "cmd": "update_banner",
 		                  "active_banner_id": active_banner_id,
@@ -250,7 +250,7 @@ function submit_add_banner(form, e) {
 
     $.ajax({
         type: "post",
-        url: BASE_LANG + "service/banner.php",
+        url: BASE_LANG + "service/banner_cover.php",
         contentType: false,
         cache: false,
         processData: false,
