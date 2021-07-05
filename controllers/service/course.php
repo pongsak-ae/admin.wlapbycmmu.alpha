@@ -310,7 +310,7 @@ if ($cmd != "") {
         $course_id    = isset($_POST['course_id']) ? $_POST['course_id'] : "";
 
         $sql = "SELECT cus_id, customer_fullname, customer_image, customer_company, course_name FROM customer c
-                LEFT JOIN course co ON c.course_id = co.course_id
+                LEFT JOIN course co ON c.course_id = co.course_id 
                 WHERE c.course_id = @course_id";
         $sql_param = array();
         $sql_param['course_id'] = $course_id;
@@ -324,7 +324,7 @@ if ($cmd != "") {
 
         $sql = "SELECT commenter_id, commenter_title, commenter_detail, customer_fullname
                         , customer_company, customer_image, customer_position, cm.createdatetime AS commentdate
-                FROM commenter cm LEFT JOIN customer c ON cm.cus_id = c.cus_id WHERE c.course_id = @course_id";
+                FROM commenter cm LEFT JOIN customer c ON cm.cus_id = c.cus_id WHERE cm.course_id = @course_id";
 
         $sql_param = array();
         $sql_param['course_id'] = $course_id;
