@@ -208,10 +208,10 @@ $(function(){
             edit_s_lname: {
                 required: true
             },
-            edit_s_email: {
-                required: true,
-                email: true
-            },
+            // edit_s_email: {
+            //     required: true,
+            //     email: true
+            // },
             // edit_s_comp: {
             //     required: true
             // },
