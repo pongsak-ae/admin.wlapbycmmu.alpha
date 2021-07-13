@@ -20,6 +20,7 @@ $result = array();
 foreach($ds as $v) {
         $result[] = array(
                 'course_id' => $v['course_id'],
+                'course_no' => $v['course_no'],
                 'course_name' => $v['course_name'],
                 'course_detail' => base64_decode($v['course_detail']),
                 'course_datetime' => $v['course_datetime'],
