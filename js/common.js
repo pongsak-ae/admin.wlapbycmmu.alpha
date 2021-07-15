@@ -336,18 +336,24 @@ function encode_quote(text){
     // {$#A01$} = '
     // {$#A02$} = "
     var value = text.replaceAll("'", "{$#A01$}").replaceAll('"', "{$#A02$}").replaceAll(':', "{$#A03$}").replaceAll('.', "{$#A04$}");
-
-    return btoa(value);
+    return utf8_to_b64(value);
 }
 
 function decode_quote(text){
     // {$#A01$} = '
     // {$#A02$} = "
-    var value = atob(text).replaceAll("{$#A01$}", "'").replaceAll('{$#A02$}', '"').replaceAll('{$#A03$}', ':').replaceAll('{$#A04$}', '.');
+    var value = b64_to_utf8(text).replaceAll("{$#A01$}", "'").replaceAll('{$#A02$}', '"').replaceAll('{$#A03$}', ':').replaceAll('{$#A04$}', '.');
 
     return value;
 }
 
+function utf8_to_b64( str ) {
+    return window.btoa(unescape(encodeURIComponent( str )));
+}
+
+function b64_to_utf8( str ) {
+    return decodeURIComponent(escape(window.atob( str )));
+}
 
 function get_page_perm(page_url) {
     var s_path =  page_url.split("/").slice(2).join("/");

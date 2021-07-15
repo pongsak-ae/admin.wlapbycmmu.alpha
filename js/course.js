@@ -61,8 +61,8 @@ function datatable_course(){
     }
 
     function tools(data, type, row, meta){
-
         var course_detail    = encode_quote(row['course_detail']);
+
         var tools = '<button ';
         tools    += ' data-eco-id="'    + data + '"';
         tools    += ' data-eco-active="'+ row['course_active'] + '"';
