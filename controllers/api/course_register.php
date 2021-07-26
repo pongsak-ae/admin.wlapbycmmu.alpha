@@ -38,7 +38,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $coordinator_phone = !empty($_POST['coordinator_phone']) ? $_POST['coordinator_phone'] : null;
                 $coordinator_adviser = !empty($_POST['coordinator_adviser']) ? $_POST['coordinator_adviser'] : null;
                 $allergic_food = !empty($_POST['allergic_food']) ? $_POST['allergic_food'] : null;
-
+                $new_customer_birthday = date("Y-m-d", strtotime($customer_birthday));
                 $new_id = "";
                 $sql_param['course_id'] = $course_id;
                 $sql_param['shirt_id'] = $shirt_id;
@@ -49,7 +49,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $sql_param['customer_phone'] = $customer_phone;
                 $sql_param['customer_facebook'] = $customer_facebook;
                 $sql_param['customer_email'] = $customer_email;
-                $sql_param['customer_birthday'] = $customer_birthday;
+                $sql_param['customer_birthday'] = $new_customer_birthday;
                 $sql_param['customer_company'] = $customer_company;
                 $sql_param['customer_position'] = $customer_position;
                 $sql_param['customer_idcard'] = $customer_idcard;
@@ -78,4 +78,32 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
 }
 
 echo json_encode($response);
+
+function compressImage($source, $destination, $quality) { 
+        // Get image info 
+        $imgInfo = getimagesize($source);
+        $mime = $imgInfo['mime'];
+        // Create a new image from file
+        switch($mime){ 
+                case 'image/jpeg': 
+                $image = imagecreatefromjpeg($source);
+                imagejpeg($image, $destination, $quality);
+                break; 
+                case 'image/png': 
+                $image = imagecreatefrompng($source);
+                $pngQuality = ($quality - 100) / 11.111111;
+                $pngQuality = round(abs($pngQuality));
+                imagepng($image, $destination, $pngQuality);
+                break; 
+                case 'image/gif': 
+                $image = imagecreatefromgif($source);
+                imagegif($image, $destination, $quality);
+                break; 
+                default: 
+                $image = imagecreatefromjpeg($source);
+                imagejpeg($image, $destination, $quality);
+        } 
+        // Return compressed image 
+        return $destination;
+}
 ?>
