@@ -23,7 +23,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $customer_phone = !empty($_POST['customer_phone']) ? $_POST['customer_phone'] : null;
                 $customer_facebook = !empty($_POST['customer_facebook']) ? $_POST['customer_facebook'] : null;
                 $customer_email = !empty($_POST['customer_email']) ? $_POST['customer_email'] : null;
-                $customer_birthday = !empty($_POST['customer_birthday']) ? $_POST['customer_birthday'] : null;
+                $customer_birthday = !empty($_POST['customer_birthday']) ? date("Y-m-d", strtotime($_POST['customer_birthday'])) : null;
                 $customer_company = !empty($_POST['customer_company']) ? $_POST['customer_company'] : null;
                 $customer_position = !empty($_POST['customer_position']) ? $_POST['customer_position'] : null;
                 $customer_idcard = !empty($_POST['customer_idcard']) ? $_POST['customer_idcard'] : null;
@@ -38,7 +38,6 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $coordinator_phone = !empty($_POST['coordinator_phone']) ? $_POST['coordinator_phone'] : null;
                 $coordinator_adviser = !empty($_POST['coordinator_adviser']) ? $_POST['coordinator_adviser'] : null;
                 $allergic_food = !empty($_POST['allergic_food']) ? $_POST['allergic_food'] : null;
-                $new_customer_birthday = date("Y-m-d", strtotime($customer_birthday));
                 $new_id = "";
                 $sql_param['course_id'] = $course_id;
                 $sql_param['shirt_id'] = $shirt_id;
@@ -49,7 +48,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $sql_param['customer_phone'] = $customer_phone;
                 $sql_param['customer_facebook'] = $customer_facebook;
                 $sql_param['customer_email'] = $customer_email;
-                $sql_param['customer_birthday'] = $new_customer_birthday;
+                $sql_param['customer_birthday'] = $customer_birthday;
                 $sql_param['customer_company'] = $customer_company;
                 $sql_param['customer_position'] = $customer_position;
                 $sql_param['customer_idcard'] = $customer_idcard;
