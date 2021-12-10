@@ -76,9 +76,31 @@ if ($res_course_comment > 0) {
         
 }
 $result['course_comment'] = $course_comment;
-// ============== COURSE GALLERY ===================
-$sql_g = "SELECT gallery_name, gallery_img, gallery_alt
-                FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_status = 'Y'";
+
+// // ============== COURSE GALLERY ===================
+// $sql_g = "SELECT gallery_name, gallery_img, gallery_alt, gallery_stage
+//                 FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_status = 'Y'";
+// $sql_param_g = array();
+// $sql_param_g['course_id'] = $course_id;
+// $ds_course_gallery = null;
+// $res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+// $course_gallery = array();
+// if ($res_course_gallery > 0) {
+//         foreach($ds_course_gallery as $v) {
+//                 $course_gallery[] = array(
+//                         'gallery_name' => $v['gallery_name'],
+//                         'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
+//                         'gallery_alt' => $v['gallery_alt'],
+//                         'gallery_stage' => $v['gallery_stage']
+//                 );
+//         }
+        
+// }
+// $result['course_gallery'] = $course_gallery;
+// $response[] = $result;
+
+$sql_g = "SELECT gallery_name, gallery_img, gallery_alt, gallery_stage
+                FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_stage = '1' and gallery_status = 'Y'";
 $sql_param_g = array();
 $sql_param_g['course_id'] = $course_id;
 $ds_course_gallery = null;
@@ -89,13 +111,68 @@ if ($res_course_gallery > 0) {
                 $course_gallery[] = array(
                         'gallery_name' => $v['gallery_name'],
                         'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
-                        'gallery_alt' => $v['gallery_alt']
+                        'gallery_alt' => $v['gallery_alt'],
+                        'gallery_stage' => $v['gallery_stage']
                 );
         }
-        
 }
-$result['course_gallery'] = $course_gallery;
-$response[] = $result;
+$course_gallery_stageALL['course_gallery_stage1'] = $course_gallery;
+$sql_g = "SELECT gallery_name, gallery_img, gallery_alt, gallery_stage
+                FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_stage = '2' and gallery_status = 'Y'";
+$sql_param_g = array();
+$sql_param_g['course_id'] = $course_id;
+$ds_course_gallery = null;
+$res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+$course_gallery = array();
+if ($res_course_gallery > 0) {
+        foreach($ds_course_gallery as $v) {
+                $course_gallery[] = array(
+                        'gallery_name' => $v['gallery_name'],
+                        'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
+                        'gallery_alt' => $v['gallery_alt'],
+                        'gallery_stage' => $v['gallery_stage']
+                );
+        }
+}
+$course_gallery_stageALL['course_gallery_stage2'] = $course_gallery;
+$sql_g = "SELECT gallery_name, gallery_img, gallery_alt, gallery_stage
+                FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_stage = '3' and gallery_status = 'Y'";
+$sql_param_g = array();
+$sql_param_g['course_id'] = $course_id;
+$ds_course_gallery = null;
+$res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+$course_gallery = array();
+if ($res_course_gallery > 0) {
+        foreach($ds_course_gallery as $v) {
+                $course_gallery[] = array(
+                        'gallery_name' => $v['gallery_name'],
+                        'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
+                        'gallery_alt' => $v['gallery_alt'],
+                        'gallery_stage' => $v['gallery_stage']
+                );
+        }
+}
+$course_gallery_stageALL['course_gallery_stage3'] = $course_gallery;
+$sql_g = "SELECT gallery_name, gallery_img, gallery_alt, gallery_stage
+                FROM gallery where course_id = @course_id and gallery_active = '1' and gallery_stage = '4' and gallery_status = 'Y'";
+$sql_param_g = array();
+$sql_param_g['course_id'] = $course_id;
+$ds_course_gallery = null;
+$res_course_gallery = $DB->query($ds_course_gallery, $sql_g, $sql_param_g, 0, -1, "ASSOC");
+$course_gallery = array();
+if ($res_course_gallery > 0) {
+        foreach($ds_course_gallery as $v) {
+                $course_gallery[] = array(
+                        'gallery_name' => $v['gallery_name'],
+                        'gallery_img' => WEB_META_BASE_URL.'images/gallery/'.$v['gallery_img'],
+                        'gallery_alt' => $v['gallery_alt'],
+                        'gallery_stage' => $v['gallery_stage']
+                );
+        }
+}
+$course_gallery_stageALL['course_gallery_stage4'] = $course_gallery;
+$result['course_gallery_stage_all'] = $course_gallery_stageALL;
 
+$response[] = $result;
 echo json_encode($response);
 ?>

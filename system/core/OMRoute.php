@@ -104,8 +104,9 @@ class OMRoute {
 	protected $path;
 	public function __construct() {
 		global $HTTP_SERVER_VARS;
-		$this->pathArray = explode("/", $HTTP_SERVER_VARS["REQUEST_URI"]);
-		// var_dump($this->pathArray);
+		$this->pathArray = explode("/", isset($HTTP_SERVER_VARS["REQUEST_URI"]) ? $HTTP_SERVER_VARS["REQUEST_URI"] : '');
+
+		// var_dump($HTTP_SERVER_VARS["REQUEST_URI"]);
 		// exit();
 	}
 	private static $uri = null;

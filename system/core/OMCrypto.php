@@ -18,12 +18,15 @@ class OMCrypto {
 		return $text . str_repeat(chr($pad), $pad);
 	}
 
-	function unpkcs5pad($text){
-		$pad = ord($text{strlen($text)-1});
-		if ($pad > strlen($text)) return false;
-		if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false;
-		return substr($text, 0, -1 * $pad);
-	}
+	// function unpkcs5pad($text){
+	// 	$text = isset($text) ? $text : '';
+
+	// 	$pad = ord($text{strlen($text)-1});
+	// 	if ($pad > strlen($text)) return false;
+	// 	if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false;
+	// 	return substr($text, 0, -1 * $pad);
+	// }
+
 	function Encrypt($data)
 	{
 

@@ -51,6 +51,7 @@ foreach(course() as $k => $v) {
             <th>Image name</th>
             <th>Image alt</th>
             <th>Image active</th>
+            <th>Image stage</th>
             <th>Createdatetime</th>
             <th>Tools</th>
           </tr>

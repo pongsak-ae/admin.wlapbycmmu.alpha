@@ -1,6 +1,7 @@
 ﻿<?php
-
+$conf['show_php_errors'] = E_ALL & ~E_DEPRECATED & ~E_NOTICE;
 error_reporting(E_ALL);
+
 ini_set('display_errors', 1);
 // SET TIME SESSION
 ini_set('session.gc_maxlifetime', 1800);
