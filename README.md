@@ -1,3 +1,3 @@
-# sms.cheesemobile
-sms.cheesemobile
+# wlapbycmmu
+admin.wlapbycmmu.alpha
 test
