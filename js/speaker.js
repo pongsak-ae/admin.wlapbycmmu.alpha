@@ -11,14 +11,16 @@ $(function(){
         },
         type: "JSON",
         columns: [
+            { data: "speaker_order"},
             { data: "speaker_name", render: speaker_name},
             { data: "speaker_position", render: speaker_position},
             { data: "speaker_active", render: speaker_active},
             { data: "speaker_id", render: speaker_tools}
         ],
         columnDefs: [
-            { targets: [2, 3], className: "text-center", width: "15%" },
-            { targets: [0, 1], width: "35%" }
+            { targets: 0, className: "text-center"},
+            { targets: [3, 4], className: "text-center", width: "15%" },
+            { targets: [1, 2], width: "35%" }
         ]
     });
     
@@ -32,6 +34,16 @@ $(function(){
         if(data.image !== null && data.image !== '' && data.image !== 'null') {
             $('#speaker_edit_image').attr('src', '../images/speaker/' + data.image);
         }
+        var optionOrder = '';
+        for(var i = 1; i <= data.maxOrder; i++) {
+            if(i == data.order) {
+                optionOrder += '<option value="' + i + '" selected>' + i + '</option>';
+            } else {
+                optionOrder += '<option value="' + i + '">' + i + '</option>';
+            }
+        }
+        $('#edit_s_order').html(optionOrder);
+        $('#edit_s_current_order').val(data.order);
         $('#edit_s_id').val(data.id);
         $('#modal_edit').modal('show');
     });
@@ -208,16 +220,6 @@ $(function(){
             edit_s_lname: {
                 required: true
             },
-            // edit_s_email: {
-            //     required: true,
-            //     email: true
-            // },
-            // edit_s_comp: {
-            //     required: true
-            // },
-            // edit_s_pos: {
-            //     required: true
-            // },
             edit_s_img: {
                 accept: "image/*",
                 maxImageWH: 500
@@ -301,7 +303,7 @@ $(function(){
             nameHtml += speaker_img;
             nameHtml += '<div class="flex-fill">';
             nameHtml += '   <div class="font-weight-medium">' + name + ' ' + surname + '</div>';
-            nameHtml += '   <div class="text-muted"><a class="text-reset">' + email + '</a></div>';
+            nameHtml += '   <div class="text-muted">' + email + '</div>';
             nameHtml += '</div>';
             nameHtml += '</div>';
         return nameHtml
@@ -317,11 +319,11 @@ $(function(){
     function speaker_active(data, type, row) {
         if (data == 1)
             return '<label class="form-switch"> \
-                        <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'" checked> \
+                        <input class="form-check-input cursor-pointer" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'" checked> \
                     </label>';
         else
             return '<label class="form-switch"> \
-                        <input class="form-check-input" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'"> \
+                        <input class="form-check-input cursor-pointer" name="upd_active" type="checkbox" data-active="' + data + '" data-speaker-id="' + row['speaker_id'] +'"> \
                     </label>';
     }
 
@@ -334,6 +336,8 @@ $(function(){
             tools += ' data-company = "'  + row['speaker_company'] + '"';
             tools += ' data-email = "' + row['speaker_email'] + '"';
             tools += ' data-image = "' + row['speaker_image'] + '"';
+            tools += ' data-order = "' + row['speaker_order'] + '"';
+            tools += ' data-max-order = "' + row['speaker_order_max'] + '"';
             tools += ' name="edit_speaker" class="btn btn-outline-warning mx-1"><i class="fas fa-edit"></i></button>';
             tools += '<button name="remove_speaker" data-name = "' + row['speaker_name'] + '" data-surname = "' + row['speaker_surname'];
             tools += '" data-speaker-id="' + data + '" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal_remove">'

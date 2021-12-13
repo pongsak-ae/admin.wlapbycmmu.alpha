@@ -32,6 +32,7 @@ if ($_SESSION['status'] != "Y") {
             <table id="datatable_speaker" class="table table-vcenter text-nowrap table-striped w-100">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Name</th>
                         <th>Title</th>
                         <th>Status</th>
@@ -141,13 +142,18 @@ if ($_SESSION['status'] != "Y") {
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-7">
-                            <div class="form-group mb-3 ">
+                            <div class="form-group mb-3">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label class="form-label">No.</label>
+                                        <select id="edit_s_order" name="edit_s_order" class="form-select">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
                                         <label class="form-label">First name</label>
                                         <input type="text" id="edit_s_name" name="edit_s_name" class="form-control" placeholder="Enter first name">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="form-label">Last name</label>
                                         <input type="text" id="edit_s_lname" name="edit_s_lname" class="form-control" placeholder="Enter last name">
                                     </div>
@@ -171,6 +177,7 @@ if ($_SESSION['status'] != "Y") {
                             <input type="file" id="edit_s_img" name="edit_s_img" class="form-control" accept="image/*"/>
                         </div>
                     </div>
+                    <input id="edit_s_current_order" name="edit_s_current_order" type="hidden">
                     <input id="edit_s_id" name="edit_s_id" type="hidden">
                 </div>
                 <div class="modal-footer">

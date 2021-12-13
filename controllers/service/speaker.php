@@ -15,7 +15,8 @@ $cmd = isset($_POST['cmd']) ? $_POST['cmd'] : "";
 
 if ($cmd != "") {
     if($cmd == "speaker"){
-        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, speaker_company, speaker_image, speaker_active
+        $sql = "SELECT speaker_id, speaker_name, speaker_surname, speaker_email, speaker_position, 
+                    speaker_company, speaker_image, speaker_order, speaker_active, (select max(speaker_order) FROM speaker WHERE speaker_status = 'Y') as speaker_order_max
                 FROM speaker WHERE speaker_status = 'Y'";
         $sql_param = array();
         $ds = null;
@@ -46,6 +47,7 @@ if ($cmd != "") {
 
         $res = $DB->executeInsert('speaker', $sql_param, $new_id);
         if ($res > 0) {
+
             $response['status'] = true;
             $response['msg'] = 'Create speaker successfully';
         } else {
@@ -64,7 +66,8 @@ if ($cmd != "") {
             $newfilename = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_s_img"]["type"]));
             copy($_FILES["edit_s_img"]["tmp_name"], ROOT_DIR . "images/speaker/" . $newfilename);
         }
-
+        $edit_s_order = isset($_POST['edit_s_order']) ? $_POST['edit_s_order'] : "";
+        $edit_s_current_order = isset($_POST['edit_s_current_order']) ? $_POST['edit_s_current_order'] : "";
         $sql_param = array();
         $sql_param['speaker_id'] = $edit_s_id;
         $sql_param['speaker_name'] = addslashes($edit_s_name);
@@ -78,6 +81,23 @@ if ($cmd != "") {
         $sql_param['update_by'] = getSESSION();
         $res = $DB->executeUpdate('speaker', 1, $sql_param); 
         if ($res > 0) {
+            if ($edit_s_current_order != $edit_s_order) {
+                if ($edit_s_current_order < $edit_s_order) {
+                    $set = "speaker_order = speaker_order - 1";
+                    $where = "speaker_order > $edit_s_current_order and speaker_order <= $edit_s_order";
+                } else {
+                    $set = "speaker_order = speaker_order + 1";
+                    $where = "speaker_order < $edit_s_current_order and speaker_order >= $edit_s_order";
+                }
+
+                $sql_upd_reorder = "update speaker set $set where $where";
+                $DB->execute($sql_upd_reorder);
+                $sql_upd_order = "update speaker set speaker_order = $edit_s_order where speaker_id = $edit_s_id";
+                //$sql_param_d = array();
+                //$sql_param_d['course_id'] = $edit_c_course_id;
+                $res_d = $DB->execute($sql_upd_order);
+            }
+            
             $response['status'] = true;
             $response['msg'] = 'Update successfully';
         }else{
