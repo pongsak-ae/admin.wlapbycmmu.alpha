@@ -47,7 +47,10 @@ if ($cmd != "") {
 
         $res = $DB->executeInsert('speaker', $sql_param, $new_id);
         if ($res > 0) {
-
+            $sql_upd_last_order = "UPDATE speaker set speaker_order = ((SELECT selected_value 
+                                    FROM (SELECT MAX(speaker_order) AS selected_value FROM speaker) AS sub_selected_value) + 1) 
+                                    WHERE speaker_id = ".$new_id;
+            $DB->execute($sql_upd_last_order);
             $response['status'] = true;
             $response['msg'] = 'Create speaker successfully';
         } else {
