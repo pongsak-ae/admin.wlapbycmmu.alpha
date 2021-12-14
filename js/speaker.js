@@ -227,12 +227,16 @@ $(function(){
         },
         errorClass: "text-danger",
         highlight: function(element) {
-            $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
-            $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
+            if (element.className != 'form-select') {
+                $(element).closest('.form-group').addClass('has-error').removeClass('has-success');
+                $(element).closest('.form-group').prevObject.addClass('is-invalid').removeClass('is-valid');
+            }
         },
         unhighlight: function(element) {
-            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-            $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
+            if (element.className != 'form-select') {
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                $(element).closest('.form-group').prevObject.removeClass('is-invalid').addClass('is-valid');
+            }
         },
         submitHandler: function(form, e) {
             e.preventDefault();
