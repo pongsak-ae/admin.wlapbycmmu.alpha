@@ -35,8 +35,8 @@ $result['course_detail'] = array(
         'course_schedule' => WEB_META_BASE_URL.'images/table/'.$ds[0]['course_schedule']
 );
 // ============== COURSE SPEAKER ===================
-$sql_cs = "SELECT speaker_name, speaker_surname, speaker_position, speaker_company, speaker_image, speaker_stage
-FROM v_course_speaker WHERE course_id = @course_id order by speaker_stage";
+$sql_cs = "SELECT speaker_name, speaker_surname, speaker_position, speaker_company, speaker_image, speaker_stage, speaker_order
+FROM v_course_speaker WHERE course_id = @course_id order by speaker_stage, speaker_order";
 $sql_param_cs = array();
 $sql_param_cs['course_id'] = $course_id;
 $ds_course_speaker = null;
@@ -50,7 +50,8 @@ if ($res_course_speaker > 0) {
                         'speaker_position' => $v['speaker_position'],
                         'speaker_company' => $v['speaker_company'],
                         'speaker_image' => WEB_META_BASE_URL.'images/speaker/'.$v['speaker_image'],
-                        'speaker_stage' => $v['speaker_stage']
+                        'speaker_stage' => $v['speaker_stage'],
+                        'speaker_order' => $v['speaker_order']
                 );
         }
 }
