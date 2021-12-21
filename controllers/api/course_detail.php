@@ -36,7 +36,7 @@ $result['course_detail'] = array(
 );
 // ============== COURSE SPEAKER ===================
 $sql_cs = "SELECT speaker_name, speaker_surname, speaker_position, speaker_company, speaker_image, speaker_stage, speaker_order
-FROM v_course_speaker WHERE course_id = @course_id and speaker_active = '1' order by speaker_stage, speaker_order";
+FROM v_course_speaker WHERE course_id = @course_id and speaker_active = '1' order by speaker_order";
 $sql_param_cs = array();
 $sql_param_cs['course_id'] = $course_id;
 $ds_course_speaker = null;
