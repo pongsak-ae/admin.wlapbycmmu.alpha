@@ -64,6 +64,7 @@ if ($cmd != "") {
         $add_gallery_name     = isset($_POST['add_gallery_name']) ? $_POST['add_gallery_name'] : "";
         $add_gallery_alt      = isset($_POST['add_gallery_alt']) ? $_POST['add_gallery_alt'] : "";
         $add_gallery_img      = isset($_FILES['add_gallery_img']) ? $_FILES['add_gallery_img'] : "";
+        $add_gallery_stage    = isset($_POST['add_gallery_stage']) ? $_POST['add_gallery_stage'] : "";
 
         $image_gallery = null;
         if (!empty($_FILES["add_gallery_img"])) {
@@ -79,6 +80,7 @@ if ($cmd != "") {
         $sql_param['gallery_alt']       = $add_gallery_alt;
         $sql_param['gallery_img']       = $image_gallery;
         $sql_param['create_by']           = getSESSION();
+        $sql_param['gallery_stage']       = $add_gallery_stage;
 
         $res = $DB->executeInsert('gallery', $sql_param, $new_id);
 
@@ -91,25 +93,31 @@ if ($cmd != "") {
         }
 
     } else if ($cmd == "edit_gallery"){
-
+        $sql_param = array();
         $gallery_e_id           = isset($_POST['gallery_e_id']) ? $_POST['gallery_e_id'] : "";
         $edit_gallery_status    = isset($_POST['edit_gallery_status']) ? $_POST['edit_gallery_status'] : "";
         $edit_gallery_name      = isset($_POST['edit_gallery_name']) ? $_POST['edit_gallery_name'] : "";
         $edit_gallery_alt       = isset($_POST['edit_gallery_alt']) ? $_POST['edit_gallery_alt'] : "";
         $edit_gallery_img       = isset($_FILES["edit_gallery_img"]) ? $_FILES["edit_gallery_img"] : "";
+        $edit_gallery_stage       = isset($_POST["edit_gallery_stage"]) ? $_POST["edit_gallery_stage"] : "";
 
-        $image_gallery = null;
-        if (!empty($_FILES["edit_gallery_img"])) {
-            $image_gallery = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_gallery_img"]["type"]));
-            copy($edit_gallery_img["tmp_name"], ROOT_DIR . "images/gallery/" . $image_gallery);
+        if($edit_gallery_img != ""){
+            $image_gallery = null;
+            if (!empty($_FILES["edit_gallery_img"])) {
+                $image_gallery = date('Ymd').'_'.OMImage::uuname()."." . str_replace(" ", "", basename($_FILES["edit_gallery_img"]["type"]));
+                copy($edit_gallery_img["tmp_name"], ROOT_DIR . "images/gallery/" . $image_gallery);
+            }
+            $sql_param['gallery_img']       = $image_gallery;
         }
 
-        $sql_param = array();
+
+        
         $sql_param['gallery_id']        = $gallery_e_id;
         $sql_param['gallery_name']      = $edit_gallery_name;
-        $sql_param['gallery_img']       = $image_gallery;
+        
         $sql_param['gallery_alt']       = $edit_gallery_alt;
         $sql_param['gallery_active']    = $edit_gallery_status;
+        $sql_param['gallery_stage']    = $edit_gallery_stage;
         $res = $DB->executeUpdate('gallery', 1, $sql_param);
 
         if ($res > 0) {

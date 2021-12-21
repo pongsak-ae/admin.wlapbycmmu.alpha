@@ -49,6 +49,7 @@ function datatable_gallery(){
             { "data": "gallery_name"},
             { "data": "gallery_alt" },
             { "data": "gallery_active", render : status},
+            { "data": "gallery_stage"},
             { "data": "createdatetime", render: datetime},
             { "data": "gallery_id", render: tools}
         ],
@@ -239,6 +240,14 @@ function add_gallery(){
   modal_addGalleryHTML += '<label for="add_gallery_status">Select</label>';
   modal_addGalleryHTML += '</div>';
   modal_addGalleryHTML += '</div>';
+  modal_addGalleryHTML += '<div class="mb-3">';
+  modal_addGalleryHTML += '<div class="form-floating">';
+  modal_addGalleryHTML += '<select class="form-select" id="add_gallery_stage" name="add_gallery_stage">';
+  modal_addGalleryHTML += '<option value="1">Stage 1</option><option value="2">Stage 2</option><option value="3">Stage 3</option><option value="4">Stage 4</option>';
+  modal_addGalleryHTML += '</select>';
+  modal_addGalleryHTML += '<label for="add_gallery_stage">Select Stage</label>';
+  modal_addGalleryHTML += '</div>';
+  modal_addGalleryHTML += '</div>';
   modal_addGalleryHTML += '</div>';
   modal_addGalleryHTML += '<div class="col-md-4 col-sm-12">';
   modal_addGalleryHTML += '<div class="mb-3">';
@@ -311,6 +320,9 @@ function add_gallery_validate(){
           },
           add_gallery_img : {
             required: true
+          },
+          add_gallery_stage : {
+            required: true
           }
       },
       errorPlacement: function(error, element) {
@@ -342,6 +354,7 @@ function submit_add_gallery(form, e) {
     form_data.append("add_gallery_status" , inputs.filter('#add_gallery_status').val());
     form_data.append("add_gallery_name"   , inputs.filter('#add_gallery_name').val());
     form_data.append("add_gallery_alt"    , inputs.filter('#add_gallery_alt').val());
+    form_data.append("add_gallery_stage"    , inputs.filter('#add_gallery_stage').val());
     form_data.append("add_gallery_img"    , inputs.filter('#add_gallery_img').prop("files")[0]);
 
     $.ajax({
@@ -394,6 +407,14 @@ function edit_gallery(gallery_e_id, gallery_e_active, gallery_e_image, gallery_e
   modal_editGalleryHTML += '<option value="1">Active</option><option value="0">Inactive</option>';
   modal_editGalleryHTML += '</select>';
   modal_editGalleryHTML += '<label for="edit_gallery_status">Select</label>';
+  modal_editGalleryHTML += '</div>';
+  modal_editGalleryHTML += '</div>';
+  modal_editGalleryHTML += '<div class="mb-3">';
+  modal_editGalleryHTML += '<div class="form-floating">';
+  modal_editGalleryHTML += '<select class="form-select" id="edit_gallery_stage" name="edit_gallery_stage">';
+  modal_editGalleryHTML += '<option value="1">Stage 1</option><option value="2">Stage 2</option><option value="3">Stage 3</option><option value="4">Stage 4</option>';
+  modal_editGalleryHTML += '</select>';
+  modal_editGalleryHTML += '<label for="edit_gallery_stage">Select Stage</label>';
   modal_editGalleryHTML += '</div>';
   modal_editGalleryHTML += '</div>';
   modal_editGalleryHTML += '</div>';
@@ -464,7 +485,10 @@ function edit_gallery(gallery_e_id, gallery_e_active, gallery_e_image, gallery_e
           edit_gallery_alt: {
               required: true
           },
-          edit_gallery_img: {
+        //   edit_gallery_img: {
+        //       required: true
+        //   },
+          edit_gallery_stage: {
               required: true
           }
       },
@@ -498,7 +522,8 @@ function submit_edit_gallery(form, e, gallery_e_id) {
     form_data.append("edit_gallery_name"    , inputs.filter('#edit_gallery_name').val());
     form_data.append("edit_gallery_alt"     , inputs.filter('#edit_gallery_alt').val());
     form_data.append("edit_gallery_img"     , inputs.filter('#edit_gallery_img').prop("files")[0]);
-
+    form_data.append("edit_gallery_stage"     , inputs.filter('#edit_gallery_stage').val());
+    
     $.ajax({
         type: "post",
         url: BASE_LANG + "service/gallery.php",
