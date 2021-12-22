@@ -84,7 +84,8 @@ $(function(){
             url: BASE_LANG + "service/speaker.php",
             data: {
                 "cmd": "remove_speaker",
-                "speaker_id": $(this).data('speakerId')
+                "speaker_id": $(this).data('speakerId'),
+                "speaker_order": $(this).data('speakerOrder')
             },
             dataType: "json",
             success: function (res) {
@@ -117,7 +118,7 @@ $(function(){
     $('#modal_remove').on('show.bs.modal', function(e) {
         var data = $(e.relatedTarget).data();
         $('.title', this).text(data.name + ' ' + data.surname);
-        $('.btn-confirm-del', this).data('speakerId', data.speakerId);
+        $('.btn-confirm-del', this).data({'speakerId': data.speakerId, 'speakerOrder': data.speakerOrder});
     });
 
     var frm_add_validator = $('#frm_add_speaker').validate({
@@ -344,7 +345,7 @@ $(function(){
             tools += ' data-max-order = "' + row['speaker_order_max'] + '"';
             tools += ' name="edit_speaker" class="btn btn-outline-warning mx-1"><i class="fas fa-edit"></i></button>';
             tools += '<button name="remove_speaker" data-name = "' + row['speaker_name'] + '" data-surname = "' + row['speaker_surname'];
-            tools += '" data-speaker-id="' + data + '" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal_remove">'
+            tools += '" data-speaker-id="' + data + '" data-speaker-order="' + row['speaker_order'] + '" class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal_remove">'
             tools += '<i class="far fa-trash-alt"></i></button>';
         return tools
     }

@@ -136,6 +136,9 @@ if ($cmd != "") {
             $sql_param['update_by'] = getSESSION();
             $res = $DB->executeUpdate('speaker', 1, $sql_param);
             if ($res > 0) {
+                $speaker_order = $_POST['speaker_order'];
+                $sql_upd_reorder = "update speaker set speaker_order = speaker_order - 1 where speaker_order > ".$speaker_order;
+                $DB->execute($sql_upd_reorder);
                 $response['status'] = true;
                 $response['msg'] = 'successfully';
             }else{
