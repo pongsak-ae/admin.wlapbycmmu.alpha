@@ -36,7 +36,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $coordinator_phone = !empty($_POST['coordinator_phone']) ? $_POST['coordinator_phone'] : null;
                 $coordinator_email = !empty($_POST['coordinator_email']) ? $_POST['coordinator_email'] : null;
                 $coordinator_adviser = !empty($_POST['coordinator_adviser']) ? $_POST['coordinator_adviser'] : null;
-                $customer_improve = !empty($_POST['coordinator_email']) ? implode(",", $_POST['coordinator_email']) : null;
+                $customer_improve = !empty($_POST['customer_improve']) ? implode(",", $_POST['customer_improve']) : null;
                 $allergic_food = !empty($_POST['allergic_food']) ? $_POST['allergic_food'] : null;
                 $customer_shirt = $_POST['customer_shirt'];
                 $customer_image = null;
