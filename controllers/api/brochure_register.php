@@ -23,7 +23,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $customer_fullname_en = !empty($_POST['customer_fullname_en']) ? $_POST['customer_fullname_en'] : null;
                 $customer_nickname = !empty($_POST['customer_nickname']) ? $_POST['customer_nickname'] : null;
                 $customer_phone = !empty($_POST['customer_phone']) ? $_POST['customer_phone'] : null;
-                $customer_birthday = !empty($_POST['customer_birthday']) ? date("Y-m-d", strtotime($_POST['customer_birthday'])) : null;
+                $customer_birthday = !empty($_POST['customer_birthday']) ? date("Y-m-d", strtotime(str_replace('/', '-', $_POST['customer_birthday']))) : null;
                 $customer_email = !empty($_POST['customer_email']) ? $_POST['customer_email'] : null;
                 $customer_line = !empty($_POST['customer_line']) ? $_POST['customer_line'] : null;
                 $customer_idcard = !empty($_POST['customer_idcard']) ? $_POST['customer_idcard'] : null;
@@ -49,6 +49,7 @@ if (isset($_POST['course_id']) && !empty($_POST['course_id'])) {
                 $sql_param['course_id'] = $course_id;
                 $sql_param['shirt_id'] = $customer_shirt;
                 $sql_param['customer_name_prefix'] = $customer_name_prefix;
+                $sql_param['customer_fullname'] = $customer_fullname_th;
                 $sql_param['customer_fullname_th'] = $customer_fullname_th;
                 $sql_param['customer_fullname_en'] = $customer_fullname_en;
                 $sql_param['customer_nickname'] = $customer_nickname;
